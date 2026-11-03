@@ -113,3 +113,13 @@ README are where the disclosure lives.
   composer package name.
 - Decided by Maurice: to start M0.4 ("ok, begin met M0.4"). The two ADRs
   await his acceptance.
+
+## 2026-11-03: ADR-0001 and ADR-0002 accepted
+
+- Model: Claude Opus 5.5, Claude Code CLI
+- Asked: record the acceptance.
+- Produced: both ADRs `accepted`, decided by Maurice van Loon; the M0.4
+  row in `docs/milestones.md`.
+- Decided by Maurice: ADR-0001 and ADR-0002 accepted as proposed; the
+  composer package name `mauricevanloon/omeka-s-content-credentials` kept
+  ("ok, ADR's aangenomen, naam is goed").
