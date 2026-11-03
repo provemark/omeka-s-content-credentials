@@ -115,6 +115,12 @@ Local until M0 is done; then a private GitHub repository, so CI (PHP 8.3,
 with a view to the renaming of ProveMark. Public, and registration on
 omeka.org, only with Maurice's go.
 
+## Index of steps
+
+| step | note |
+|---|---|
+| M0.3 | [`notes/step-03-test-environment.md`](notes/step-03-test-environment.md): Omeka S 4.2.1 pinned, the Docker environment, a failed install that looks installed |
+
 ## To measure before a spec rests on it
 
 From the brief, each to become a measured note against the pinned

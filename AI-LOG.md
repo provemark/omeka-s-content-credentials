@@ -64,3 +64,28 @@ README are where the disclosure lives.
   holds.
 - Reasoned, not measured: nothing new.
 - Decided by Maurice: the M0 steps as proposed ("ok, begin met M0.2").
+
+## 2026-11-03: The integration environment (M0.3)
+
+- Model: Claude Opus 5.5, Claude Code CLI
+- Asked: M0.3 with an image of our own, built from the release zip.
+- Produced: `docker/omeka/` (Dockerfile, entrypoint, a form-less install
+  script), `compose.yaml`, `tools/env/up.sh`, `down.sh`, `reset.sh`;
+  `notes/step-03-test-environment.md`; the M0.3 row in
+  `docs/milestones.md`, an index of steps in `NOTES.md`, `CHANGELOG.md`.
+- Read: in the Omeka S 4.2.1 release, `composer.json`,
+  `Omeka\Stdlib\Environment`, `Omeka\Installation\Installer` and its tasks,
+  `InstallController`, `Omeka\Mvc\Status`, `perform-job.php`,
+  `config/local.config.php`; the verifier's `composer.json`.
+- Measured: v4.2.1 is the latest release and its zip matches GitHub's
+  SHA-256; the base image lacks only `pdo_mysql` and ImageMagick; a fresh
+  environment installs in 7 s, the admin logs in (302 to `/admin`),
+  `/admin/module` lists the mounted module as having an invalid
+  `module.ini`, a second `up.sh` changes nothing; an admin address under
+  `.test` makes the installer stop after the schema, which Omeka S then
+  takes for installed. Details and commands in the step note.
+- Reasoned, not measured: PHP 8.3 as the environment's version; that the
+  pinned digests give the same images on amd64; that the unpinned Debian
+  packages stay the same.
+- Decided by Maurice: an image of our own from the release zip ("ok, eigen
+  image").
