@@ -1,0 +1,35 @@
+{
+    "name": "mauricevanloon/omeka-s-content-credentials",
+    "description": "Omeka S module that verifies the Content Credentials (C2PA) of uploaded media and shows the result in the admin interface.",
+    "type": "omeka-s-module",
+    "license": "GPL-3.0-or-later",
+    "authors": [
+        {
+            "name": "Maurice van Loon"
+        }
+    ],
+    "require": {
+        "php": "^8.3",
+        "provemark/c2pa-verifier": "^0.10"
+    },
+    "require-dev": {
+        "deptrac/deptrac": "^4.7",
+        "laravel/pint": "^1.32",
+        "pestphp/pest": "^4.7",
+        "phpstan/phpstan": "^2.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "ContentCredentials\\": "src/"
+        }
+    },
+    "config": {
+        "platform": {
+            "php": "8.3.0"
+        },
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
+    }
+}

@@ -13,3 +13,6 @@ day the work was committed.
 - M0: the integration environment: Omeka S 4.2.1 (release zip, SHA-256
   checked) on PHP 8.3 and MariaDB 11.4 in Docker Compose, with
   `tools/env/up.sh`, `down.sh` and `reset.sh`. (2026-11-03)
+- M0: `composer.json` with the verifier (`^0.10`) and the development
+  tools; ADR-0001 (PHP 8.3 floor) and ADR-0002 (dependencies), proposed.
+  (2026-11-03)

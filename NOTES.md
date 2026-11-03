@@ -120,6 +120,7 @@ omeka.org, only with Maurice's go.
 | step | note |
 |---|---|
 | M0.3 | [`notes/step-03-test-environment.md`](notes/step-03-test-environment.md): Omeka S 4.2.1 pinned, the Docker environment, a failed install that looks installed |
+| M0.4 | [`notes/step-04-dependencies.md`](notes/step-04-dependencies.md): ADR-0001 PHP 8.3 floor, ADR-0002 dependencies, `composer.json`; `omeka/omeka-s` cannot be required |
 
 ## To measure before a spec rests on it
 

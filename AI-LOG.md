@@ -89,3 +89,27 @@ README are where the disclosure lives.
   packages stay the same.
 - Decided by Maurice: an image of our own from the release zip ("ok, eigen
   image").
+
+## 2026-11-03: The PHP floor and the first dependencies (M0.4)
+
+- Model: Claude Opus 5.5, Claude Code CLI
+- Asked: M0.4 as proposed: ADR-0001 the PHP floor, ADR-0002 the
+  dependencies, then `composer.json`.
+- Produced: `docs/adr/ADR-0001-php-floor.md` and
+  `docs/adr/ADR-0002-dependencies.md`, both `proposed`; `composer.json`
+  and `composer.lock`; `notes/step-04-dependencies.md`; the M0.4 row in
+  `docs/milestones.md`, the index in `NOTES.md`, `CHANGELOG.md`.
+- Read: the verifier's ADR-0001 (for the form) and `composer.json`;
+  Tracefern's `composer.json`; Omeka S 4.2.1's `composer.lock`.
+- Measured: the latest versions on Packagist; Pest 5 needs PHP 8.4, so
+  Pest 4.7; `omeka/omeka-s` 4.2.1 cannot be required (it needs
+  `omeka-s-themes/default dev-develop`); the five packages resolve on the
+  8.3.0 platform and each starts on PHP 8.3, 8.4 and 8.5; Omeka S 4.2.1's
+  locked packages exclude PHP 8.4 (4 of 81) and 8.5 (29 of 81), none
+  excludes 8.3; the verifier runs in the integration container. Details in
+  the step note.
+- Reasoned, not measured: that Omeka S's autoloader and the module's
+  `vendor/` coexist; that `module.ini` can state a PHP requirement; the
+  composer package name.
+- Decided by Maurice: to start M0.4 ("ok, begin met M0.4"). The two ADRs
+  await his acceptance.
