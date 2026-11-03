@@ -149,3 +149,25 @@ README are where the disclosure lives.
   PHP 8.1 or 8.2.
 - Decided by Maurice: to start M0.5 ("ok, ADR's aangenomen, naam is goed,
   begin met M0.5").
+
+## 2026-11-03: The spec template and SPEC-000 as a draft (M0.6a)
+
+- Model: Claude Opus 5.5, Claude Code CLI
+- Asked: M0.6: the spec template, SPEC-000 and `bin/spec-check.php`, tests
+  first.
+- Produced: `specs/TEMPLATE.md` (Tracefern's, with the Omeka S
+  documentation and source, the Docker environment, the Laminas escaper and
+  a status line under each open question); `specs/SPEC-000-spec-traceability.md`
+  as `draft`: the verifier's SPEC-000 with its amendments 1 and 2 folded
+  in as AC11 and AC12, and a new AC13 (one file per spec ID; filenames
+  `SPEC-###-`). M0.6 split into 6a (this) and 6b (tests, script), because
+  no code may be written while SPEC-000 is a draft.
+- Read: the verifier's `specs/SPEC-000-spec-traceability.md` and
+  `bin/spec-check.php` (v0.10.0); Tracefern's `specs/TEMPLATE.md`.
+- Measured: with `php -r` on PHP 8.5.12, the verifier's filename pattern
+  reads `SPEC-0071-x.md` as `SPEC-007`, and keying by ID keeps only the last
+  of two files with the same ID.
+- Reasoned, not measured: that the verifier's whole script, run on such a
+  tree, would let the first file take part in nothing.
+- Decided by Maurice: to start M0.6 ("ok, begin met M0.6"). SPEC-000
+  awaits his approval.
