@@ -123,3 +123,29 @@ README are where the disclosure lives.
 - Decided by Maurice: ADR-0001 and ADR-0002 accepted as proposed; the
   composer package name `mauricevanloon/omeka-s-content-credentials` kept
   ("ok, ADR's aangenomen, naam is goed").
+
+## 2026-11-03: The empty module skeleton (M0.5)
+
+- Model: Claude Opus 5.5, Claude Code CLI
+- Asked: M0.5 as proposed: an empty skeleton; measure whether the
+  namespace must equal the directory and that it installs and uninstalls
+  cleanly.
+- Produced: `config/module.ini`, `Module.php`, `config/module.config.php`,
+  `src/.gitkeep`; `notes/step-05-module-skeleton.md`; the M0.5 row in
+  `docs/milestones.md`, the index in `NOTES.md`, `CHANGELOG.md`.
+- Read: in Omeka S 4.2.1, `ModuleManagerFactory`, `Module\Manager`,
+  `AbstractModule`, `ModuleCannotInstallException`, the admin
+  `ModuleController` and the module browse and uninstall-confirm views.
+- Measured: the module is recognised, installs, deactivates, activates and
+  uninstalls through the admin interface, leaving the database as before
+  except for login sessions; admin and public pages answer 200 with it
+  active; `Module.php` lints on PHP 8.1, 8.2 and 8.5; a probe module whose
+  namespace differs from its directory fails to install with HTTP 500 and
+  no row; 13 of the module's development packages are Omeka S runtime
+  packages, several at another major version. Details in the step note.
+- Reasoned, not measured: that the 500 is "class not found" (read from
+  `getModuleObject()`); that loading the module's whole `vendor/` would
+  break Omeka S; that the two autoload mappings agree; the behaviour on
+  PHP 8.1 or 8.2.
+- Decided by Maurice: to start M0.5 ("ok, ADR's aangenomen, naam is goed,
+  begin met M0.5").

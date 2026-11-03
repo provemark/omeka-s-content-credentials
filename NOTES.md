@@ -121,6 +121,7 @@ omeka.org, only with Maurice's go.
 |---|---|
 | M0.3 | [`notes/step-03-test-environment.md`](notes/step-03-test-environment.md): Omeka S 4.2.1 pinned, the Docker environment, a failed install that looks installed |
 | M0.4 | [`notes/step-04-dependencies.md`](notes/step-04-dependencies.md): ADR-0001 PHP 8.3 floor, ADR-0002 dependencies, `composer.json`; `omeka/omeka-s` cannot be required |
+| M0.5 | [`notes/step-05-module-skeleton.md`](notes/step-05-module-skeleton.md): the empty module installs and uninstalls cleanly; namespace must equal the directory; never load the module's whole `vendor/` |
 
 ## To measure before a spec rests on it
 

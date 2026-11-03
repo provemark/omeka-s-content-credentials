@@ -16,3 +16,6 @@ day the work was committed.
 - M0: `composer.json` with the verifier (`^0.10`) and the development
   tools; ADR-0001 (PHP 8.3 floor) and ADR-0002 (dependencies), proposed.
   (2026-11-03)
+- M0: the empty module (`config/module.ini`, `Module.php`,
+  `config/module.config.php`); installs and uninstalls cleanly in
+  Omeka S 4.2.1. (2026-11-03)
