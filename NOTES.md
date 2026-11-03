@@ -48,8 +48,11 @@ Measured 2026-11-03 (`gh api repos/<repo>/license`): `omeka/omeka-s`,
 add-on" on omeka.org states no licence requirement (it asks for a release
 zip and a directory name that matches).
 
-Reasoned, not measured: whether Omeka S itself says "only" or "or later";
-the module says "or later" either way.
+Measured 2026-11-03 (M0.2): Omeka S's README says "GNU General Public
+License, version 3 (GPLv3)", without "or later". Its `LICENSE` and the text
+at `gnu.org/licenses/gpl-3.0.txt` differ only in four URLs (`http` against
+`https`, one older path); this repository's `LICENSE` is the gnu.org text.
+The module says "or later" either way, which includes version 3.
 
 ### 3. Storing the verdict: a module-owned table (direction; ADR to follow)
 

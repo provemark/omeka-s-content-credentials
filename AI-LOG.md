@@ -45,3 +45,22 @@ README are where the disclosure lives.
   row per check, never updated, built in M5; (6) local until M0 is done,
   then a private GitHub repository; public and omeka.org only with
   Maurice's go.
+
+## 2026-11-03: The plan, the licence, a README (M0.2)
+
+- Model: Claude Opus 5.5, Claude Code CLI
+- Asked: M0.2 as proposed: `docs/milestones.md`, `LICENSE`, `README.md`,
+  `CHANGELOG.md`.
+- Produced: `docs/milestones.md` (M0 to M7 from the brief, still a draft
+  for M1 to M7, and the M0 steps with their status); `LICENSE`, the GPL-3.0
+  text from `gnu.org/licenses/gpl-3.0.txt` (SHA-256
+  `3972dc97…36986`); `README.md` with the status and the disclosure of
+  this log; `CHANGELOG.md`; in `NOTES.md` decision 2 the open point
+  replaced by the measurement below.
+- Measured: Omeka S's `LICENSE` (`gh api repos/omeka/omeka-s/contents/LICENSE`)
+  differs from the gnu.org text only in four URLs; Omeka S's README says
+  "version 3 (GPLv3)" without "or later"; `provemark/c2pa-verifier` is a
+  public repository and on Packagist (HTTP 200), so the README's link to it
+  holds.
+- Reasoned, not measured: nothing new.
+- Decided by Maurice: the M0 steps as proposed ("ok, begin met M0.2").
