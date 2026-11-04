@@ -683,3 +683,11 @@ README are where the disclosure lives.
 - Produced: the four tests (seen red: 4 failed), `SettingsPage`,
   SPEC-004 (Scope, AC6, AC8, Amendments), `notes/step-22-settings-texts.md`,
   NOTES, CHANGELOG.
+
+## 2026-11-04: M5 steps proposed
+
+- Model: Claude Opus 5.5, Claude Code CLI
+- Asked: "ok, stel M5-stappen voor".
+- Produced: `docs/milestones.md` ("M4 is done", "M5 steps").
+- Read: the verifier's `docs/evidence-format.md`, the `TrustSettings`
+  signatures, decision 5 in `NOTES.md`. Nothing measured.
