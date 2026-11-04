@@ -24,9 +24,9 @@ The first run, 41792666292, on commit `949afc4` (`gh run watch`, then
 |---|---|---|
 | PHP 8.3 | 23 s | PHP 8.3.36; spec-check "OK: 2 spec(s), 3 test file(s)"; PHPStan "No errors"; 29 tests passed |
 | PHP 8.4 | 26 s | PHP 8.4.27; the same |
-| PHP 8.5 | 20 s | the same |
+| PHP 8.5 | 20 s | PHP 8.5.12; the same |
 | integration | 139 s | runner PHP 8.3.36; "Omeka S installed." twice; 5 tests passed |
-| parses on 8.1 / 8.2 | 7 s / 10 s | "No syntax errors detected" three times each; 8.2 is PHP 8.2.35 |
+| parses on 8.1 / 8.2 | 7 s / 10 s | PHP 8.1.34 and 8.2.35; "No syntax errors detected" three times each |
 
 Two things reasoned until now are measured by this run:
 
