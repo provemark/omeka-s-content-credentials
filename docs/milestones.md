@@ -41,5 +41,6 @@ One concept per step, one commit per step, each built after an "ok".
 
 **M0 is done (2026-11-04):** `composer check` passes, including the
 integration tests, and the module installs and uninstalls cleanly in
-Omeka S 4.2.1 (SPEC-001). Next, by decision 6 in `NOTES.md`: a private
-GitHub repository, its owner and name asked of Maurice.
+Omeka S 4.2.1 (SPEC-001). Then, by decision 6 in `NOTES.md`: the private
+GitHub repository `provemark/omeka-s-content-credentials` (2026-11-04).
+Next: CI on PHP 8.3, 8.4 and 8.5.

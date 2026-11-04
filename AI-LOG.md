@@ -261,3 +261,25 @@ README are where the disclosure lives.
   escaping would change); the integration support code on PHP 8.3.
 - Decided by Maurice: SPEC-001 approved with both proposals ("ok, SPEC-001
   goedgekeurd met beide voorstellen, begin").
+
+## 2026-11-04: The private GitHub repository
+
+- Model: Claude Opus 5.5, Claude Code CLI
+- Asked: the repository first, before M1.
+- Produced: the private repository `provemark/omeka-s-content-credentials`
+  with `main` pushed; the commit address rewritten before the push; this
+  repository's `user.email` and `user.name` set; decision 6 in `NOTES.md`
+  marked done; `docs/milestones.md`.
+- Measured: `gh` logged in as Maurice1969DB, a member of `provemark`; the
+  name free; the eleven commits carried the global configuration's address,
+  while the verifier's history uses the GitHub noreply address; no tracked
+  file names a commit hash, so rewriting changed no record; after
+  `git filter-repo --mailmap`, all 22 author and committer fields carry the
+  noreply address; no tracked file holds the old address, a key or a
+  token, and no commit message carries attribution; the GitHub API lists
+  only the noreply address on the pushed commits. A bundle of the history
+  before the rewrite was kept outside the repository, in the session's
+  scratch directory.
+- Reasoned, not measured: nothing new.
+- Decided by Maurice: owner and name `provemark/omeka-s-content-credentials`;
+  rewrite to the noreply address before pushing.

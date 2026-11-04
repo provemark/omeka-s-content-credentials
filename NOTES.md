@@ -115,6 +115,17 @@ Local until M0 is done; then a private GitHub repository, so CI (PHP 8.3,
 with a view to the renaming of ProveMark. Public, and registration on
 omeka.org, only with Maurice's go.
 
+**Done 2026-11-04:** private repository
+`provemark/omeka-s-content-credentials` (chosen by Maurice), next to the
+sister projects; the release zip's directory stays `ContentCredentials`
+whatever the repository is called. Before the first push, the eleven local
+commits were rewritten (`git filter-repo --mailmap`) from the author and
+committer address of the global git configuration to
+`16209371+Maurice1969DB@users.noreply.github.com`, the address the
+verifier's history uses, and this repository's `user.email` set to it.
+Measured: the GitHub API lists that address, and only that one, as author
+and committer of every pushed commit.
+
 ## Index of steps
 
 | step | note |
