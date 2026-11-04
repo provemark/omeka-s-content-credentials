@@ -654,3 +654,21 @@ README are where the disclosure lives.
 - Produced: `specs/SPEC-005-recheck-existing-media.md` (`draft`, 13 ACs,
   five open questions with recommendations); `docs/milestones.md`.
 - Rests on steps 18 and 20; nothing new measured.
+
+## 2026-11-04: M4.4, SPEC-005 implemented
+
+- Model: Claude Opus 5.5, Claude Code CLI
+- Asked: "ok, SPEC-005 goedgekeurd met alle aanbevelingen, begin".
+- Produced: `src/Check/Recheck.php`, `src/Check/RecheckCounts.php`,
+  `src/Display/RecheckSection.php`, `src/Omeka/RecheckJob.php`,
+  `src/Omeka/RecheckRuns.php`, `Module.php`; `tests/Unit/RecheckTest.php`,
+  `tests/Integration/RecheckTest.php`, `OmekaInstallation::rootShell()`;
+  SPEC-005 (status, open-question statuses, Traceability);
+  `notes/step-21-recheck.md`; README, CHANGELOG, NOTES, milestones.
+- Tests seen red before the code (unit 2 failed; integration 11 failed,
+  3 passed); AC10 falsified with a `global_admin` case.
+- Found while testing: opcache delays a change to `local.config.php`
+  (measured, see the note).
+- Mistake of mine, caught before the commit: a message with an
+  apostrophe inside a single-quoted PHP string, made by a `sed` edit;
+  `php -l` showed it and it was fixed.

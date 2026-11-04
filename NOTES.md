@@ -153,6 +153,7 @@ and committer of every pushed commit.
 | M4.1 | [`notes/step-18-jobs.md`](notes/step-18-jobs.md): `PhpCli` jobs run as their own process in the container; a throw or a fatal error ends `error` with the message and paths in the job log, which site admins can read; Stop works only through `shouldStop()`; a job that cannot start is `error` while the page reports success; `Synchronous` blocks the request |
 | — | [`notes/step-19-configure-link.md`](notes/step-19-configure-link.md): SPEC-004 amendment 1; Omeka shows the Configure link only with `configurable = true` in `module.ini`, which was missing; installing then redirects to the configure page (SPEC-001 amendment 2) |
 | M4.2 | [`notes/step-20-recheck-at-scale.md`](notes/step-20-recheck-at-scale.md): the module's check as a job: 3 097 media in 14.9 s, memory flat at 18 MB; trust built once per run (per item triples the time); stop and carry on by id works; two runs at once and an upload during a run do no harm |
+| M4.4 | [`notes/step-21-recheck.md`](notes/step-21-recheck.md): SPEC-005 implemented; runs started from the configure page, one at a time, with the trust settings of the start; the job log holds only the module's own lines; opcache delays a change to `local.config.php` by up to 2 s (measured) |
 
 ## To measure before a spec rests on it
 

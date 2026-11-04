@@ -23,7 +23,10 @@ column until they add it, as with Omeka's own optional columns.
 Milestone M3 is done: uploads are checked against the C2PA trust lists
 bundled in [`trust/`](trust/README.md) (CC BY 4.0, © C2PA), with or
 without DigiCert timestamps, or against custom trust settings, all on
-the module's configure page (SPEC-004). The plan is in [`docs/milestones.md`](docs/milestones.md),
+the module's configure page (SPEC-004). Milestone M4 is done: a global
+administrator can check existing media again from the configure page,
+all of them or those without a result, as a background job that Omeka's
+job page can stop (SPEC-005). The plan is in [`docs/milestones.md`](docs/milestones.md),
 the decisions are in [`NOTES.md`](NOTES.md).
 
 ## Requirements (planned)

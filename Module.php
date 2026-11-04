@@ -6,6 +6,7 @@ namespace ContentCredentials;
 
 use ContentCredentials\Omeka\AdminDisplay;
 use ContentCredentials\Omeka\AfterFlushListener;
+use ContentCredentials\Omeka\RecheckRuns;
 use ContentCredentials\Omeka\Schema;
 use ContentCredentials\Omeka\TrustConfig;
 use Doctrine\DBAL\Connection;
@@ -35,7 +36,8 @@ use Omeka\Settings\Settings;
  * PNG and WebP originals once they are committed (SPEC-002). The admin
  * media page, its Details panel, the browse column and the browse filter
  * show the verdict (SPEC-003). The configure page holds the trust settings
- * every check uses (SPEC-004); uninstalling removes them.
+ * every check uses (SPEC-004); uninstalling removes them. The same page
+ * starts a run over existing media and shows the latest (SPEC-005).
  *
  * Keep this file parseable on PHP 8.1: Omeka S 4.2 runs from 8.1 and loads it
  * before the module can say it needs 8.3 (ADR-0001).
@@ -93,7 +95,8 @@ final class Module extends AbstractModule
 
     public function getConfigForm(PhpRenderer $renderer): string
     {
-        return TrustConfig::create($this->getServiceLocator(), __DIR__)->form($renderer, $this->refused);
+        return TrustConfig::create($this->getServiceLocator(), __DIR__)->form($renderer, $this->refused)
+            .RecheckRuns::create($this->getServiceLocator())->html($renderer);
     }
 
     public function handleConfigForm(AbstractController $controller): bool
@@ -101,6 +104,18 @@ final class Module extends AbstractModule
         $request = $controller->getRequest();
         $post = $request instanceof Request ? $request->getPost() : null;
         $fields = $post instanceof Parameters ? $post->toArray() : [];
+        // A start button: start a run, and save nothing (SPEC-005 AC11).
+        $start = $fields['content_credentials_recheck'] ?? null;
+        if ($start !== null) {
+            $problem = RecheckRuns::create($this->getServiceLocator())->start(is_string($start) ? $start : '');
+            if ($problem === null) {
+                (new Messenger)->addSuccess("Checking existing media has started. Its status is on this module's configure page.");
+            } else {
+                (new Messenger)->addError($problem);
+            }
+
+            return true;
+        }
         $refusal = TrustConfig::create($this->getServiceLocator(), __DIR__)->save($fields);
         if ($refusal === null) {
             return true;

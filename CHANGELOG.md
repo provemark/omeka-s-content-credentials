@@ -50,3 +50,8 @@ day the work was committed.
 - Fixed: the modules page now links to the configure page
   (`configurable = true` in `config/module.ini`; SPEC-004 amendment 1),
   and installing goes straight to it (SPEC-001 amendment 2). (2026-11-04)
+- M4: checking existing media again. The configure page starts a run
+  over all checkable media or those without a result, as an Omeka job,
+  one at a time, with the trust settings saved when it starts; it shows
+  the latest run and links to its job page, where Stop ends it. The job
+  log holds only the module's own lines (SPEC-005). (2026-11-04)

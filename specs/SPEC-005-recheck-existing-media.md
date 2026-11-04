@@ -2,9 +2,9 @@
 
 | Field      | Value                                             |
 |------------|---------------------------------------------------|
-| Status     | draft                                             |
+| Status     | implemented                                       |
 | Author     | Maurice van Loon                                  |
-| Approved   | —                                                 |
+| Approved   | Maurice van Loon, 2026-11-04                      |
 | Supersedes | —                                                 |
 
 > Lifecycle: `draft` → maintainer approves → `approved` → tests-first →
@@ -253,16 +253,22 @@ Each with my recommendation and the trade-off. Maurice decides.
      original.
 
    Trade-off: two buttons instead of one.
+   *Status 2026-11-04:* answered, the recommendation approved by Maurice
+   van Loon with the spec.
 2. **Replace or keep the earlier verdict.** Recommended: replace, as an
    upload does (measured: the upsert). The row then shows what holds now.
    What held at upload is lost until M5 keeps evidence. Keeping the first
    verdict would make a re-check useless after a settings change.
+   *Status 2026-11-04:* answered, the recommendation approved by Maurice
+   van Loon with the spec.
 3. **Who starts a run, and where.** Recommended: global administrators,
    on the module's configure page. That page is measured as global-admin
    only and CSRF-checked, and Omeka links to it since SPEC-004
    amendment 1. A page of the module's own needs a route, a controller
    and ACL rules, none of which are measured. Trade-off: the settings
    and the runs share one form, so AC11 is needed.
+   *Status 2026-11-04:* answered, the recommendation approved by Maurice
+   van Loon with the spec.
 4. **How progress shows.** Recommended:
    - the configure page shows the latest run (status, start, end, a link
      to Omeka's job page);
@@ -274,12 +280,16 @@ Each with my recommendation and the trade-off. Maurice decides.
 
    Omeka's job page then shows status and the log with nothing of our
    own. Trade-off: no live progress bar.
+   *Status 2026-11-04:* answered, the recommendation approved by Maurice
+   van Loon with the spec.
 5. **After a stop.** Recommended: a new run starts again from the first
    media item. At the measured rate this costs seconds to minutes, and
    it keeps the run free of state of its own. "Check media without a
    result" catches up after a stop that came before the first rows,
    not one that replaced old rows. Carrying on from the last id is
    possible (measured) but needs that id stored somewhere; out of scope.
+   *Status 2026-11-04:* answered, the recommendation approved by Maurice
+   van Loon with the spec.
 
 ## Traceability
 
@@ -287,16 +297,16 @@ Filled when status becomes `implemented`.
 
 | Acceptance criterion | Test (file :: name / group) | Source (file/symbol) |
 |----------------------|-----------------------------|----------------------|
-| AC1                  | —                           | —                    |
-| AC2                  | —                           | —                    |
-| AC3                  | —                           | —                    |
-| AC4                  | —                           | —                    |
-| AC5                  | —                           | —                    |
-| AC6                  | —                           | —                    |
-| AC7                  | —                           | —                    |
-| AC8                  | —                           | —                    |
-| AC9                  | —                           | —                    |
-| AC10                 | —                           | —                    |
-| AC11                 | —                           | —                    |
-| AC12                 | —                           | —                    |
-| AC13                 | —                           | —                    |
+| AC1 | `tests/Integration/RecheckTest.php` :: AC1 | `Omeka\RecheckJob`, `Check\Recheck`, `Omeka\RecheckRuns::start()` |
+| AC2 | `tests/Integration/RecheckTest.php` :: AC2 | `Omeka\RecheckJob::run()` (`without_result`) |
+| AC3 | `tests/Integration/RecheckTest.php` :: AC3 | `Omeka\RecheckJob::run()` (trust built once) |
+| AC4 | `tests/Integration/RecheckTest.php` :: AC4 | `Check\Recheck`, `Omeka\DbalVerdictStore` (upsert) |
+| AC5 | `tests/Integration/RecheckTest.php` :: AC5 | `Check\Recheck::run()` (`STOP_EVERY`), `Display\RecheckSection` |
+| AC6 | `tests/Integration/RecheckTest.php` :: AC6 | `Check\MediaCheck`, `Omeka\RecheckJob::run()` (paths) |
+| AC7 | `tests/Integration/RecheckTest.php` :: AC7; `tests/Unit/RecheckTest.php` :: AC7 | `Check\Recheck`, `Check\RecheckCounts`, `Omeka\RecheckJob::perform()` |
+| AC8 | `tests/Integration/RecheckTest.php` :: AC8 | `Omeka\RecheckRuns::start()`, `Display\RecheckSection` |
+| AC9 | `tests/Integration/RecheckTest.php` :: AC9 | `Omeka\RecheckRuns::start()`, `Display\RecheckSection::RUNNING` |
+| AC10 | `tests/Integration/RecheckTest.php` :: AC10 | Omeka's configure ACL; `Module::handleConfigForm()` |
+| AC11 | `tests/Integration/RecheckTest.php` :: AC11 | `Module::handleConfigForm()` |
+| AC12 | `tests/Integration/RecheckTest.php` :: AC12 | `Omeka\RecheckJob` |
+| AC13 | `tests/Unit/RecheckTest.php` :: AC13 | `Check\MediaCheck` via `Check\Recheck::run($total, $phpVersion)` |

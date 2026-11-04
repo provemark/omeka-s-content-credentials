@@ -267,6 +267,15 @@ final class OmekaInstallation
         return is_array($row) ? array_combine(array_map('strval', array_keys($row)), $row) : null;
     }
 
+    /**
+     * Runs a shell script as root inside this installation's Omeka S
+     * container (SPEC-005 AC8 changes and restores local.config.php).
+     */
+    public function rootShell(string $script): string
+    {
+        return self::run(['docker', 'compose', 'exec', '-T', $this->omekaService, 'sh', '-c', $script]);
+    }
+
     public function sql(string $query): string
     {
         return trim(self::run([
