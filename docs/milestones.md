@@ -97,3 +97,30 @@ SPEC-004; each Omeka equivalent is measured first.
 photo, and with custom settings on the module's own fixtures. The
 configure page shows the list's date and warns 183 days after the last
 comparison (SPEC-004). Next: M4, checking existing media again.
+
+## M4 steps
+
+Proposed 2026-11-04; one step at a time, each after an "ok". The aim
+(above): check existing media again from the admin interface, with every
+media item checked, the run interruptible, and a second run harmless.
+Tracefern's re-check (its SPEC-008, SPEC-013, SPEC-017) is the blueprint;
+each Omeka equivalent is measured first.
+
+Read, not measured (Omeka S 4.2.1 source):
+- Jobs extend `Omeka\Job\AbstractJob` and are started through
+  `Omeka\Job\Dispatcher`, with one of two strategies.
+  - `PhpCli` starts a background PHP process through Omeka's CLI service
+    (`exec`, with a PHP path that can be set in Omeka's settings).
+  - `Synchronous` runs the job in the request.
+- A job can be stopped (`Dispatcher::stop()`); the job itself checks
+  `shouldStop()`.
+
+The module's "no `exec`" rule covers its verification path. Whether
+relying on Omeka's own dispatcher is acceptable is part of M4.1's note.
+
+| step | what | status |
+|---|---|---|
+| M4.1 | Measure Omeka S jobs in the test environment: dispatching with `PhpCli` (does it run in the container, which PHP path, what happens when it cannot start), `Synchronous`, the job table and its statuses, `shouldStop()` and `Dispatcher::stop()`, a job that throws, the job log, memory over many media (`EntityManager::clear()`), and where an administrator can start one (a button on the configure page, or a page of the module's own, and the ACL for it) | proposed |
+| M4.2 | Measure a re-check at scale with a probe job: a few thousand media of the fixture types in the test environment; time per item, memory, stop and start again, two runs at once, an upload during a run; and what a re-check does to an existing row (SPEC-002's upsert) | proposed |
+| M4.3 | The M4 spec (`draft`). Choices to put to Maurice: which media a run checks (all, those without a row, those checked with another verifier version or trust source, those whose file changed since the check); whether a re-check replaces the row or keeps the first verdict until M5's evidence keeps history; who may start a run; how progress shows | proposed |
+| M4.4 | after approval: tests seen red, the implementation, green, Traceability | proposed |

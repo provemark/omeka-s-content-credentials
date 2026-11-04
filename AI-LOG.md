@@ -586,3 +586,12 @@ README are where the disclosure lives.
 - Mistakes of mine, caught by the tests: a regex on a 1 MiB textarea,
   and `verdictRow()` without the new column.
 - Not measured: the page in a browser; a POST without the hidden field.
+
+## 2026-11-04: M4 steps proposed
+
+- Model: Claude Opus 5.5, Claude Code CLI
+- Asked: "ok, stel M4-stappen voor".
+- Produced: the M4 steps table in `docs/milestones.md`.
+- Read: `Omeka\Job\AbstractJob`, `Dispatcher`, the `PhpCli` and
+  `Synchronous` strategies (file list and signatures only). Nothing
+  measured.
