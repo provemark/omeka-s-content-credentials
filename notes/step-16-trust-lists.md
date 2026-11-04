@@ -19,7 +19,7 @@ full result of the main run is `result-2026-11-04.txt` there.
   `47009ee` and at the newest commit touching `trust-list/`, `d6dec63`
   (2026-10-26, "Automated Sync: Update trust lists"), with
   `gh api …/contents/…?ref=`. All three copies have the same SHA-256:
-  `b3949271…421af8ae` (32 certificates) and `7182cb22…c2cd2c675`
+  `b3949271…421af8ae` (32 certificates) and `7182cb22…7cd2c675`
   (23 certificates). `d6dec63` changed other files in that directory,
   not these two.
 - `DigiCertTrustedRootG4.crt.pem` from Tracefern: `openssl x509
