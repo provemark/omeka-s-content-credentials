@@ -492,3 +492,14 @@ README are where the disclosure lives.
   "by the module".
 - Not measured: the browse's cost (one row query per media item), the
   column picker, the look in a browser.
+
+## 2026-11-04: M3 steps proposed
+
+- Model: Claude Opus 5.5, Claude Code CLI
+- Asked: "ok, lezing klopt, stel M3-stappen voor".
+- Decided by Maurice: AC10's "never echoed" in SPEC-003 means "by the
+  module" (the reading in `notes/step-14-show-the-result.md` stands).
+- Produced: the M3 steps table in `docs/milestones.md`.
+- Read: `NOTES.md` §4; the verifier's `docs/trust-settings.md`;
+  Tracefern's `specs/SPEC-004-trust-settings.md` (criteria) and
+  `trust/README.md`; the list of Tracefern's fixtures. Nothing measured.

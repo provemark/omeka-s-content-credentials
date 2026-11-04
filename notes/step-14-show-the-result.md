@@ -76,7 +76,8 @@ Docker environment of `tools/env/`.
   Omeka builds from the whole query. That is Omeka's output, escaped
   as an attribute, and not the module's. The test now checks the active
   filters, where the module writes; the criterion's "the value itself is
-  never echoed" is read as "by the module".
+  never echoed" is read as "by the module". Maurice confirmed this reading
+  on 2026-11-04.
 - PHPStan level max found 17 errors in the first version, among them a
   representation id typed `mixed` (now `VerdictReader::rowFor()`, which
   refuses anything but a positive integer) and a view plugin that might

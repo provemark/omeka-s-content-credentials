@@ -76,3 +76,19 @@ Proposed 2026-11-04; one step at a time, each after an "ok".
 media page, in the Details panel and in the browse column; untrusted text
 is escaped and control and direction characters made visible (SPEC-003).
 Next: M3, trust settings.
+
+## M3 steps
+
+Proposed 2026-11-04; one step at a time, each after an "ok". The
+decisions are already in `NOTES.md` §4 (bundle the two C2PA lists and
+the DigiCert root, DigiCert on by default, custom settings replace
+everything, an age warning, never fetch). The blueprint is Tracefern's
+SPEC-004; each Omeka equivalent is measured first.
+
+| step | what | status |
+|---|---|---|
+| M3.1 | Measure Omeka S 4.2.1 for settings: the module configuration form (`getConfigForm()`, `handleConfigForm()`), `Omeka\Settings` (storage, size of a 70 KB value, reading it from the after-flush listener), CSRF on the form, where a warning can show (the configure page, the messenger, the dashboard), and `Module::upgrade()` for a schema change | proposed |
+| M3.2 | Measure the verifier with the bundled lists: our six fixtures and Tracefern's real-world fixtures (Pixel 10, OpenAI, Truepic, Amazon Titan; their licences decide which may be copied), DigiCert on and off, equal to `vendor/bin/c2pa-verify --settings`; and what building the settings adds per upload | proposed |
+| M3.3 | ADR-0004: bundling the trust lists as data (source, commit, CC BY 4.0 attribution, the DigiCert fingerprint, how a copy is refreshed, the age threshold) | proposed |
+| M3.4 | The M3 spec (`draft`), including the column that records the trust source in each row (an amendment to SPEC-002's table) | proposed |
+| M3.5 | after approval: tests seen red, the implementation, green, Traceability | proposed |
