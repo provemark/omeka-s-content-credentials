@@ -2,9 +2,9 @@
 
 | Field      | Value                                             |
 |------------|---------------------------------------------------|
-| Status     | draft                                             |
+| Status     | approved                                          |
 | Author     | Maurice van Loon                                  |
-| Approved   | —                                                 |
+| Approved   | Maurice van Loon, 2026-11-04                      |
 | Supersedes | —                                                 |
 
 > Lifecycle: `draft` → maintainer approves → `approved` → tests-first →
@@ -275,6 +275,8 @@ before its first file.
   the upload?) and leaves media unchecked until it runs. Recommendation:
   in the request now, as Tracefern did first (its SPEC-001; the background
   came later, its SPEC-013), and a job with M4. *Blocker for approval.*
+  *Status 2026-11-04:* answered, in the request, the recommendation
+  approved by Maurice van Loon with the spec.
 - **The fixtures in the repository:** copying the six signed and unsigned
   fixtures (249,809 bytes together, measured) and one GIF into
   `tests/Fixtures/c2pa/`, or reading them from elsewhere? The installed
@@ -282,6 +284,8 @@ before its first file.
   Recommendation: copy, with a README naming the verifier's tag (v0.10.0)
   and licence. The altered JPEG and the PDF are made by the tests.
   *Non-blocker.*
+  *Status 2026-11-04:* answered, copied, the recommendation approved by
+  Maurice van Loon with the spec.
 
 ## Traceability
 

@@ -392,3 +392,11 @@ README are where the disclosure lives.
   (an open question in the spec).
 - Decided by Maurice: to write the spec ("ok, begin met M1.4"); approval
   pending.
+
+## 2026-11-04: SPEC-002 approved, SPEC-001 amendment 1
+
+- Decided by Maurice: SPEC-002 approved with both recommendations (verify
+  in the request; copy the fixtures), and with it SPEC-001 amendment 1
+  ("ok, SPEC-002 goedgekeurd met beide aanbevelingen, begin").
+- Produced: the status and the answered questions in SPEC-002; AC1 and an
+  Amendments section in SPEC-001.

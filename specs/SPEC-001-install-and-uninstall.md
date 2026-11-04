@@ -62,14 +62,15 @@ Acceptance criteria as Given/When/Then. AC1–AC4 and AC6 run in
 rows of every table, every `setting` row, and the `module` table; the
 `session` table's row count is left out, because logging in adds to it.
 
-- **AC1 — installing adds one row and nothing else**
+- **AC1 — installing adds one row and one empty table** *(amendment 1)*
   - Given a freshly reset environment, where the modules page lists
     ContentCredentials as not installed
   - When the administrator installs it through the modules page
   - Then the response is a redirect to the modules page with "The module
     was successfully installed", the `module` table holds
     `ContentCredentials`, active, with the version of `config/module.ini`,
-    and the snapshot differs from the one before only in that row
+    and the snapshot differs from the one before only in that row and in
+    the table `content_credentials_verdict` (SPEC-002), with no rows
 
 - **AC2 — an active module breaks no page**
   - Given the module installed and active
@@ -167,6 +168,14 @@ anything outside the compose project `content-credentials-test`.
   runs `tools/env/up.sh` first, so `composer check` is one command.
   *Status 2026-11-04:* answered, the proposal approved by Maurice van Loon
   with the spec.
+
+## Amendments
+
+- **Amendment 1 (2026-11-04, approved by Maurice van Loon with SPEC-002):**
+  AC1 allows the table `content_credentials_verdict` of SPEC-002, empty,
+  next to the module row. Was: "the snapshot differs from the one before
+  only in that row". AC4 is unchanged: uninstalling leaves the snapshot as
+  it was before installing.
 
 ## Traceability
 
