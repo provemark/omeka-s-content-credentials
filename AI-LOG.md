@@ -372,3 +372,23 @@ README are where the disclosure lives.
 - Reasoned, not measured: the conclusions for the spec in the note.
 - Decided by Maurice: to do M1.3 ("ok, ADR-0003 aangenomen, begin met
   M1.3").
+
+## 2026-11-04: M1.4, SPEC-002 as a draft
+
+- Model: Claude Opus 5.5, Claude Code CLI
+- Asked: M1.4.
+- Produced: `specs/SPEC-002-verify-on-upload.md` (`draft`, 14 criteria, two
+  open questions, SPEC-001 amendment 1 proposed in its scope);
+  `docs/milestones.md`.
+- Read: `specs/TEMPLATE.md`; Tracefern's SPEC-001 (behaviour section);
+  `Omeka\File\Store\StoreInterface` and `Local`; the allowed media types in
+  Omeka S 4.2.1's `config/module.config.php`.
+- Measured: the CLI's report shape for `fixture-signed.jpg` (the active
+  manifest's `signature_info` has `issuer` and `common_name`, no `time`);
+  the unsigned fixtures give `Invalid`, `has_manifest` false, no status;
+  the altered JPEG of AC4 gives `Invalid` with `signingCredential.untrusted`
+  and `assertion.dataHash.mismatch`; the six fixtures are 249,809 bytes.
+- Reasoned, not measured: the request-time cost of verifying large files
+  (an open question in the spec).
+- Decided by Maurice: to write the spec ("ok, begin met M1.4"); approval
+  pending.
