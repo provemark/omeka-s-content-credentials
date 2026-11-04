@@ -48,5 +48,5 @@ day the work was committed.
   six months after the lists were last compared with the published ones;
   uninstalling removes the settings (SPEC-004). (2026-11-04)
 - Fixed: the modules page now links to the configure page
-  (`configurable = true` in `config/module.ini`; SPEC-004 amendment 1).
-  (2026-11-04)
+  (`configurable = true` in `config/module.ini`; SPEC-004 amendment 1),
+  and installing goes straight to it (SPEC-001 amendment 2). (2026-11-04)

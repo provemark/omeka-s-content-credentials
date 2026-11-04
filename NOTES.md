@@ -151,7 +151,7 @@ and committer of every pushed commit.
 | M3.4 | `specs/SPEC-004-trust-settings.md`: the M3 spec; approved 2026-11-04 with all recommendations, with SPEC-002 amendment 1 (the `trust` column) and SPEC-003 amendment 1 (the trust line) |
 | M3.5 | [`notes/step-17-trust-settings.md`](notes/step-17-trust-settings.md): SPEC-004 implemented; PHP's default 2M upload limit refuses the Pixel 10 fixture (test environment raised to 64M); a 1 MiB textarea exceeds PCRE's backtrack limit in a test regex |
 | M4.1 | [`notes/step-18-jobs.md`](notes/step-18-jobs.md): `PhpCli` jobs run as their own process in the container; a throw or a fatal error ends `error` with the message and paths in the job log, which site admins can read; Stop works only through `shouldStop()`; a job that cannot start is `error` while the page reports success; `Synchronous` blocks the request |
-| — | [`notes/step-19-configure-link.md`](notes/step-19-configure-link.md): SPEC-004 amendment 1; Omeka shows the Configure link only with `configurable = true` in `module.ini`, which was missing |
+| — | [`notes/step-19-configure-link.md`](notes/step-19-configure-link.md): SPEC-004 amendment 1; Omeka shows the Configure link only with `configurable = true` in `module.ini`, which was missing; installing then redirects to the configure page (SPEC-001 amendment 2) |
 
 ## To measure before a spec rests on it
 

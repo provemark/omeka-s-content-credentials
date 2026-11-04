@@ -621,3 +621,15 @@ README are where the disclosure lives.
 - Produced: the AC11 test (seen red after correcting a too-strict first
   version, see the note); `config/module.ini`; SPEC-004 AC11, Amendments
   and Traceability; `notes/step-19-configure-link.md`; NOTES, CHANGELOG.
+
+## 2026-11-04: SPEC-001 amendment 2, the install redirect
+
+- Model: Claude Opus 5.5, Claude Code CLI
+- Asked: "ok, SPEC-001 amendement 2 goedgekeurd, voer het uit".
+- Mistake of mine: commit `9e72de5` was pushed with a red `composer check`
+  (check and commit chained with `;`). Its failure, SPEC-001 AC1, showed
+  that `configurable = true` also changes the redirect after install.
+- Decided by Maurice: SPEC-001 amendment 2.
+- Produced: SPEC-001 AC1 and its Amendments; the AC1 test (seen red
+  without `configurable`, green with it); `notes/step-19-configure-link.md`;
+  CHANGELOG, NOTES.

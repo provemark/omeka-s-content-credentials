@@ -62,11 +62,12 @@ Acceptance criteria as Given/When/Then. AC1–AC4 and AC6 run in
 rows of every table, every `setting` row, and the `module` table; the
 `session` table's row count is left out, because logging in adds to it.
 
-- **AC1 — installing adds one row and one empty table** *(amendment 1)*
+- **AC1 — installing adds one row and one empty table** *(amendments 1 and 2)*
   - Given a freshly reset environment, where the modules page lists
     ContentCredentials as not installed
   - When the administrator installs it through the modules page
-  - Then the response is a redirect to the modules page with "The module
+  - Then the response is a redirect to the module's configure page
+    (`/admin/module/configure?id=ContentCredentials`) with "The module
     was successfully installed", the `module` table holds
     `ContentCredentials`, active, with the version of `config/module.ini`,
     and the snapshot differs from the one before only in that row and in
@@ -176,6 +177,12 @@ anything outside the compose project `content-credentials-test`.
   next to the module row. Was: "the snapshot differs from the one before
   only in that row". AC4 is unchanged: uninstalling leaves the snapshot as
   it was before installing.
+- **Amendment 2 (2026-11-04, approved by Maurice van Loon):** AC1's
+  redirect goes to the module's configure page. Omeka S redirects there
+  after installing a module whose `module.ini` says `configurable = true`
+  (`ModuleController::installAction()`), which SPEC-004 amendment 1 added.
+  Was: "a redirect to the modules page". The message, the module row and
+  the snapshot are unchanged. Record: `notes/step-19-configure-link.md`.
 
 ## Traceability
 

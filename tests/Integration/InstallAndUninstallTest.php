@@ -52,7 +52,8 @@ it('AC1: installing adds one row and one empty table', function (): void {
     $response = $omeka->moduleAction('install', SPEC001_MODULE);
 
     expect($response->status)->toBe(302)
-        ->and($response->location)->toEndWith('/admin/module')
+        // amendment 2: a configurable module is sent to its configure page
+        ->and($response->location)->toEndWith('/admin/module/configure?id='.SPEC001_MODULE)
         ->and(OmekaInstallation::messages($omeka->get('/admin/module')->body))->toContain('The module was successfully installed')
         ->and($omeka->moduleRow(SPEC001_MODULE))->toBe(['id' => SPEC001_MODULE, 'is_active' => '1', 'version' => spec001IniVersion()])
         // amendment 1: SPEC-002's table, empty, and otherwise only the

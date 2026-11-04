@@ -36,3 +36,22 @@ in the container reads as `"1"`.
   assertions); with it, green (5 assertions).
 - A site administrator sees the module on `/admin/module` (200) and no
   Configure link (ACL `configure` denied, step 15).
+
+## A second effect: install redirects to the configure page (SPEC-001 amendment 2)
+
+The commit with the fix (`9e72de5`) was pushed with a red `composer
+check`. I had chained the check and the commit with `;` instead of `&&`.
+The failing test was SPEC-001 AC1: "Failed asserting that
+'/admin/module/configure?id=ContentCredentials' ends with
+"/admin/module"."
+
+- Read: `ModuleController::installAction()` adds "The module was
+  successfully installed" and then redirects a configurable module to
+  `configure?id=…`, any other to the modules page.
+- Fix: SPEC-001 amendment 2 (approved by Maurice, 2026-11-04). AC1
+  expects the redirect to the configure page; the message, the module row
+  and the snapshot are unchanged.
+- The amended test was seen red without `configurable = true` ("Failed
+  asserting that '/admin/module' ends with
+  "/admin/module/configure?id=ContentCredentials"", 1 failed, 3
+  assertions), and green with it (7 assertions).
