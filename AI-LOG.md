@@ -235,3 +235,29 @@ README are where the disclosure lives.
   question before the draft was handed over.
 - Measured: `composer check` passes with SPEC-001 listed as draft.
 - Decided by Maurice: nothing yet; SPEC-001 awaits his approval.
+
+## 2026-11-04: SPEC-001 implemented; M0 done (M0.7b)
+
+- Model: Claude Opus 5.5, Claude Code CLI
+- Asked: SPEC-001 approved with both proposals; tests first, then the
+  implementation.
+- Produced: SPEC-001 `approved` (status lines under its two open
+  questions), then `implemented` with the Traceability filled;
+  `src/Requirements.php`, `Module::install()`; the unit and integration
+  tests and their support classes; the PHP 8.2 installation in
+  `compose.yaml` with `BASE_IMAGE` in the Dockerfile; `tools/env/up.sh`
+  for both; the integration suite in `phpunit.xml` and `composer check`;
+  SPEC-000's AC8 test made to count test files itself; the second part of
+  `notes/step-07-composer-check.md`; `docs/milestones.md` (M0 done),
+  `NOTES.md`, `CHANGELOG.md`.
+- Read: `Omeka\Mvc\Application::init()` (only active modules are loaded).
+- Measured: red for AC5 and AC6 on the missing behaviour, and for AC1–AC4
+  with a temporary sabotage `Module.php` (never committed); a module's
+  `src/` is not autoloadable during its own install, which made the first
+  implementation fail with HTTP 500; `composer check` green in 30 s; the
+  unit suite on PHP 8.3 and 8.4; the refusal message on the PHP 8.2 page.
+  Details in the step note.
+- Reasoned, not measured: that the message is escaped (it holds nothing
+  escaping would change); the integration support code on PHP 8.3.
+- Decided by Maurice: SPEC-001 approved with both proposals ("ok, SPEC-001
+  goedgekeurd met beide voorstellen, begin").

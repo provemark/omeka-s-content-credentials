@@ -124,6 +124,7 @@ omeka.org, only with Maurice's go.
 | M0.5 | [`notes/step-05-module-skeleton.md`](notes/step-05-module-skeleton.md): the empty module installs and uninstalls cleanly; namespace must equal the directory; never load the module's whole `vendor/` |
 | M0.6 | [`notes/step-06-spec-check.md`](notes/step-06-spec-check.md): the spec template; SPEC-000 implemented, `bin/spec-check.php` the first step of `composer check` |
 | M0.7a | [`notes/step-07-composer-check.md`](notes/step-07-composer-check.md): Pint, PHPStan at max with Omeka S scanned from the pinned release, Deptrac; Deptrac does not enforce a layer per file |
+| M0.7b | same note, second part: SPEC-001 implemented; a module's `src/` is not autoloaded during its own install |
 
 ## To measure before a spec rests on it
 

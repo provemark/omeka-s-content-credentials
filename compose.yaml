@@ -2,24 +2,39 @@
 # Omeka S 4.2.1 and MariaDB, with this repository mounted as the module
 # ContentCredentials. Driven by the scripts in tools/env/; never a
 # development installation. Everything here is test-only: the passwords are
-# not secrets, and the port listens on 127.0.0.1 only.
+# not secrets, and the ports listen on 127.0.0.1 only.
+#
+# Two installations: `omeka` on PHP 8.3 (port 8088), where the module runs,
+# and `omeka-php82` on PHP 8.2 (port 8089), where it must refuse to install
+# (SPEC-001 AC6). Each has its own database.
 name: content-credentials-test
+
+x-db: &db
+  image: mariadb:11.4@sha256:d1891ede5a559f1086f55053bb8cc1569b0298338c4d72d71725a7f74f6ba620
+  environment:
+    MARIADB_DATABASE: omeka
+    MARIADB_USER: omeka
+    MARIADB_PASSWORD: omeka
+    MARIADB_ROOT_PASSWORD: root
+  healthcheck:
+    test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+    interval: 2s
+    timeout: 5s
+    retries: 30
+
+x-omeka-environment: &omeka-environment
+  OMEKA_ROOT: /var/www/html
+  OMEKA_DB_NAME: omeka
+  OMEKA_DB_USER: omeka
+  OMEKA_DB_PASSWORD: omeka
+  OMEKA_ADMIN_EMAIL: admin@example.com
+  OMEKA_ADMIN_PASSWORD: test-only-admin-password
 
 services:
   db:
-    image: mariadb:11.4@sha256:d1891ede5a559f1086f55053bb8cc1569b0298338c4d72d71725a7f74f6ba620
-    environment:
-      MARIADB_DATABASE: omeka
-      MARIADB_USER: omeka
-      MARIADB_PASSWORD: omeka
-      MARIADB_ROOT_PASSWORD: root
+    <<: *db
     volumes:
       - db:/var/lib/mysql
-    healthcheck:
-      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
-      interval: 2s
-      timeout: 5s
-      retries: 30
 
   omeka:
     build: docker/omeka
@@ -28,19 +43,39 @@ services:
       db:
         condition: service_healthy
     environment:
-      OMEKA_ROOT: /var/www/html
+      <<: *omeka-environment
       OMEKA_DB_HOST: db
-      OMEKA_DB_NAME: omeka
-      OMEKA_DB_USER: omeka
-      OMEKA_DB_PASSWORD: omeka
-      OMEKA_ADMIN_EMAIL: admin@example.com
-      OMEKA_ADMIN_PASSWORD: test-only-admin-password
     ports:
       - "127.0.0.1:${CC_TEST_PORT:-8088}:80"
     volumes:
       - files:/var/www/html/files
       - ./:/var/www/html/modules/ContentCredentials:ro
 
+  db-php82:
+    <<: *db
+    volumes:
+      - db-php82:/var/lib/mysql
+
+  omeka-php82:
+    build:
+      context: docker/omeka
+      args:
+        BASE_IMAGE: php:8.2-apache@sha256:89e5f7bde208a146519d12100c11e71a1d0119a10703cfc454d1bdca274147ec
+    image: content-credentials-test/omeka:4.2.1-php8.2
+    depends_on:
+      db-php82:
+        condition: service_healthy
+    environment:
+      <<: *omeka-environment
+      OMEKA_DB_HOST: db-php82
+    ports:
+      - "127.0.0.1:${CC_TEST_PORT_PHP82:-8089}:80"
+    volumes:
+      - files-php82:/var/www/html/files
+      - ./:/var/www/html/modules/ContentCredentials:ro
+
 volumes:
   db:
   files:
+  db-php82:
+  files-php82:

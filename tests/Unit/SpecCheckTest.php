@@ -100,11 +100,20 @@ it('AC8: a tree with several problems reports one line per finding and exits 1',
 })->group('SPEC-000');
 
 it('AC8: this repository itself is clean, with the fixture trees skipped', function (): void {
-    $result = specCheck(dirname(__DIR__, 2));
+    $root = dirname(__DIR__, 2);
+    $result = specCheck($root);
+
+    // the *Test.php files outside tests/Fixtures, counted independently of the checker
+    $outsideFixtures = 0;
+    foreach (new RecursiveIteratorIterator(new RecursiveDirectoryIterator($root.'/tests', FilesystemIterator::SKIP_DOTS)) as $file) {
+        if ($file instanceof SplFileInfo && str_ends_with($file->getFilename(), 'Test.php') && ! str_contains($file->getPathname(), '/tests/Fixtures/')) {
+            $outsideFixtures++;
+        }
+    }
 
     expect($result->findings)->toBe([])
         ->and($result->specs)->toHaveKey('SPEC-000')
-        ->and($result->testFiles)->toBe(1)
+        ->and($result->testFiles)->toBe($outsideFixtures)
         ->and($result->exitCode())->toBe(0);
 })->group('SPEC-000');
 

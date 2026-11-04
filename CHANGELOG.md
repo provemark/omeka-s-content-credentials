@@ -24,3 +24,6 @@ day the work was committed.
   refuses two spec files with one ID. (2026-11-04)
 - M0: `composer check` runs spec-check, Pint, PHPStan at level max (Omeka S
   read from the pinned release), Deptrac and the unit tests. (2026-11-04)
+- M0: installing refuses PHP below 8.3 with a message on the modules page
+  (SPEC-001); integration tests of installing and uninstalling, on PHP 8.3
+  and 8.2, in `composer check`. (2026-11-04)

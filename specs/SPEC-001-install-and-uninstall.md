@@ -2,9 +2,9 @@
 
 | Field      | Value                                             |
 |------------|---------------------------------------------------|
-| Status     | draft                                             |
+| Status     | implemented                                       |
 | Author     | Maurice van Loon                                  |
-| Approved   | —                                                 |
+| Approved   | Maurice van Loon, 2026-11-04                      |
 | Supersedes | —                                                 |
 
 > Lifecycle: `draft` → maintainer approves → `approved` → tests-first →
@@ -155,6 +155,8 @@ anything outside the compose project `content-credentials-test`.
   compose service on its own port and database, started only for this
   test. The alternative, testing only AC5 and reasoning the wiring, would
   leave the one path that protects old hosts unmeasured.
+  *Status 2026-11-04:* answered, the proposal approved by Maurice van Loon
+  with the spec.
 - ~~Blocker: whether Omeka S's messenger escapes a message (AC5).~~
   Answered 2026-11-04 by reading `Omeka\View\Helper\Messages::__invoke()`
   (4.2.1, lines 39–55): a message that is not a `MessageInterface`, or one
@@ -163,6 +165,8 @@ anything outside the compose project `content-credentials-test`.
 - Non-blocker: `composer check` will need the Docker environment running
   (or start it, about 10 s when built). Proposed: the integration step
   runs `tools/env/up.sh` first, so `composer check` is one command.
+  *Status 2026-11-04:* answered, the proposal approved by Maurice van Loon
+  with the spec.
 
 ## Traceability
 
@@ -171,9 +175,9 @@ least one test; every source file maps back to this spec.
 
 | Acceptance criterion | Test (file :: name / group) | Source (file/symbol) |
 |----------------------|-----------------------------|----------------------|
-| AC1                  | —                           | —                    |
-| AC2                  | —                           | —                    |
-| AC3                  | —                           | —                    |
-| AC4                  | —                           | —                    |
-| AC5                  | —                           | —                    |
-| AC6                  | —                           | —                    |
+| AC1 | tests/Integration/InstallAndUninstallTest.php :: AC1: installing adds one row and nothing else / SPEC-001 | Module.php :: Module (the skeleton); tests/Integration/Support/OmekaInstallation.php :: snapshot(), moduleAction() |
+| AC2 | tests/Integration/InstallAndUninstallTest.php :: AC2: an active module breaks no page / SPEC-001 | Module.php :: Module::getConfig() |
+| AC3 | tests/Integration/InstallAndUninstallTest.php :: AC3: deactivating and activating / SPEC-001 | Module.php :: Module |
+| AC4 | tests/Integration/InstallAndUninstallTest.php :: AC4: uninstalling leaves the installation as it was / SPEC-001 | Module.php :: Module (inherits an empty uninstall()) |
+| AC5 | tests/Unit/RequirementsTest.php :: AC5: PHP 8.3.0 and later pass; AC5: PHP below 8.3 is refused with a message; AC5: a string that is not a version fails closed / SPEC-001 | src/Requirements.php :: Requirements::phpProblem() |
+| AC6 | tests/Integration/InstallAndUninstallTest.php :: AC6: the refusal on PHP 8.2 reaches the modules page and writes nothing / SPEC-001 | Module.php :: Module::install(); compose.yaml :: omeka-php82, db-php82; docker/omeka/Dockerfile :: BASE_IMAGE |

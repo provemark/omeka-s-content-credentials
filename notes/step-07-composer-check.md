@@ -67,3 +67,78 @@ Host PHP 8.5.12; Pint 1.32.1, PHPStan 2.3.5, Deptrac 4.7.2, Pest 4.7.8.
   rule kept by review. To decide with M1's first layer.
 - The Omeka S scan follows the release's directory layout; a new pin may
   need other directories. Noted for the next pin.
+
+# M0.7b: SPEC-001, install and uninstall
+
+2026-11-04. SPEC-001 approved by Maurice van Loon with both proposals of
+its open questions, and now `implemented`.
+
+## What was built
+
+| file | what |
+|---|---|
+| `deptrac.yaml` | the first layer, `Requirements` (M0, SPEC-001), depending on nothing, added with the first file in `src/` |
+| `src/Requirements.php` | `phpProblem()`: null from PHP 8.3.0, else the message; what is not `major.minor.patch` is refused |
+| `Module.php` | `install()` throws `ModuleCannotInstallException` with that message; loads `src/Requirements.php` itself (below) |
+| `tests/Unit/RequirementsTest.php` | AC5, 13 data sets |
+| `tests/Integration/InstallAndUninstallTest.php` | AC1–AC4 on PHP 8.3, AC6 on PHP 8.2 |
+| `tests/Integration/Support/` | `OmekaInstallation` (the admin interface over HTTP with a cookie jar, the database through `docker compose exec`), `HttpResponse` |
+| `docker/omeka/Dockerfile` | the base image as a build argument, `BASE_IMAGE` |
+| `compose.yaml` | a second installation, `omeka-php82` on `php:8.2-apache` (pinned by digest) with `db-php82`, port 8089 |
+| `tools/env/up.sh` | installs and checks both installations |
+| `composer.json`, `phpunit.xml` | the `Integration` suite; `test:integration` (`up.sh`, then Pest) as the last step of `check`; `autoload-dev` for `tests/` |
+
+`8.3` (without a patch number) is refused as "not a version": PHP_VERSION
+always has three parts, so a shorter string is not something PHP gives.
+
+## Seen red
+
+1. AC5: all 13 data sets failed, the class not existing yet.
+2. AC6: failed on PHP 8.2 with "The module was successfully installed"
+   instead of the refusal; the module had really installed there, so AC6
+   was given the same "uninstalled first" starting state as the others.
+3. AC1 failed first on a fault in the test, not the module: the expected
+   snapshot did not count the `module` table going from 0 to 1 rows.
+   Corrected; then green against the skeleton.
+4. AC1–AC4 passed against the skeleton of step 05, which already behaved
+   so. To see them red, a temporary `Module.php` (never committed) wrote a
+   setting in `install()`, counted every request in a setting, and threw on
+   `/admin/item`: all four failed. `Module.php` was restored with
+   `git checkout`, and the environment reset to remove the two settings.
+
+## Measured
+
+Host PHP 8.5.12; the environment of step 03 with the second installation:
+PHP 8.2.35 (`php:8.2-apache`, digest `89e5f7bd…`, Debian 13).
+
+1. `tools/env/reset.sh` with both installations: exit 0 in 24.7 s,
+   including building the PHP 8.2 image; "Omeka S installed." twice.
+2. **A module's `src/` is not autoloaded while it is installed.** With the
+   first implementation, installing on PHP 8.3 answered HTTP 500. In the
+   container, after `Omeka\Mvc\Application::init()`, with the module not
+   installed: `class_exists('ContentCredentials\Module')` true,
+   `class_exists('ContentCredentials\Requirements')` false. Read in
+   `Application::init()`: only active modules are loaded, and the `src/`
+   autoloader comes with loading. So `install()` requires
+   `src/Requirements.php` itself. Every later `install()` or `uninstall()`
+   must do the same for what it uses from `src/`.
+3. `composer check` after `reset.sh`: exit 0 in 29.9 s; spec-check "OK: 2
+   spec(s), 3 test file(s)", Pint, PHPStan, Deptrac pass, 29 unit tests and
+   5 integration tests pass.
+4. The unit suite in `php:8.3-cli` and `php:8.4-cli`: 29 passed on both.
+5. The page on PHP 8.2 after the refused install:
+   `<ul class="messages"><li class="error">Content Credentials (C2PA) needs
+   PHP 8.3 or later; this server runs PHP 8.2.35.</li></ul>`, and no
+   `module` row.
+
+## Reasoned, not measured
+
+- That the message is escaped: read in `Omeka\View\Helper\Messages`; the
+  message holds no character that escaping changes, so the page cannot show
+  it.
+- The integration tests ran only from the host's PHP 8.5; their support
+  code avoids `http_get_last_response_headers()` (8.4+) and
+  `$http_response_header` (deprecated in 8.5), but it was not run on 8.3.
+- SPEC-000's AC8 test asserted exactly one test file; it now counts the
+  files outside `tests/Fixtures` itself. A test made less brittle, not a
+  change of the criterion.

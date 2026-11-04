@@ -2,8 +2,11 @@
 #
 # Built from the release zip of the pinned tag, checked against its SHA-256,
 # on the official PHP image pinned by digest. PHP 8.3 is the floor the
-# verifier sets (^8.3); Omeka S 4.2.1 itself runs from 8.1.
-FROM php:8.3-apache@sha256:a2d500abd37ddb8b999e52c11f7bb340772ad5665b254bbb0b2762d6f131acb9
+# verifier sets (^8.3) and the default; Omeka S 4.2.1 itself runs from 8.1.
+# compose.yaml builds it a second time on PHP 8.2, where the module must
+# refuse to install (SPEC-001 AC6).
+ARG BASE_IMAGE=php:8.3-apache@sha256:a2d500abd37ddb8b999e52c11f7bb340772ad5665b254bbb0b2762d6f131acb9
+FROM ${BASE_IMAGE}
 
 ARG OMEKA_VERSION=4.2.1
 ARG OMEKA_SHA256=cc27d1c7aca0209523d19aa285f4a08e29e34950dcc446951a7c1311de348e82

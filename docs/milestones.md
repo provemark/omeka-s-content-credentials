@@ -37,4 +37,9 @@ One concept per step, one commit per step, each built after an "ok".
 | M0.6a | `specs/TEMPLATE.md` and SPEC-000 (`draft`), a port of the verifier's SPEC-000 with one new criterion | done 2026-11-03; SPEC-000 approved 2026-11-04 |
 | M0.6b | after approval: SPEC-000's tests, seen red; `bin/spec-check.php`; green; Traceability filled | done 2026-11-04 (`notes/step-06-spec-check.md`) |
 | M0.7a | `composer check`: spec-check, Pint, PHPStan at level max, Deptrac, Pest (unit); green on an empty `src/` | done 2026-11-04 (`notes/step-07-composer-check.md`) |
-| M0.7b | SPEC-001 (install and uninstall), then its integration tests against the Docker environment, in `composer check` | proposed |
+| M0.7b | SPEC-001 (install and uninstall), then its integration tests against the Docker environment, in `composer check` | done 2026-11-04 (`notes/step-07-composer-check.md`) |
+
+**M0 is done (2026-11-04):** `composer check` passes, including the
+integration tests, and the module installs and uninstalls cleanly in
+Omeka S 4.2.1 (SPEC-001). Next, by decision 6 in `NOTES.md`: a private
+GitHub repository, its owner and name asked of Maurice.

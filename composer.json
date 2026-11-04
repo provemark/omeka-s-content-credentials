@@ -23,6 +23,11 @@
             "ContentCredentials\\": "src/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "ContentCredentials\\Tests\\": "tests/"
+        }
+    },
     "config": {
         "platform": {
             "php": "8.3.0"
@@ -47,7 +52,12 @@
             "@lint",
             "@analyse",
             "@deptrac",
-            "@test"
+            "@test",
+            "@test:integration"
+        ],
+        "test:integration": [
+            "sh tools/env/up.sh",
+            "pest --testsuite=Integration"
         ]
     }
 }

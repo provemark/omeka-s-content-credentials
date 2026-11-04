@@ -1,12 +1,16 @@
 # Architecture boundaries for src/, one layer per milestone, each added
 # before the first file in it (so that file lands under a rule instead of
 # before one). Adding an arrow between layers is a decision that belongs in
-# the spec of the code that needs it.
-#
-# M0: src/ is empty and there are no layers yet. M1's layer comes with M1's
-# first spec.
+# the spec of the code that needs it. Deptrac does not itself flag a file in
+# no layer (notes/step-07-composer-check.md): keeping every file in a layer
+# is a rule of review.
 deptrac:
   paths:
     - ./src
-  layers: []
-  ruleset: []
+  layers:
+    - name: Requirements   # M0, SPEC-001: what the server must offer; runs on the PHP it refuses, depends on nothing
+      collectors:
+        - type: classLike
+          value: ^ContentCredentials\\Requirements$
+  ruleset:
+    Requirements: []
