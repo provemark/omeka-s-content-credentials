@@ -283,3 +283,22 @@ README are where the disclosure lives.
 - Reasoned, not measured: nothing new.
 - Decided by Maurice: owner and name `provemark/omeka-s-content-credentials`;
   rewrite to the noreply address before pushing.
+
+## 2026-11-04: CI
+
+- Model: Claude Opus 5.5, Claude Code CLI
+- Asked: CI as proposed: static checks and unit tests on PHP 8.3–8.5, the
+  integration tests in a job of their own.
+- Produced: `.github/workflows/ci.yml` (three jobs, and a parse check of
+  the files Omeka S loads on PHP 8.1 and 8.2, which was added to the
+  proposal); `notes/step-08-ci.md`; `docs/milestones.md`, `NOTES.md`,
+  `CHANGELOG.md`.
+- Read: the verifier's `.github/workflows/ci.yml`.
+- Measured: the first run (41792666292) green on all six jobs, with the
+  PHP versions, test counts and installs read from its log; that settles
+  two points step 07 had reasoned (the integration support code on PHP
+  8.3; the pinned images on the runner). Details in the step note.
+- Reasoned, not measured: that the runner is x64 (GitHub's documentation);
+  that a failing step turns the run red (no deliberately red commit was
+  pushed).
+- Decided by Maurice: to build CI ("ok, begin met CI").

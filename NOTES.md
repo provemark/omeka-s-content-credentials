@@ -136,6 +136,7 @@ and committer of every pushed commit.
 | M0.6 | [`notes/step-06-spec-check.md`](notes/step-06-spec-check.md): the spec template; SPEC-000 implemented, `bin/spec-check.php` the first step of `composer check` |
 | M0.7a | [`notes/step-07-composer-check.md`](notes/step-07-composer-check.md): Pint, PHPStan at max with Omeka S scanned from the pinned release, Deptrac; Deptrac does not enforce a layer per file |
 | M0.7b | same note, second part: SPEC-001 implemented; a module's `src/` is not autoloaded during its own install |
+| CI | [`notes/step-08-ci.md`](notes/step-08-ci.md): GitHub Actions, static checks and unit tests on PHP 8.3–8.5, the integration tests, a parse check on 8.1 and 8.2; first run green |
 
 ## To measure before a spec rests on it
 

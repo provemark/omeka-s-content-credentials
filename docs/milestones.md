@@ -43,4 +43,5 @@ One concept per step, one commit per step, each built after an "ok".
 integration tests, and the module installs and uninstalls cleanly in
 Omeka S 4.2.1 (SPEC-001). Then, by decision 6 in `NOTES.md`: the private
 GitHub repository `provemark/omeka-s-content-credentials` (2026-11-04).
-Next: CI on PHP 8.3, 8.4 and 8.5.
+CI on PHP 8.3, 8.4 and 8.5, with the integration tests (2026-11-04,
+`notes/step-08-ci.md`). Next: M1.

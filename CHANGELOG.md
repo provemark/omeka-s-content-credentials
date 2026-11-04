@@ -27,3 +27,6 @@ day the work was committed.
 - M0: installing refuses PHP below 8.3 with a message on the modules page
   (SPEC-001); integration tests of installing and uninstalling, on PHP 8.3
   and 8.2, in `composer check`. (2026-11-04)
+- CI on GitHub Actions: static checks and unit tests on PHP 8.3, 8.4 and
+  8.5, the integration tests, and a parse check on PHP 8.1 and 8.2.
+  (2026-11-04)
