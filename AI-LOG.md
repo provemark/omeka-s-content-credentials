@@ -218,3 +218,20 @@ README are where the disclosure lives.
   Details in the step note.
 - Reasoned, not measured: nothing new.
 - Decided by Maurice: to start M0.7 ("ok, begin met M0.7").
+
+## 2026-11-04: SPEC-001 as a draft (M0.7b)
+
+- Model: Claude Opus 5.5, Claude Code CLI
+- Asked: M0.7, the integration test of installing and uninstalling, which
+  needs a spec first.
+- Produced: `specs/SPEC-001-install-and-uninstall.md` as `draft`: AC1–AC4
+  make step 05's by-hand measurement into integration tests; AC5 refuses
+  PHP below 8.3 with a message (a unit-tested check); AC6 measures the
+  refusal on an Omeka S running PHP 8.2. Two open questions: how AC6 gets
+  that Omeka S (proposed: a second service built from `php:8.2-apache`),
+  and whether `composer check` starts the environment itself.
+- Read: `Omeka\View\Helper\Messages` in Omeka S 4.2.1: a plain-string
+  message is escaped with `escapeHtml`. That answered a third open
+  question before the draft was handed over.
+- Measured: `composer check` passes with SPEC-001 listed as draft.
+- Decided by Maurice: nothing yet; SPEC-001 awaits his approval.
