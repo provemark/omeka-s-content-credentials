@@ -671,4 +671,5 @@ README are where the disclosure lives.
   (measured, see the note).
 - Mistake of mine, caught before the commit: a message with an
   apostrophe inside a single-quoted PHP string, made by a `sed` edit;
-  `php -l` showed it and it was fixed.
+  seen when reading the edited line back, fixed, then checked with
+  `php -l`.
