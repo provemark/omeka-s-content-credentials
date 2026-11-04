@@ -171,3 +171,27 @@ README are where the disclosure lives.
   tree, would let the first file take part in nothing.
 - Decided by Maurice: to start M0.6 ("ok, begin met M0.6"). SPEC-000
   awaits his approval.
+
+## 2026-11-04: SPEC-000 implemented (M0.6b)
+
+- Model: Claude Opus 5.5, Claude Code CLI
+- Asked: M0.6b after approving SPEC-000: tests first and seen red, then the
+  script.
+- Produced: SPEC-000 `approved` (Maurice van Loon, 2026-11-04) with a
+  status line under its open question (its own AC12), then `implemented`
+  with the Traceability filled; `tests/Unit/SpecCheckTest.php`; the
+  verifier's fixture trees and two new ones; `bin/spec-check.php`;
+  `tests/Pest.php`, `phpunit.xml`; scripts in `composer.json`;
+  `notes/step-06-spec-check.md`; `docs/milestones.md`, `NOTES.md`,
+  `CHANGELOG.md`.
+- Read: the verifier's `tests/Unit/SpecCheckTest.php`, its fixture trees
+  and `phpunit.xml`.
+- Measured: red on a missing script, then 15 of 16 red on a stub, and AC10
+  red with the check order reversed; green, 16 passed, on PHP 8.3, 8.4 and
+  8.5; on a copy with SPEC-000 implemented and untraced, `composer check`
+  stops at spec-check with exit 1 and Pest does not run. Details in the
+  step note.
+- Reasoned, not measured: that Pest never collects the fixture trees
+  (inferred from the test count).
+- Decided by Maurice: SPEC-000 approved ("ok, SPEC-000 goedgekeurd, begin
+  met M0.6b").

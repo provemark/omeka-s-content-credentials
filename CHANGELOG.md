@@ -19,3 +19,6 @@ day the work was committed.
 - M0: the empty module (`config/module.ini`, `Module.php`,
   `config/module.config.php`); installs and uninstalls cleanly in
   Omeka S 4.2.1. (2026-11-03)
+- M0: the spec template and SPEC-000, the spec traceability check
+  (`bin/spec-check.php`), as the first step of `composer check`; it also
+  refuses two spec files with one ID. (2026-11-04)

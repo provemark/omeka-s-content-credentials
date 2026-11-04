@@ -2,9 +2,9 @@
 
 | Field      | Value                                             |
 |------------|---------------------------------------------------|
-| Status     | draft                                             |
+| Status     | implemented                                       |
 | Author     | Maurice van Loon                                  |
-| Approved   | —                                                 |
+| Approved   | Maurice van Loon, 2026-11-04                      |
 | Supersedes | —                                                 |
 
 > Lifecycle: `draft` → maintainer approves → `approved` → tests-first →
@@ -226,6 +226,8 @@ function specCheck(string $root): SpecCheckResult;
   tests carrying their group (the tests would be stale). Proposed: allowed,
   no finding; revisit when the first spec is superseded (as in the
   verifier).
+  *Status 2026-11-04:* a process question, no verdict; open until a spec is
+  superseded.
 
 ## Traceability
 
@@ -234,16 +236,16 @@ least one test; every source file maps back to this spec.
 
 | Acceptance criterion | Test (file :: name / group) | Source (file/symbol) |
 |----------------------|-----------------------------|----------------------|
-| AC1                  | —                           | —                    |
-| AC2                  | —                           | —                    |
-| AC3                  | —                           | —                    |
-| AC4                  | —                           | —                    |
-| AC5                  | —                           | —                    |
-| AC6                  | —                           | —                    |
-| AC7                  | —                           | —                    |
-| AC8                  | —                           | —                    |
-| AC9                  | —                           | —                    |
-| AC10                 | —                           | —                    |
-| AC11                 | —                           | —                    |
-| AC12                 | —                           | —                    |
-| AC13                 | —                           | —                    |
+| AC1 | tests/Unit/SpecCheckTest.php :: AC1: reports every spec with its status and no findings on a clean tree / SPEC-000 | bin/spec-check.php :: specCheck(), specCheckStatus(), SpecCheckResult::render() |
+| AC2 | tests/Unit/SpecCheckTest.php :: AC2: a group that names no existing spec is a finding / SPEC-000 | bin/spec-check.php :: specCheck() (group without spec) |
+| AC3 | tests/Unit/SpecCheckTest.php :: AC3: a test file without any spec group is a finding / SPEC-000 | bin/spec-check.php :: specCheckGroups(), specCheck() |
+| AC4 | tests/Unit/SpecCheckTest.php :: AC4: a draft spec whose group is already carried by a test is a finding / SPEC-000 | bin/spec-check.php :: specCheck() (draft) |
+| AC5 | tests/Unit/SpecCheckTest.php :: AC5: an implemented spec without a test carrying its group is a finding / SPEC-000 | bin/spec-check.php :: specCheck() (implemented) |
+| AC6 | tests/Unit/SpecCheckTest.php :: AC6: an implemented spec with an unfilled Traceability row is a finding naming the criterion / SPEC-000 | bin/spec-check.php :: specCheckUnfilledTraceability() |
+| AC7 | tests/Unit/SpecCheckTest.php :: AC7: a spec without a recognisable status is a finding and is not treated as any status / SPEC-000 | bin/spec-check.php :: specCheckStatus() |
+| AC8 | tests/Unit/SpecCheckTest.php :: AC8: a clean tree exits 0 and says OK with the counts; AC8: a tree with several problems reports one line per finding and exits 1; AC8: this repository itself is clean, with the fixture trees skipped / SPEC-000 | bin/spec-check.php :: SpecCheckResult::exitCode(), render(); specCheckTestFiles() skips tests/Fixtures/ |
+| AC9 | tests/Unit/SpecCheckTest.php :: AC9: a multi-argument group call counts for every spec it names / SPEC-000 | bin/spec-check.php :: specCheckGroups() |
+| AC10 | tests/Unit/SpecCheckTest.php :: AC10: spec-check is the first step of composer check / SPEC-000; and measured by hand, 2026-11-04: on a copy with SPEC-000 set to `implemented` and its Traceability empty, `composer check` stopped at spec-check with exit 1 (13 findings) and Pest never ran (`notes/step-06-spec-check.md`) | composer.json :: scripts.check (spec-check first), scripts.spec-check |
+| AC11 | tests/Unit/SpecCheckTest.php :: AC11: a test naming a criterion its spec does not trace is a finding naming file, line and criterion / SPEC-000 | bin/spec-check.php :: specCheckNamedCriteria(), specCheckTracedCriteria(), specCheck() |
+| AC12 | tests/Unit/SpecCheckTest.php :: AC12: an open question without a status line is a finding in an approved spec, not in a draft / SPEC-000 | bin/spec-check.php :: specCheckOpenQuestions() |
+| AC13 | tests/Unit/SpecCheckTest.php :: AC13: two files with one spec ID are one finding, and the ID takes part in nothing else; AC13: a filename without SPEC-, three digits and a hyphen is a finding / SPEC-000 | bin/spec-check.php :: specCheckSpecFiles(), specCheckJoin(), specCheck() (duplicated) |
