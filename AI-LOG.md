@@ -633,3 +633,16 @@ README are where the disclosure lives.
 - Produced: SPEC-001 AC1 and its Amendments; the AC1 test (seen red
   without `configurable`, green with it); `notes/step-19-configure-link.md`;
   CHANGELOG, NOTES.
+
+## 2026-11-04: M4.2, a re-check at scale measured
+
+- Model: Claude Opus 5.5, Claude Code CLI
+- Asked: "ok, begin met M4.2".
+- Produced: `tools/probes/RecheckProbe/` (module, seed and measure
+  scripts, measurement only); `notes/step-20-recheck-at-scale.md`;
+  `docs/milestones.md`; `NOTES.md`.
+- Measured: the table in the note, in the PHP 8.3 container, with 2 530
+  seeded media that were deleted afterwards (one extra test item went
+  with them, see the note).
+- Not measured: large originals one by one, slower hosts, a progress
+  display.

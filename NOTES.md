@@ -152,6 +152,7 @@ and committer of every pushed commit.
 | M3.5 | [`notes/step-17-trust-settings.md`](notes/step-17-trust-settings.md): SPEC-004 implemented; PHP's default 2M upload limit refuses the Pixel 10 fixture (test environment raised to 64M); a 1 MiB textarea exceeds PCRE's backtrack limit in a test regex |
 | M4.1 | [`notes/step-18-jobs.md`](notes/step-18-jobs.md): `PhpCli` jobs run as their own process in the container; a throw or a fatal error ends `error` with the message and paths in the job log, which site admins can read; Stop works only through `shouldStop()`; a job that cannot start is `error` while the page reports success; `Synchronous` blocks the request |
 | — | [`notes/step-19-configure-link.md`](notes/step-19-configure-link.md): SPEC-004 amendment 1; Omeka shows the Configure link only with `configurable = true` in `module.ini`, which was missing; installing then redirects to the configure page (SPEC-001 amendment 2) |
+| M4.2 | [`notes/step-20-recheck-at-scale.md`](notes/step-20-recheck-at-scale.md): the module's check as a job: 3 097 media in 14.9 s, memory flat at 18 MB; trust built once per run (per item triples the time); stop and carry on by id works; two runs at once and an upload during a run do no harm |
 
 ## To measure before a spec rests on it
 
