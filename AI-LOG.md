@@ -646,3 +646,11 @@ README are where the disclosure lives.
   with them, see the note).
 - Not measured: large originals one by one, slower hosts, a progress
   display.
+
+## 2026-11-04: M4.3, SPEC-005 drafted
+
+- Model: Claude Opus 5.5, Claude Code CLI
+- Asked: "ok, begin met M4.3".
+- Produced: `specs/SPEC-005-recheck-existing-media.md` (`draft`, 13 ACs,
+  five open questions with recommendations); `docs/milestones.md`.
+- Rests on steps 18 and 20; nothing new measured.
