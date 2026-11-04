@@ -138,7 +138,8 @@ and committer of every pushed commit.
 | M0.7b | same note, second part: SPEC-001 implemented; a module's `src/` is not autoloaded during its own install |
 | CI | [`notes/step-08-ci.md`](notes/step-08-ci.md): GitHub Actions, static checks and unit tests on PHP 8.3–8.5, the integration tests, a parse check on 8.1 and 8.2; first run green |
 | M1.1 | [`notes/step-09-events-and-original.md`](notes/step-09-events-and-original.md): `entity.persist.post` on `Omeka\Entity\Media` fires once per new media on every measured route, original present and byte-identical; `api.create.post` on the media adapter does not (the brief's candidate); deleting an item gives no media `api.delete.post` |
-| M1.2 | [`notes/step-10-storage-and-after-flush.md`](notes/step-10-storage-and-after-flush.md): a module table with `ON DELETE CASCADE` installs and uninstalls cleanly and follows deletes; Doctrine `postFlush` fires after the commit on every route; an exception there gives HTTP 500 for a committed upload; ADR-0003 proposed |
+| M1.2 | [`notes/step-10-storage-and-after-flush.md`](notes/step-10-storage-and-after-flush.md): a module table with `ON DELETE CASCADE` installs and uninstalls cleanly and follows deletes; Doctrine `postFlush` fires after the commit on every route; an exception there gives HTTP 500 for a committed upload; ADR-0003 accepted |
+| M1.3 | [`notes/step-11-loading-the-verifier.md`](notes/step-11-loading-the-verifier.md): the whole development `vendor/` breaks Omeka's logger (fatal), and any Composer `autoload.php` kills PHP 8.2; an autoloader for the verifier's namespace only gives the CLI's verdict on 16 fixtures in Omeka; Strauss rewrites namespace strings, not paths |
 
 ## To measure before a spec rests on it
 
@@ -159,4 +160,5 @@ Omeka S 4.2.x:
   (step 10), ADR-0003; migrations between versions not yet;
 - display: view events or helpers for the media page and the browse;
 - the PHP floor: Omeka S 4.2 from PHP 8.1, the verifier `^8.3` (an ADR);
-- bundling: Strauss prefixing of the verifier, as Tracefern's SPEC-009.
+- bundling: Strauss prefixing of the verifier, as Tracefern's SPEC-009:
+  measured on a build copy (step 11); the build itself is M7.

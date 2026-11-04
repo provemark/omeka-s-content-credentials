@@ -351,3 +351,24 @@ README are where the disclosure lives.
 
 - Decided by Maurice: ADR-0003 (storing the verdict) accepted ("ok,
   ADR-0003 aangenomen").
+
+## 2026-11-04: M1.3, loading the verifier inside Omeka S
+
+- Model: Claude Opus 5.5, Claude Code CLI
+- Asked: M1.3.
+- Produced: the measurement-only module `tools/probes/AutoloadProbe/`;
+  `notes/step-11-loading-the-verifier.md`; `NOTES.md`,
+  `docs/milestones.md`. Measurement scripts and build copies stayed outside
+  the repository or were removed.
+- Read: the verifier's `composer.json`, README (Use, Public API) and
+  `Cli/Command.php`; Tracefern's SPEC-009 and `tools/build.sh`.
+- Measured: thirteen packages in both vendors at other versions; the whole
+  development `vendor/autoload.php` gives HTTP 500 on PHP 8.2 and a latent
+  fatal in Omeka's PSR logger on 8.3; a one-namespace autoloader gives the
+  CLI's verdict (state and JSON hash) on 16 fixtures inside Omeka, the
+  logger intact; a Strauss 0.30.0 build copy does the same, its
+  `autoload.php` fatal on 8.2; Strauss rewrites namespace strings but not
+  paths. The test environment was reset.
+- Reasoned, not measured: the conclusions for the spec in the note.
+- Decided by Maurice: to do M1.3 ("ok, ADR-0003 aangenomen, begin met
+  M1.3").
