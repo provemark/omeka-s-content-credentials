@@ -447,3 +447,17 @@ README are where the disclosure lives.
   reset afterwards.
 - Reasoned, not measured: the conclusions for the spec in the note.
 - Decided by Maurice: version left at 0.1.0 until release; begin M2.
+
+## 2026-11-04: M2.2, SPEC-003 as a draft
+
+- Model: Claude Opus 5.5, Claude Code CLI
+- Asked: M2.2.
+- Produced: `specs/SPEC-003-show-the-result.md` (`draft`, 11 criteria, two
+  open questions); `docs/milestones.md`.
+- Read: Tracefern's SPEC-002 (wording, escaping of control and direction
+  characters), ported; `Omeka\Mvc\Status`.
+- Measured: the test environment has no site.
+- Reasoned, not measured: that `Status::isAdminRequest()` separates the
+  admin side (AC11 will measure it).
+- Decided by Maurice: to write the spec ("ok, begin met M2.2"); approval
+  pending.
