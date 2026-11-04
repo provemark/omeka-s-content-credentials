@@ -20,6 +20,10 @@ deptrac:
       collectors:
         - type: classLike
           value: ^ContentCredentials\\Entity\\
+    - name: Trust          # M3, SPEC-004: the bundled lists and which settings a check uses; no Omeka S
+      collectors:
+        - type: classLike
+          value: ^ContentCredentials\\Trust\\
     - name: Display        # M2, SPEC-003: what a row says, in the module's words; no Omeka S
       collectors:
         - type: classLike
@@ -30,7 +34,8 @@ deptrac:
           value: ^ContentCredentials\\Omeka\\
   ruleset:
     Requirements: []
-    Check: [Requirements]
+    Trust: []
+    Check: [Requirements, Trust]
     Entity: []
-    Display: [Check]
-    Omeka: [Check, Display, Entity, Requirements]
+    Display: [Check, Trust]
+    Omeka: [Check, Display, Entity, Requirements, Trust]

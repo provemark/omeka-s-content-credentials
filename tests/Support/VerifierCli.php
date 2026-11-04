@@ -22,9 +22,13 @@ final class VerifierCli
      *
      * @return array<mixed>
      */
-    public static function report(string $path): array
+    public static function report(string $path, ?string $settingsFile = null): array
     {
-        $process = proc_open([PHP_BINARY, dirname(__DIR__, 2).'/vendor/bin/c2pa-verify', $path], [1 => ['pipe', 'w'], 2 => ['pipe', 'w']], $pipes);
+        $command = [PHP_BINARY, dirname(__DIR__, 2).'/vendor/bin/c2pa-verify', $path];
+        if ($settingsFile !== null) {
+            array_push($command, '--settings', $settingsFile);
+        }
+        $process = proc_open($command, [1 => ['pipe', 'w'], 2 => ['pipe', 'w']], $pipes);
         if (! is_resource($process)) {
             throw new RuntimeException('c2pa-verify did not start');
         }
@@ -83,5 +87,32 @@ final class VerifierCli
         file_put_contents($path, $bytes);
 
         return $path;
+    }
+
+    /**
+     * A trust-settings file built the way the verifier's
+     * docs/trust-settings.md builds one (SPEC-004's oracle), from the
+     * bundled lists in trust/, or with the given anchors only. Written to
+     * tests/tmp/.
+     *
+     * @param  list<array{string, string}>|null  $anchors  [path, trust kind] pairs; null: the bundled lists
+     */
+    public static function settingsFile(bool $digicert = true, ?array $anchors = null): string
+    {
+        $trust = dirname(__DIR__, 2).'/trust/';
+        $anchors ??= array_merge(
+            [[$trust.'C2PA-TRUST-LIST.pem', 'manifest'], [$trust.'C2PA-TSA-TRUST-LIST.pem', 'tsa']],
+            $digicert ? [[$trust.'DigiCertTrustedRootG4.crt.pem', 'tsa']] : [],
+        );
+        $entries = array_map(static fn (array $anchor): array => ['trust_anchors' => (string) file_get_contents($anchor[0]), 'trust_kind' => $anchor[1]], $anchors);
+        $json = json_encode(['verify' => ['verify_trust' => true], 'trust' => ['anchors' => $entries]], JSON_THROW_ON_ERROR | JSON_UNESCAPED_SLASHES);
+        $dir = dirname(__DIR__).'/tmp';
+        if (! is_dir($dir)) {
+            mkdir($dir, 0777, true);
+        }
+        $file = $dir.'/settings-'.hash('sha256', $json).'.json';
+        file_put_contents($file, $json);
+
+        return $file;
     }
 }

@@ -32,6 +32,11 @@ RUN curl -sSfL -o /tmp/omeka-s.zip \
 # Omeka S's .htaccess needs AllowOverride.
 RUN sed -i 's#AllowOverride None#AllowOverride All#' /etc/apache2/apache2.conf
 
+# PHP's default upload limit (2M) refuses the 5.8 MB Pixel 10 fixture of
+# SPEC-004 (measured, notes/step-17-trust-settings.md); Omeka S installations
+# commonly raise it the same way.
+RUN printf 'upload_max_filesize = 64M\npost_max_size = 64M\n' > /usr/local/etc/php/conf.d/uploads.ini
+
 COPY entrypoint.sh /usr/local/bin/omeka-entrypoint
 COPY install.php /usr/local/lib/omeka-install.php
 

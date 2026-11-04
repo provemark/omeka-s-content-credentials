@@ -20,11 +20,11 @@ final class DbalVerdictStore implements VerdictStore
     public function write(int $mediaId, Verdict $verdict): void
     {
         $this->connection->executeStatement(
-            'INSERT INTO '.Schema::TABLE.' (media_id, state, format, signer_issuer, signer_common_name, signed_at, codes, remote_manifest_url, reason, verifier, checked_sha256, checked_at)'
-            .' VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'
+            'INSERT INTO '.Schema::TABLE.' (media_id, state, format, signer_issuer, signer_common_name, signed_at, codes, remote_manifest_url, reason, verifier, trust, checked_sha256, checked_at)'
+            .' VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'
             .' ON DUPLICATE KEY UPDATE state = VALUES(state), format = VALUES(format), signer_issuer = VALUES(signer_issuer),'
             .' signer_common_name = VALUES(signer_common_name), signed_at = VALUES(signed_at), codes = VALUES(codes),'
-            .' remote_manifest_url = VALUES(remote_manifest_url), reason = VALUES(reason), verifier = VALUES(verifier),'
+            .' remote_manifest_url = VALUES(remote_manifest_url), reason = VALUES(reason), verifier = VALUES(verifier), trust = VALUES(trust),'
             .' checked_sha256 = VALUES(checked_sha256), checked_at = VALUES(checked_at)',
             [
                 $mediaId,
@@ -37,6 +37,7 @@ final class DbalVerdictStore implements VerdictStore
                 $verdict->remoteManifestUrl,
                 $verdict->reason,
                 $verdict->verifier,
+                $verdict->trust,
                 $verdict->checkedSha256,
                 $verdict->checkedAt->format('Y-m-d H:i:s'),
             ],

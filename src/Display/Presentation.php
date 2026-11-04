@@ -7,7 +7,8 @@ namespace ContentCredentials\Display;
 use ContentCredentials\Check\Verdict;
 
 /**
- * What a stored row says, in the module's words (SPEC-003). It never shows
+ * What a stored row says, in the module's words (SPEC-003; the trust line
+ * of SPEC-004). It never shows
  * a verdict the row does not hold: a row whose state, codes or reason is
  * not one SPEC-002 writes is "Result unreadable", and no row is "Not
  * checked".
@@ -65,7 +66,8 @@ final class Presentation
         $state = $row['state'] ?? null;
         $codes = self::codes($row['codes'] ?? null);
         $reason = $row['reason'] ?? null;
-        if (! is_string($state) || ! in_array($state, self::STATES, true) || $codes === null
+        $trust = self::trustLine($row['trust'] ?? null);
+        if (! is_string($state) || ! in_array($state, self::STATES, true) || $codes === null || $trust === false
             || ($state === Verdict::ERROR && (! is_string($reason) || ! isset(self::REASONS[$reason])))) {
             return new self(self::UNREADABLE, []);
         }
@@ -100,8 +102,39 @@ final class Presentation
         if ($checkedAt !== null && $verifier !== null) {
             $lines[] = ['Checked %1$s UTC with c2pa-verifier %2$s', [$checkedAt, $verifier]];
         }
+        if ($trust !== null) {
+            $lines[] = $trust;
+        }
 
         return new self(self::HEADLINES[$state], $lines);
+    }
+
+    /**
+     * The line naming the trust source (SPEC-004 AC7, SPEC-003 amendment
+     * 1): null for no source (NULL), false for a value the module never
+     * writes, which makes the row unreadable.
+     *
+     * @return array{string, list<string>}|false|null
+     */
+    private static function trustLine(mixed $trust): array|false|null
+    {
+        if ($trust === null) {
+            return null;
+        }
+        if (! is_string($trust)) {
+            return false;
+        }
+        if (preg_match('/^c2pa-(\d{4}-\d{2}-\d{2})(\+digicert)?$/', $trust, $m) === 1) {
+            return isset($m[2])
+                ? ['Trust: the C2PA trust list of %s, with DigiCert timestamps', [$m[1]]]
+                : ['Trust: the C2PA trust list of %s', [$m[1]]];
+        }
+
+        return match ($trust) {
+            'custom' => ['Trust: custom trust settings', []],
+            'none' => ['Trust: none (checked without a trust list)', []],
+            default => false,
+        };
     }
 
     /** The headline: an English source string, for `translate`. */

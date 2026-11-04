@@ -48,13 +48,13 @@ final class OmekaInstallation
         return new self('http://127.0.0.1:'.(getenv('CC_TEST_PORT_PHP82') ?: '8089'), 'db-php82', 'omeka-php82');
     }
 
-    public function logIn(): void
+    public function logIn(string $email = self::EMAIL, string $password = self::PASSWORD): void
     {
         $this->cookies = [];
         $page = $this->get('/login');
         $response = $this->post('/login', [
-            'email' => self::EMAIL,
-            'password' => self::PASSWORD,
+            'email' => $email,
+            'password' => $password,
             'loginform_csrf' => self::field($page->body, 'loginform_csrf'),
             'submit' => 'Log in',
         ]);
@@ -258,7 +258,7 @@ final class OmekaInstallation
      */
     public function verdictRow(int $mediaId): ?array
     {
-        $out = $this->sql("SELECT JSON_OBJECT('media_id', media_id, 'state', state, 'format', format, 'signer_issuer', signer_issuer, 'signer_common_name', signer_common_name, 'signed_at', signed_at, 'codes', codes, 'remote_manifest_url', remote_manifest_url, 'reason', reason, 'verifier', verifier, 'checked_sha256', checked_sha256, 'checked_at', checked_at) FROM content_credentials_verdict WHERE media_id = ".$mediaId);
+        $out = $this->sql("SELECT JSON_OBJECT('media_id', media_id, 'state', state, 'format', format, 'signer_issuer', signer_issuer, 'signer_common_name', signer_common_name, 'signed_at', signed_at, 'codes', codes, 'remote_manifest_url', remote_manifest_url, 'reason', reason, 'verifier', verifier, 'trust', trust, 'checked_sha256', checked_sha256, 'checked_at', checked_at) FROM content_credentials_verdict WHERE media_id = ".$mediaId);
         if ($out === '') {
             return null;
         }

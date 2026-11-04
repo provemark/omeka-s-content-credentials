@@ -91,4 +91,9 @@ SPEC-004; each Omeka equivalent is measured first.
 | M3.2 | Measure the verifier with the bundled lists: our six fixtures and Tracefern's real-world fixtures (Pixel 10, OpenAI, Truepic, Amazon Titan; their licences decide which may be copied), DigiCert on and off, equal to `vendor/bin/c2pa-verify --settings`; and what building the settings adds per upload | done 2026-11-04 (`notes/step-16-trust-lists.md`) |
 | M3.3 | ADR-0004: bundling the trust lists as data (source, commit, CC BY 4.0 attribution, the DigiCert fingerprint, how a copy is refreshed, the age threshold) | done 2026-11-04: ADR-0004 `proposed`; accepted 2026-11-04 |
 | M3.4 | The M3 spec (`draft`), including the column that records the trust source in each row (an amendment to SPEC-002's table) | done 2026-11-04: SPEC-004 `draft`, with SPEC-002 amendment 1 and SPEC-003 amendment 1 proposed in it; approved 2026-11-04 with all recommendations |
-| M3.5 | after approval: tests seen red, the implementation, green, Traceability | proposed |
+| M3.5 | after approval: tests seen red, the implementation, green, Traceability | done 2026-11-04 (`notes/step-17-trust-settings.md`) |
+
+**M3 is done (2026-11-04):** `Trusted` is reached by default on the Pixel 10
+photo, and with custom settings on the module's own fixtures. The
+configure page shows the list's date and warns 183 days after the last
+comparison (SPEC-004). Next: M4, checking existing media again.

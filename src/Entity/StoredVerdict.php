@@ -54,6 +54,9 @@ class StoredVerdict
     /** @Column(type="string", length=32, nullable=true) */
     protected ?string $verifier = null;
 
+    /** @Column(type="string", length=64, nullable=true) */
+    protected ?string $trust = null;
+
     /** @Column(name="checked_sha256", type="string", length=64, nullable=true) */
     protected ?string $checkedSha256 = null;
 
@@ -111,6 +114,11 @@ class StoredVerdict
     public function getVerifier(): ?string
     {
         return $this->verifier;
+    }
+
+    public function getTrust(): ?string
+    {
+        return $this->trust;
     }
 
     public function getCheckedSha256(): ?string

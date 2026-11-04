@@ -6,6 +6,7 @@ namespace ContentCredentials\Omeka;
 
 use ContentCredentials\Check\MediaCheck;
 use ContentCredentials\Check\Recorder;
+use ContentCredentials\Trust\BuiltTrust;
 use Doctrine\DBAL\Connection;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Events;
@@ -13,13 +14,15 @@ use Laminas\Log\Logger;
 use Laminas\ServiceManager\ServiceLocatorInterface;
 use Omeka\Entity\Media;
 use Omeka\File\Store\Local;
+use Provemark\C2paVerifier\Trust\TrustSettings;
 use Provemark\C2paVerifier\Verifier\VerificationReport;
 use Provemark\C2paVerifier\Verifier\Verifier;
 use Throwable;
 use UnexpectedValueException;
 
 /**
- * Verifies new media after Doctrine has committed them (SPEC-002, ADR-0003).
+ * Verifies new media after Doctrine has committed them (SPEC-002, ADR-0003),
+ * with the trust settings of SPEC-004.
  *
  * note() runs in `entity.persist.post`, inside the flush (step 09): it only
  * remembers a media item of a checked type with an original, and the first
@@ -49,6 +52,7 @@ final class AfterFlushListener
         $connection = $services->get('Omeka\Connection');
         $store = $services->get('Omeka\File\Store');
         $logger = $services->get('Omeka\Logger');
+        $trust = TrustConfig::create($services, $moduleDirectory);
         if (! $entityManager instanceof EntityManager || ! $connection instanceof Connection) {
             throw new UnexpectedValueException('Omeka S did not provide its entity manager and connection.');
         }
@@ -59,7 +63,8 @@ final class AfterFlushListener
                 return Verifier::VERSION;
             },
             /** @param resource $stream */
-            static fn ($stream): VerificationReport => (new Verifier)->verify($stream, null),
+            static fn ($stream, ?TrustSettings $settings): VerificationReport => (new Verifier)->verify($stream, $settings),
+            static fn (): BuiltTrust => $trust->built(),
         );
         $recorder = new Recorder($check, new DbalVerdictStore($connection), static function (Throwable $e, int $mediaId) use ($logger): void {
             if ($logger instanceof Logger) {

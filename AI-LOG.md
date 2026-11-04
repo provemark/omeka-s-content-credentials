@@ -567,3 +567,22 @@ README are where the disclosure lives.
   only; custom settings in `Omeka\Settings`; copy the Pixel 10 photo), and
   with it SPEC-002 amendment 1 and SPEC-003 amendment 1 ("ok, SPEC-004
   goedgekeurd met alle aanbevelingen, begin").
+
+## 2026-11-04: M3.5, SPEC-004 implemented
+
+- Model: Claude Opus 5.5, Claude Code CLI
+- Asked: "ok, SPEC-004 goedgekeurd met alle aanbevelingen, begin".
+- Produced: the tests first (`tests/Unit/TrustSettingsTest.php`,
+  `tests/Integration/TrustSettingsTest.php`, seen red: 37 of 38 and 10 of
+  11); `trust/` and its README; `src/Trust/`; changes in `src/Check/`,
+  `src/Display/`, `src/Omeka/`, `src/Entity/`, `Module.php`, `deptrac.yaml`;
+  `tools/trust/compare.sh`; three fixtures and two licence files; the
+  test environment's upload limit; SPEC-004 Traceability and status
+  `implemented`; `notes/step-17-trust-settings.md`; README, CHANGELOG,
+  NOTES, milestones.
+- Measured: the red and green runs; AC9 made to fail with an old
+  comparison date; PHP's upload limits in the container; `compare.sh`
+  against upstream (`gh api`, public files).
+- Mistakes of mine, caught by the tests: a regex on a 1 MiB textarea,
+  and `verdictRow()` without the new column.
+- Not measured: the page in a browser; a POST without the hidden field.

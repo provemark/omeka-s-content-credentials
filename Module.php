@@ -7,12 +7,19 @@ namespace ContentCredentials;
 use ContentCredentials\Omeka\AdminDisplay;
 use ContentCredentials\Omeka\AfterFlushListener;
 use ContentCredentials\Omeka\Schema;
+use ContentCredentials\Omeka\TrustConfig;
 use Doctrine\DBAL\Connection;
 use Laminas\EventManager\EventInterface;
 use Laminas\EventManager\SharedEventManagerInterface;
+use Laminas\Http\Request;
+use Laminas\Mvc\Controller\AbstractController;
 use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\Stdlib\Parameters;
+use Laminas\View\Renderer\PhpRenderer;
 use Omeka\Module\AbstractModule;
 use Omeka\Module\Exception\ModuleCannotInstallException;
+use Omeka\Mvc\Controller\Plugin\Messenger;
+use Omeka\Settings\Settings;
 
 /**
  * The module's entry point for Omeka S.
@@ -27,7 +34,8 @@ use Omeka\Module\Exception\ModuleCannotInstallException;
  * media item is handed to the after-flush listener, which verifies JPEG,
  * PNG and WebP originals once they are committed (SPEC-002). The admin
  * media page, its Details panel, the browse column and the browse filter
- * show the verdict (SPEC-003).
+ * show the verdict (SPEC-003). The configure page holds the trust settings
+ * every check uses (SPEC-004); uninstalling removes them.
  *
  * Keep this file parseable on PHP 8.1: Omeka S 4.2 runs from 8.1 and loads it
  * before the module can say it needs 8.3 (ADR-0001).
@@ -37,6 +45,9 @@ final class Module extends AbstractModule
     private ?AfterFlushListener $afterFlush = null;
 
     private ?AdminDisplay $adminDisplay = null;
+
+    /** Custom settings submitted and refused in this request (SPEC-004 AC5). */
+    private ?string $refused = null;
 
     /**
      * @return array<mixed>
@@ -71,6 +82,35 @@ final class Module extends AbstractModule
         // An inactive module's src/ is not autoloaded either.
         require_once __DIR__.'/src/Omeka/Schema.php';
         self::connection($serviceLocator)->executeStatement(Schema::drop());
+        // Omeka S leaves a module's settings behind (step 15); the keys are
+        // those of SPEC-004, written out because src/ is not loaded here.
+        $settings = $serviceLocator->get('Omeka\Settings');
+        if ($settings instanceof Settings) {
+            $settings->delete('content_credentials_digicert');
+            $settings->delete('content_credentials_custom_settings');
+        }
+    }
+
+    public function getConfigForm(PhpRenderer $renderer): string
+    {
+        return TrustConfig::create($this->getServiceLocator(), __DIR__)->form($renderer, $this->refused);
+    }
+
+    public function handleConfigForm(AbstractController $controller): bool
+    {
+        $request = $controller->getRequest();
+        $post = $request instanceof Request ? $request->getPost() : null;
+        $fields = $post instanceof Parameters ? $post->toArray() : [];
+        $refusal = TrustConfig::create($this->getServiceLocator(), __DIR__)->save($fields);
+        if ($refusal === null) {
+            return true;
+        }
+        $custom = $fields['content_credentials_custom_settings'] ?? '';
+        $this->refused = is_string($custom) ? $custom : '';
+        // Plain text: Omeka's messages() escapes it (step 15).
+        (new Messenger)->addError('These trust settings were not saved: '.$refusal);
+
+        return false;
     }
 
     public function attachListeners(SharedEventManagerInterface $sharedEventManager): void

@@ -148,6 +148,8 @@ and committer of every pushed commit.
 | M3.1 | [`notes/step-15-settings.md`](notes/step-15-settings.md): the configure page is global-admin only and CSRF-checked; a refused form loses the posted text unless the module restores it; a 74 KB setting reads back exactly, also in `postFlush`; every request decodes all settings; a `view.layout` warning shows on every admin page; a module in `needs_upgrade` is not loaded; uninstall leaves a module's settings |
 | M3.2 | [`notes/step-16-trust-lists.md`](notes/step-16-trust-lists.md): Tracefern's list copy is byte-identical to upstream (`47009ee`, unchanged at `d6dec63`); library equals CLI on 52 file × settings pairs; Pixel 10 and OpenAI `Trusted` by default; DigiCert decides Amazon Titan, Lightroom and `c2pa-rs-ocsp`; `fromJson()` costs about 15 ms per upload; the OpenAI image turns `Invalid` on 2027-04-23 |
 | M3.3 | [`docs/adr/ADR-0004-bundled-trust-lists.md`](docs/adr/ADR-0004-bundled-trust-lists.md) (accepted 2026-11-04): the three files in `trust/`, unchanged, hashes recorded in code and checked by a test; two dates shown, the age warning (183 days) counted from the last comparison with upstream; a development script compares before a release |
+| M3.4 | `specs/SPEC-004-trust-settings.md`: the M3 spec; approved 2026-11-04 with all recommendations, with SPEC-002 amendment 1 (the `trust` column) and SPEC-003 amendment 1 (the trust line) |
+| M3.5 | [`notes/step-17-trust-settings.md`](notes/step-17-trust-settings.md): SPEC-004 implemented; PHP's default 2M upload limit refuses the Pixel 10 fixture (test environment raised to 64M); a 1 MiB textarea exceeds PCRE's backtrack limit in a test regex |
 
 ## To measure before a spec rests on it
 

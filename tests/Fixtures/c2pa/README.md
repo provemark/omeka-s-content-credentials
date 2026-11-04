@@ -1,4 +1,4 @@
-# C2PA fixtures (SPEC-002)
+# C2PA fixtures (SPEC-002, SPEC-004)
 
 Copied unchanged from `provemark/c2pa-verifier` at tag v0.10.0 (commit
 `4bcd6ae`), `tests/Fixtures/`; each file's SHA-256 was compared with
@@ -16,3 +16,19 @@ signed assets are signed with the public c2pa-rs ES256 test certificates
 The altered JPEG (AC4) and the PDF (AC6) are made by the tests, not kept
 here. The verdicts are never copied: the tests run `vendor/bin/c2pa-verify`
 on the same bytes.
+
+## Added for SPEC-004 (trust settings)
+
+Copied unchanged from `provemark/tracefern-image-check` `tests/Fixtures/`
+(last changed there in commit `e81ce12`, 2026-09-26; checkout at `adcfd3c`);
+SHA-256 compared with that copy on 2026-11-04. Tracefern's fixtures README
+gives their origin; the short version:
+
+| file | from | licence | used for |
+|---|---|---|---|
+| `google-20250919-pixel10-npld-picnic-table.jpg` | Wikimedia Commons, `File:NPLD 25 WW new picnic table (55032713763).jpg`, uploaded by the US Bureau of Land Management | public domain (US federal work) | `Trusted` with the bundled C2PA lists (SPEC-004 AC2, AC4) |
+| `c2pa-rs-ocsp.jpg` | `contentauth/c2pa-rs` `sdk/tests/fixtures/ocsp.jpg` (58eac79) | Apache-2.0 OR MIT, © Adobe and the c2pa-rs contributors; see `LICENSE-c2pa-rs-APACHE` and `LICENSE-c2pa-rs-MIT` | an expired signer with a DigiCert timestamp: `Valid` with the DigiCert root, `Invalid` without (AC3) |
+| `c2pa-rs-test-trust-anchors.pem` | the verifier's `trust/trust_anchors.pem`, byte-identical to `contentauth/c2patool` `sample/` | Apache-2.0 OR MIT (c2pa-rs / c2patool) | custom settings under which `fixture-signed.*` is `Trusted` (AC4); public certificates, no key |
+
+Their verdicts are stable from 2026-11-04 to at least 2035-01-01
+(`notes/step-16-trust-lists.md`, measured).

@@ -2,7 +2,7 @@
 
 | Field      | Value                                             |
 |------------|---------------------------------------------------|
-| Status     | approved                                          |
+| Status     | implemented                                       |
 | Author     | Maurice van Loon                                  |
 | Approved   | Maurice van Loon, 2026-11-04                      |
 | Supersedes | —                                                 |
@@ -309,17 +309,18 @@ recorded in the Amendments sections of SPEC-002 and SPEC-003.
 ## Traceability
 
 Filled when status becomes `implemented`. Every acceptance criterion maps to at
-least one test; every source file maps back to this spec.
+least one test; every source file maps back to this spec. All tests carry
+`->group('SPEC-004')`; the record is `notes/step-17-trust-settings.md`.
 
 | Acceptance criterion | Test (file :: name / group) | Source (file/symbol) |
 |----------------------|-----------------------------|----------------------|
-| AC1                  | —                           | —                    |
-| AC2                  | —                           | —                    |
-| AC3                  | —                           | —                    |
-| AC4                  | —                           | —                    |
-| AC5                  | —                           | —                    |
-| AC6                  | —                           | —                    |
-| AC7                  | —                           | —                    |
-| AC8                  | —                           | —                    |
-| AC9                  | —                           | —                    |
-| AC10                 | —                           | —                    |
+| AC1 | `tests/Unit/TrustSettingsTest.php` :: AC1 (three tests) | `trust/` (three files, `README.md`); `Trust\BundledLists::FILES`, `DIGICERT_FINGERPRINT`, `COMMIT`, `LIST_DATE`, `COMPARED`; `tools/trust/compare.sh` |
+| AC2 | `tests/Unit/TrustSettingsTest.php` :: AC2, AC3; AC2 (two tests); `tests/Integration/TrustSettingsTest.php` :: AC2 | `Trust\TrustChoice::build()`, `bundledJson()`; `Trust\BuiltTrust`; `Check\MediaCheck` (`$trust`); `Check\Verdict::$trust`; `Omeka\TrustConfig::built()`; `Omeka\AfterFlushListener::create()`; `Omeka\Schema`, `DbalVerdictStore`; `Entity\StoredVerdict::getTrust()` |
+| AC3 | `tests/Unit/TrustSettingsTest.php` :: AC2, AC3; `tests/Integration/TrustSettingsTest.php` :: AC3 | `Trust\BundledLists::source()`; `Trust\TrustChoice::bundledJson()`; `Omeka\TrustConfig::digicert()`, `save()` |
+| AC4 | `tests/Unit/TrustSettingsTest.php` :: AC4; `tests/Integration/TrustSettingsTest.php` :: AC4 | `Trust\TrustChoice::build()` (`custom`); `Omeka\TrustConfig::custom()`, `save()` |
+| AC5 | `tests/Unit/TrustSettingsTest.php` :: AC5 (three tests); `tests/Integration/TrustSettingsTest.php` :: AC5 (three cases) | `Trust\TrustChoice::refusal()`, `MAX_CUSTOM_BYTES`; `Omeka\TrustConfig::save()`, `form()`; `Module::handleConfigForm()`, `getConfigForm()`, `$refused` |
+| AC6 | `tests/Unit/TrustSettingsTest.php` :: AC6 (four tests); `tests/Integration/TrustSettingsTest.php` :: AC6 | `Trust\BuiltTrust::without()`; `Check\MediaCheck::trust()`; `Display\SettingsPage::html()` (`$problem`) |
+| AC7 | `tests/Unit/TrustSettingsTest.php` :: AC7 (two tests); `tests/Integration/TrustSettingsTest.php` :: AC7 | `Display\Presentation::trustLine()`; `Omeka\VerdictReader::row()` (`trust`) |
+| AC8 | `tests/Unit/TrustSettingsTest.php` :: AC8; `tests/Integration/TrustSettingsTest.php` :: AC8 | `Display\SettingsPage::html()`; `Omeka\TrustConfig::form()`; `Omeka\ViewText` |
+| AC9 | `tests/Unit/TrustSettingsTest.php` :: AC9 (two tests); `tests/Integration/TrustSettingsTest.php` :: AC9 | `Trust\BundledLists::isStale()`, `STALE_AFTER_DAYS`; `Display\SettingsPage::html()` (`$stale`) |
+| AC10 | `tests/Integration/TrustSettingsTest.php` :: AC10 | `Module::uninstall()` |

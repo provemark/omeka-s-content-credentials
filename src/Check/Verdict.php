@@ -8,7 +8,9 @@ use DateTimeImmutable;
 use Provemark\C2paVerifier\Verifier\VerificationReport;
 
 /**
- * One media item's verdict, as SPEC-002 stores it.
+ * One media item's verdict, as SPEC-002 stores it, with the source of the
+ * trust settings it was checked with (SPEC-004; null for an error before
+ * verification).
  *
  * Its state is the verifier's ValidationState value, or one of the two the
  * module derives: `none` (no manifest in the file) and `error` (not
@@ -47,9 +49,13 @@ final class Verdict
         public readonly ?string $verifier,
         public readonly ?string $checkedSha256,
         public readonly DateTimeImmutable $checkedAt,
+        public readonly ?string $trust = null,
     ) {}
 
-    public static function fromReport(VerificationReport $report, string $sha256, string $verifier, DateTimeImmutable $checkedAt): self
+    /**
+     * @param  string|null  $trust  the source of the trust settings used (SPEC-004)
+     */
+    public static function fromReport(VerificationReport $report, string $sha256, string $verifier, DateTimeImmutable $checkedAt, ?string $trust = null): self
     {
         $state = $report->hasManifest ? $report->result->state->value : self::NONE;
         $signature = $report->hasManifest ? ($report->signatureInfo ?? []) : [];
@@ -75,6 +81,7 @@ final class Verdict
             $verifier,
             $sha256,
             $checkedAt,
+            $trust,
         );
     }
 

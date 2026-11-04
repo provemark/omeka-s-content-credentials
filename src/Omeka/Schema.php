@@ -7,7 +7,8 @@ namespace ContentCredentials\Omeka;
 /**
  * The module's one table (ADR-0003, SPEC-002): created in install(),
  * dropped in uninstall(). Text from the file goes into LONGTEXT columns,
- * so no length the file chooses can make a write fail.
+ * so no length the file chooses can make a write fail. `trust` names the
+ * trust settings a check used (SPEC-004, SPEC-002 amendment 1).
  *
  * Required by Module.php during install and uninstall, when Omeka S has not
  * put src/ on the autoloader (step 07): this file depends on nothing.
@@ -33,6 +34,7 @@ final class Schema
             .'remote_manifest_url LONGTEXT DEFAULT NULL, '
             .'reason VARCHAR(16) DEFAULT NULL, '
             .'verifier VARCHAR(32) DEFAULT NULL, '
+            .'trust VARCHAR(64) DEFAULT NULL, '
             .'checked_sha256 CHAR(64) DEFAULT NULL, '
             .'checked_at DATETIME NOT NULL, '
             .'PRIMARY KEY(media_id)'

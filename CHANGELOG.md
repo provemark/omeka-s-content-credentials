@@ -40,3 +40,10 @@ day the work was committed.
   browse, and a filter by verdict (admin only); text from the file is
   escaped and its control and direction characters made visible
   (SPEC-003). (2026-11-04)
+- M3: trust settings. Uploads are verified against the bundled C2PA trust
+  lists (`trust/`, CC BY 4.0) and the DigiCert Trusted Root G4 for
+  timestamps (an option, on by default), or against custom trust settings
+  that replace them, set on the module's configure page. Each verdict
+  records its trust source and the admin block names it. The page warns
+  six months after the lists were last compared with the published ones;
+  uninstalling removes the settings (SPEC-004). (2026-11-04)

@@ -19,7 +19,11 @@ and the verdict is stored with it (SPEC-002). Milestone M2 is done: the
 admin media page and its Details panel show the verdict, the media browse
 has a column "Content Credentials" and a filter by verdict (SPEC-003).
 Administrators who have chosen their own browse columns do not get the
-column until they add it, as with Omeka's own optional columns. The plan is in [`docs/milestones.md`](docs/milestones.md),
+column until they add it, as with Omeka's own optional columns.
+Milestone M3 is done: uploads are checked against the C2PA trust lists
+bundled in [`trust/`](trust/README.md) (CC BY 4.0, © C2PA), with or
+without DigiCert timestamps, or against custom trust settings, all on
+the module's configure page (SPEC-004). The plan is in [`docs/milestones.md`](docs/milestones.md),
 the decisions are in [`NOTES.md`](NOTES.md).
 
 ## Requirements (planned)

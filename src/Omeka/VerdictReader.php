@@ -59,6 +59,7 @@ final class VerdictReader
             'remote_manifest_url' => $stored->getRemoteManifestUrl(),
             'reason' => $stored->getReason(),
             'verifier' => $stored->getVerifier(),
+            'trust' => $stored->getTrust(),
             'checked_sha256' => $stored->getCheckedSha256(),
             'checked_at' => $stored->getCheckedAt()->format('Y-m-d H:i:s'),
         ];
