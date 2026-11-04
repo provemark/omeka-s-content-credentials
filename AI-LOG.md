@@ -324,3 +324,26 @@ README are where the disclosure lives.
 - Reasoned, not measured: that storing must wait until after the flush;
   which hook that is, CSV Import, File Sideload and batch create.
 - Decided by Maurice: to start M1 ("ok, begin met M1").
+
+## 2026-11-04: M1.2, a module-owned table and the hook after the commit
+
+- Model: Claude Opus 5.5, Claude Code CLI
+- Asked: M1.2.
+- Produced: the measurement-only module `tools/probes/StorageProbe/`;
+  `notes/step-10-storage-and-after-flush.md`; `docs/adr/ADR-0003-storage.md`
+  (proposed); `NOTES.md`, `docs/milestones.md`. Pint also reformatted
+  `tools/probes/EventProbe/`.
+- Read: `Omeka\Service\EntityManagerFactory`, Doctrine's
+  `UnitOfWork::commit()`, the Mapping module's `Module.php` and
+  `config/module.config.php` (GitHub).
+- Measured: the table installs and uninstalls with the schema back as it
+  was; `postFlush` after the commit on four routes, batch create from the
+  CLI included; writing there through DBAL and the entity manager; an
+  exception there gives HTTP 500 for a committed upload; reading and a
+  DQL join without proxies; rows removed with their media and with the
+  item. The test environment was reset afterwards.
+- Reasoned, not measured: when proxies would be needed; outer
+  transactions opened by other modules; the cost of verifying in the
+  request.
+- Decided by Maurice: to do M1.2 ("ok, begin met M1.2"); ADR-0003 awaits
+  his decision.

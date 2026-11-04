@@ -138,6 +138,7 @@ and committer of every pushed commit.
 | M0.7b | same note, second part: SPEC-001 implemented; a module's `src/` is not autoloaded during its own install |
 | CI | [`notes/step-08-ci.md`](notes/step-08-ci.md): GitHub Actions, static checks and unit tests on PHP 8.3–8.5, the integration tests, a parse check on 8.1 and 8.2; first run green |
 | M1.1 | [`notes/step-09-events-and-original.md`](notes/step-09-events-and-original.md): `entity.persist.post` on `Omeka\Entity\Media` fires once per new media on every measured route, original present and byte-identical; `api.create.post` on the media adapter does not (the brief's candidate); deleting an item gives no media `api.delete.post` |
+| M1.2 | [`notes/step-10-storage-and-after-flush.md`](notes/step-10-storage-and-after-flush.md): a module table with `ON DELETE CASCADE` installs and uninstalls cleanly and follows deletes; Doctrine `postFlush` fires after the commit on every route; an exception there gives HTTP 500 for a committed upload; ADR-0003 proposed |
 
 ## To measure before a spec rests on it
 
@@ -151,11 +152,11 @@ Omeka S 4.2.x:
   on every route: measured for the admin form, the API and the URL
   ingester (step 09); CSV Import and File Sideload not yet;
 - which event fires once per new media item with the file available, and
-  which on update and delete: measured (step 09); which hook fires after
-  the flush has committed, not yet;
+  which on update and delete: measured (step 09); the hook after the
+  commit: Doctrine `postFlush` (step 10);
 - background jobs, and whether a failing job can break an upload;
-- storage: entity registration, install and uninstall SQL, migrations
-  (decision 3);
+- storage: entity registration, install and uninstall SQL: measured
+  (step 10), ADR-0003; migrations between versions not yet;
 - display: view events or helpers for the media page and the browse;
 - the PHP floor: Omeka S 4.2 from PHP 8.1, the verifier `^8.3` (an ADR);
 - bundling: Strauss prefixing of the verifier, as Tracefern's SPEC-009.
