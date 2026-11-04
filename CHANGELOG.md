@@ -30,3 +30,8 @@ day the work was committed.
 - CI on GitHub Actions: static checks and unit tests on PHP 8.3, 8.4 and
   8.5, the integration tests, and a parse check on PHP 8.1 and 8.2.
   (2026-11-04)
+- M1: every new JPEG, PNG and WebP media item with an original is verified
+  with `provemark/c2pa-verifier` after it is saved, and its verdict stored
+  in the table `content_credentials_verdict` (created on install, dropped
+  on uninstall, removed with its media); a failure is stored as `error`
+  and never stops the upload (SPEC-002). (2026-11-04)

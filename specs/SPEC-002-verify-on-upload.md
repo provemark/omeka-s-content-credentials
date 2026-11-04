@@ -2,7 +2,7 @@
 
 | Field      | Value                                             |
 |------------|---------------------------------------------------|
-| Status     | approved                                          |
+| Status     | implemented                                       |
 | Author     | Maurice van Loon                                  |
 | Approved   | Maurice van Loon, 2026-11-04                      |
 | Supersedes | —                                                 |
@@ -294,17 +294,17 @@ least one test; every source file maps back to this spec.
 
 | Acceptance criterion | Test (file :: name / group) | Source (file/symbol) |
 |----------------------|-----------------------------|----------------------|
-| AC1                  | —                           | —                    |
-| AC2                  | —                           | —                    |
-| AC3                  | —                           | —                    |
-| AC4                  | —                           | —                    |
-| AC5                  | —                           | —                    |
-| AC6                  | —                           | —                    |
-| AC7                  | —                           | —                    |
-| AC8                  | —                           | —                    |
-| AC9                  | —                           | —                    |
-| AC10                 | —                           | —                    |
-| AC11                 | —                           | —                    |
-| AC12                 | —                           | —                    |
-| AC13                 | —                           | —                    |
-| AC14                 | —                           | —                    |
+| AC1 | tests/Integration/VerifyOnUploadTest.php :: AC1: a signed file gets the CLI's verdict / SPEC-002 | src/Check/Verdict.php :: Verdict::fromReport(); src/Check/MediaCheck.php :: check(); src/Omeka/AfterFlushListener.php; src/Omeka/DbalVerdictStore.php; src/Omeka/Schema.php; Module.php :: install(), attachListeners() |
+| AC2 | tests/Integration/VerifyOnUploadTest.php :: AC2: every route gets exactly one row / SPEC-002 | src/Omeka/AfterFlushListener.php :: note(), postFlush() |
+| AC3 | tests/Unit/VerifyOnUploadTest.php :: AC3: an unsigned file is none, not Invalid; tests/Integration/VerifyOnUploadTest.php :: AC3: an unsigned file is none, not Invalid / SPEC-002 | src/Check/Verdict.php :: Verdict::fromReport() |
+| AC4 | tests/Unit/VerifyOnUploadTest.php :: AC4: an altered file is Invalid with the CLI's codes; tests/Integration/VerifyOnUploadTest.php :: AC4: an altered file is Invalid with the CLI's codes / SPEC-002 | src/Check/Verdict.php :: Verdict::fromReport() |
+| AC5 | tests/Unit/VerifyOnUploadTest.php :: AC5: every state is the verifier's, or none for a file without a manifest / SPEC-002 | src/Check/Verdict.php :: Verdict::fromReport(), Verdict::error() |
+| AC6 | tests/Integration/VerifyOnUploadTest.php :: AC6: other media are left alone / SPEC-002 | src/Omeka/AfterFlushListener.php :: MEDIA_TYPES, note() |
+| AC7 | tests/Integration/VerifyOnUploadTest.php :: AC7: deleting the media or its item removes the row / SPEC-002 | src/Omeka/Schema.php :: create() (the foreign key) |
+| AC8 | tests/Unit/VerifyOnUploadTest.php :: AC8: an original that cannot be opened is error / unreadable / SPEC-002 | src/Check/MediaCheck.php :: check(); src/Omeka/AfterFlushListener.php :: originalPath() |
+| AC9 | tests/Unit/VerifyOnUploadTest.php :: AC9: an exception from the verifier is error / exception, its message not kept; AC9: an exception anywhere in recording never leaves the recorder / SPEC-002 | src/Check/MediaCheck.php :: check(); src/Check/Recorder.php :: record(); src/Omeka/AfterFlushListener.php :: note(), postFlush(); Module.php :: attachListeners() |
+| AC10 | tests/Unit/VerifyOnUploadTest.php :: AC10: the interrupted row is written before the verifier runs / SPEC-002 | src/Check/Recorder.php :: record() |
+| AC11 | tests/Unit/VerifyOnUploadTest.php :: AC11: a store that fails is reported, never thrown; tests/Integration/VerifyOnUploadTest.php :: AC11: a store that cannot be written leaves the upload alone / SPEC-002 | src/Check/Recorder.php :: record(); src/Omeka/AfterFlushListener.php :: create() (the failure is logged by class only) |
+| AC12 | tests/Unit/VerifyOnUploadTest.php :: AC12: below PHP 8.3 the verifier is not loaded: error / requirements / SPEC-002; .github/workflows/ci.yml :: parses on PHP 8.1 / 8.2 | src/Check/MediaCheck.php :: check() |
+| AC13 | tests/Integration/VerifyOnUploadTest.php :: AC13: only the verifier's own source is loaded from vendor/ / SPEC-002 (tests/Integration/Support/included-files.php) | src/Omeka/VerifierLoader.php :: register(); src/Entity/StoredVerdict.php; config/module.config.php |
+| AC14 | tests/Integration/VerifyOnUploadTest.php :: AC14: text from the file is stored exactly / SPEC-002 | src/Omeka/DbalVerdictStore.php :: write() (bound parameters); src/Omeka/Schema.php (LONGTEXT) |

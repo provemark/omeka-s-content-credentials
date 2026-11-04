@@ -184,7 +184,7 @@ least one test; every source file maps back to this spec.
 
 | Acceptance criterion | Test (file :: name / group) | Source (file/symbol) |
 |----------------------|-----------------------------|----------------------|
-| AC1 | tests/Integration/InstallAndUninstallTest.php :: AC1: installing adds one row and nothing else / SPEC-001 | Module.php :: Module (the skeleton); tests/Integration/Support/OmekaInstallation.php :: snapshot(), moduleAction() |
+| AC1 | tests/Integration/InstallAndUninstallTest.php :: AC1: installing adds one row and one empty table / SPEC-001 | Module.php :: Module (the skeleton); tests/Integration/Support/OmekaInstallation.php :: snapshot(), moduleAction() |
 | AC2 | tests/Integration/InstallAndUninstallTest.php :: AC2: an active module breaks no page / SPEC-001 | Module.php :: Module::getConfig() |
 | AC3 | tests/Integration/InstallAndUninstallTest.php :: AC3: deactivating and activating / SPEC-001 | Module.php :: Module |
 | AC4 | tests/Integration/InstallAndUninstallTest.php :: AC4: uninstalling leaves the installation as it was / SPEC-001 | Module.php :: Module (inherits an empty uninstall()) |

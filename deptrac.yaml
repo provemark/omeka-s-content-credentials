@@ -12,5 +12,20 @@ deptrac:
       collectors:
         - type: classLike
           value: ^ContentCredentials\\Requirements$
+    - name: Check          # M1, SPEC-002: from a file to a verdict, and recording it; no Omeka S
+      collectors:
+        - type: classLike
+          value: ^ContentCredentials\\Check\\
+    - name: Entity         # M1, SPEC-002 / ADR-0003: the table, as Doctrine maps it
+      collectors:
+        - type: classLike
+          value: ^ContentCredentials\\Entity\\
+    - name: Omeka          # M1, SPEC-002: the wiring into Omeka S (events, store, schema, loader)
+      collectors:
+        - type: classLike
+          value: ^ContentCredentials\\Omeka\\
   ruleset:
     Requirements: []
+    Check: [Requirements]
+    Entity: []
+    Omeka: [Check, Entity, Requirements]

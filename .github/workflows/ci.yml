@@ -71,7 +71,9 @@ jobs:
 
   # ADR-0001: Omeka S 4.2 loads Module.php on PHP 8.1 and 8.2, and on a
   # refused install also src/Requirements.php, before the module can say it
-  # needs 8.3. They must parse there.
+  # needs 8.3. And a module already installed on a PHP that is later
+  # downgraded runs src/ to record `error` / `requirements` (SPEC-002 AC12).
+  # So all of it must parse there; the verifier itself need not.
   parse-on-older-php:
     name: parses on PHP ${{ matrix.php }}
     runs-on: ubuntu-24.04
@@ -86,6 +88,6 @@ jobs:
           php-version: ${{ matrix.php }}
           coverage: none
       - run: |
-          for file in Module.php config/module.config.php src/Requirements.php; do
+          for file in Module.php config/module.config.php $(find src -name '*.php' | sort); do
             php -l "$file"
           done

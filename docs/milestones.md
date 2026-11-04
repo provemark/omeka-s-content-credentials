@@ -56,4 +56,8 @@ Proposed 2026-11-04; one step at a time, each after an "ok".
 | M1.2 | Measure a module-owned table (entity, install and uninstall SQL) and the hook after the flush; ADR-0003 storage | done 2026-11-04 (`notes/step-10-storage-and-after-flush.md`); ADR-0003 accepted 2026-11-04 |
 | M1.3 | Measure loading the verifier without the module's whole `vendor/` | done 2026-11-04 (`notes/step-11-loading-the-verifier.md`) |
 | M1.4 | The M1 spec (`draft`), resting on M1.1 to M1.3 | done 2026-11-04: SPEC-002 `draft`, with SPEC-001 amendment 1 proposed in it |
-| M1.5 | after approval: SPEC-002's tests, seen red; the implementation; green; Traceability filled | proposed |
+| M1.5 | after approval: SPEC-002's tests, seen red; the implementation; green; Traceability filled | done 2026-11-04 (`notes/step-12-verify-on-upload.md`) |
+
+**M1 is done (2026-11-04):** the verdict of every new JPEG, PNG and WebP
+equals `vendor/bin/c2pa-verify` on the same file, measured in Omeka S
+4.2.1 (SPEC-002). Next: M2, showing it.

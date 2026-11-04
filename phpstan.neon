@@ -17,6 +17,15 @@ parameters:
         - build/omeka-s/application/src
         - build/omeka-s/vendor/laminas
         - build/omeka-s/vendor/omeka
+        # SPEC-002: the database connection, the entity manager and its
+        # events. Named one by one: doctrine/deprecations is in this
+        # repository's vendor/ too, at another version.
+        - build/omeka-s/vendor/doctrine/dbal
+        - build/omeka-s/vendor/doctrine/orm
+        - build/omeka-s/vendor/doctrine/event-manager
+        - build/omeka-s/vendor/doctrine/persistence
+        - build/omeka-s/vendor/doctrine/collections
+        - build/omeka-s/vendor/doctrine/common
     excludePaths:
         analyse:
             - tests/Fixtures

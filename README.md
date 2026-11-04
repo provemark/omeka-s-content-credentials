@@ -13,8 +13,10 @@ when a file came in stays on record after a certificate has expired.
 
 ## Status
 
-In development, milestone M0 (the skeleton). Nothing works yet and nothing
-has been released. The plan is in [`docs/milestones.md`](docs/milestones.md),
+In development; nothing has been released. Milestone M1 is done: every
+new JPEG, PNG and WebP media item is verified once, after it is saved,
+and the verdict is stored with it (SPEC-002). Nothing shows it yet; that
+is M2. The plan is in [`docs/milestones.md`](docs/milestones.md),
 the decisions are in [`NOTES.md`](NOTES.md).
 
 ## Requirements (planned)

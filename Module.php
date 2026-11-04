@@ -4,6 +4,11 @@ declare(strict_types=1);
 
 namespace ContentCredentials;
 
+use ContentCredentials\Omeka\AfterFlushListener;
+use ContentCredentials\Omeka\Schema;
+use Doctrine\DBAL\Connection;
+use Laminas\EventManager\EventInterface;
+use Laminas\EventManager\SharedEventManagerInterface;
 use Laminas\ServiceManager\ServiceLocatorInterface;
 use Omeka\Module\AbstractModule;
 use Omeka\Module\Exception\ModuleCannotInstallException;
@@ -16,13 +21,18 @@ use Omeka\Module\Exception\ModuleCannotInstallException;
  * that namespace itself; this file loads nothing else.
  *
  * Installing refuses PHP below 8.3 with a message on the modules page
- * (SPEC-001; module.ini cannot state a PHP version).
+ * (SPEC-001; module.ini cannot state a PHP version), and creates the
+ * verdict table; uninstalling drops it (SPEC-002, ADR-0003). Every new
+ * media item is handed to the after-flush listener, which verifies JPEG,
+ * PNG and WebP originals once they are committed (SPEC-002).
  *
  * Keep this file parseable on PHP 8.1: Omeka S 4.2 runs from 8.1 and loads it
  * before the module can say it needs 8.3 (ADR-0001).
  */
 final class Module extends AbstractModule
 {
+    private ?AfterFlushListener $afterFlush = null;
+
     /**
      * @return array<mixed>
      */
@@ -45,5 +55,38 @@ final class Module extends AbstractModule
         if ($problem !== null) {
             throw new ModuleCannotInstallException($problem);
         }
+        require_once __DIR__.'/src/Omeka/Schema.php';
+        foreach (Schema::create() as $statement) {
+            self::connection($serviceLocator)->executeStatement($statement);
+        }
+    }
+
+    public function uninstall(ServiceLocatorInterface $serviceLocator): void
+    {
+        // An inactive module's src/ is not autoloaded either.
+        require_once __DIR__.'/src/Omeka/Schema.php';
+        self::connection($serviceLocator)->executeStatement(Schema::drop());
+    }
+
+    public function attachListeners(SharedEventManagerInterface $sharedEventManager): void
+    {
+        $sharedEventManager->attach('Omeka\Entity\Media', 'entity.persist.post', function (EventInterface $event): void {
+            try {
+                $this->afterFlush ??= AfterFlushListener::create($this->getServiceLocator(), __DIR__);
+                $this->afterFlush->note($event->getTarget());
+            } catch (\Throwable $e) {
+                // Inside Doctrine's flush: nothing may undo the upload (SPEC-002).
+            }
+        });
+    }
+
+    private static function connection(ServiceLocatorInterface $serviceLocator): Connection
+    {
+        $connection = $serviceLocator->get('Omeka\Connection');
+        if (! $connection instanceof Connection) {
+            throw new ModuleCannotInstallException('Omeka S did not provide its database connection.');
+        }
+
+        return $connection;
     }
 }

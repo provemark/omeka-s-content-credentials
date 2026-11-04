@@ -400,3 +400,28 @@ README are where the disclosure lives.
   ("ok, SPEC-002 goedgekeurd met beide aanbevelingen, begin").
 - Produced: the status and the answered questions in SPEC-002; AC1 and an
   Amendments section in SPEC-001.
+
+## 2026-11-04: M1.5, SPEC-002 implemented
+
+- Model: Claude Opus 5.5, Claude Code CLI
+- Asked: implement SPEC-002 ("begin").
+- Produced: `src/Check/` (Verdict, MediaCheck, Recorder, VerdictStore),
+  `src/Omeka/` (AfterFlushListener, DbalVerdictStore, Schema,
+  VerifierLoader), `src/Entity/StoredVerdict.php`; `Module.php` (install,
+  uninstall, the listener); `config/module.config.php`; three Deptrac
+  layers; PHPStan scan of Omeka's Doctrine packages; the tests
+  (`tests/Unit/VerifyOnUploadTest.php`,
+  `tests/Integration/VerifyOnUploadTest.php`, `tests/Support/VerifierCli.php`,
+  `tests/Integration/Support/included-files.php`, additions to
+  `OmekaInstallation`); SPEC-001's AC1 test for amendment 1; the fixtures
+  in `tests/Fixtures/c2pa/`; CI's parse check over all of `src/`;
+  SPEC-002's Traceability; `notes/step-12-verify-on-upload.md`; README,
+  CHANGELOG, NOTES, milestones.
+- Measured: the red runs before the implementation; the green
+  `composer check`; what each integration test measures (in the note);
+  three defects in the tests found and fixed, among them that Omeka's
+  `application.config.php` sets `$url` in its caller's scope.
+- Reasoned, not measured: AC8–AC10 and AC12 through stand-ins; `verifier`
+  `NULL` for `requirements`; the time verifying adds to large uploads.
+- Decided by Maurice: SPEC-002 and its two recommendations, SPEC-001
+  amendment 1.
