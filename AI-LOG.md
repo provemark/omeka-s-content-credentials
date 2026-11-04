@@ -595,3 +595,16 @@ README are where the disclosure lives.
 - Read: `Omeka\Job\AbstractJob`, `Dispatcher`, the `PhpCli` and
   `Synchronous` strategies (file list and signatures only). Nothing
   measured.
+
+## 2026-11-04: M4.1, jobs in Omeka S measured
+
+- Model: Claude Opus 5.5, Claude Code CLI
+- Asked: "ok, begin met M4.1".
+- Produced: `tools/probes/JobProbe/` (module and scripts, measurement
+  only); `notes/step-18-jobs.md`; `docs/milestones.md`; `NOTES.md`.
+- Read: `Dispatcher`, `PhpCli`, `Synchronous`, `AbstractJob`, `Cli`,
+  `perform-job.php`, `JobController` (Omeka S 4.2.1).
+- Measured: the table in the note, in the PHP 8.3 container; the
+  container's `local.config.php` was changed for one case and restored.
+- Not measured: scale, concurrency, restart after a stop (M4.2); a host
+  with `exec` disabled.
