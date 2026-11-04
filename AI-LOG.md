@@ -542,3 +542,8 @@ README are where the disclosure lives.
 - Proposed for Maurice to decide: the age warning counts from the date
   of the last comparison with upstream, not from the upstream commit
   date; both are shown.
+
+## 2026-11-04: ADR-0004 accepted
+
+- Decided by Maurice: ADR-0004 accepted, the age warning counted from the
+  comparison date ("ok, ADR-0004 aangenomen, begin met M3.4").
