@@ -547,3 +547,15 @@ README are where the disclosure lives.
 
 - Decided by Maurice: ADR-0004 accepted, the age warning counted from the
   comparison date ("ok, ADR-0004 aangenomen, begin met M3.4").
+
+## 2026-11-04: M3.4, SPEC-004 as a draft
+
+- Model: Claude Opus 5.5, Claude Code CLI
+- Asked: "ok, ADR-0004 aangenomen, begin met M3.4".
+- Produced: `specs/SPEC-004-trust-settings.md` (`draft`, 10 criteria,
+  SPEC-002 amendment 1 and SPEC-003 amendment 1 proposed, four open
+  questions); `docs/milestones.md`.
+- Read: Tracefern's SPEC-004 criteria (ported); steps 15 and 16; ADR-0004.
+- Measured: SPEC-002's altered JPEG gives the same verdict with and
+  without the bundled lists (for the amendment's claim).
+- Decided by Maurice: approval pending.
