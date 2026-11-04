@@ -461,3 +461,10 @@ README are where the disclosure lives.
   admin side (AC11 will measure it).
 - Decided by Maurice: to write the spec ("ok, begin met M2.2"); approval
   pending.
+
+## 2026-11-04: SPEC-003 approved
+
+- Decided by Maurice: SPEC-003 approved with both recommendations (the
+  filter on admin requests only; the column for administrators with own
+  columns accepted, said in the README) ("ok, SPEC-003 goedgekeurd met
+  beide aanbevelingen, begin").

@@ -69,5 +69,5 @@ Proposed 2026-11-04; one step at a time, each after an "ok".
 | step | what | status |
 |---|---|---|
 | M2.1 | Measure the admin view hooks: the media page, the browse, a filter; escaping | done 2026-11-04 (`notes/step-13-admin-views.md`) |
-| M2.2 | The M2 spec (`draft`) | done 2026-11-04: SPEC-003 `draft` |
+| M2.2 | The M2 spec (`draft`) | done 2026-11-04: SPEC-003 `draft`; approved 2026-11-04 |
 | M2.3 | after approval: tests seen red, the implementation, green, Traceability | proposed |

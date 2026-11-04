@@ -2,9 +2,9 @@
 
 | Field      | Value                                             |
 |------------|---------------------------------------------------|
-| Status     | draft                                             |
+| Status     | approved                                          |
 | Author     | Maurice van Loon                                  |
-| Approved   | —                                                 |
+| Approved   | Maurice van Loon, 2026-11-04                      |
 | Supersedes | —                                                 |
 
 > Lifecycle: `draft` → maintainer approves → `approved` → tests-first →
@@ -233,10 +233,14 @@ Deptrac gets a layer `Display` (no Omeka S, may use nothing but
   verify. Recommendation: apply it only on admin requests
   (`Status::isAdminRequest()`), as AC11 states; an API filter for
   integrations can come with its own spec. *Blocker for approval.*
+  *Status 2026-11-04:* answered, admin requests only, the recommendation
+  approved by Maurice van Loon with the spec.
 - **The column for administrators with their own columns.** They do not
   get it until they add it (step 13). Recommendation: accept, it is how
   Omeka's own optional columns behave; say so in the README.
   *Non-blocker.*
+  *Status 2026-11-04:* answered, accepted and to be said in the README,
+  approved by Maurice van Loon with the spec.
 
 ## Traceability
 
