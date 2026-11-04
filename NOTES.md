@@ -142,6 +142,7 @@ and committer of every pushed commit.
 | M1.3 | [`notes/step-11-loading-the-verifier.md`](notes/step-11-loading-the-verifier.md): the whole development `vendor/` breaks Omeka's logger (fatal), and any Composer `autoload.php` kills PHP 8.2; an autoloader for the verifier's namespace only gives the CLI's verdict on 16 fixtures in Omeka; Strauss rewrites namespace strings, not paths |
 | M1.4 | `specs/SPEC-002-verify-on-upload.md`: the M1 spec; approved 2026-11-04 with SPEC-001 amendment 1 |
 | M1.5 | [`notes/step-12-verify-on-upload.md`](notes/step-12-verify-on-upload.md): SPEC-002 implemented; every new JPEG, PNG and WebP gets the CLI's verdict, stored after the commit; Omeka's `application.config.php` sets `$url` in its caller's scope |
+| M2.1 | [`notes/step-13-admin-views.md`](notes/step-13-admin-views.md): `view.show.sidebar`, `view.details`, a column type added through `column_defaults`, `view.advanced_search` / `view.search.filters` / `api.search.query` for a filter; output through `escapeHtml` arrives escaped; an unknown `sort_by` is ignored |
 
 ## To measure before a spec rests on it
 
@@ -160,7 +161,8 @@ Omeka S 4.2.x:
 - background jobs, and whether a failing job can break an upload;
 - storage: entity registration, install and uninstall SQL: measured
   (step 10), ADR-0003; migrations between versions not yet;
-- display: view events or helpers for the media page and the browse;
+- display: view events or helpers for the media page and the browse:
+  measured (step 13);
 - the PHP floor: Omeka S 4.2 from PHP 8.1, the verifier `^8.3` (an ADR);
 - bundling: Strauss prefixing of the verifier, as Tracefern's SPEC-009:
   measured on a build copy (step 11); the build itself is M7.

@@ -425,3 +425,25 @@ README are where the disclosure lives.
   `NULL` for `requirements`; the time verifying adds to large uploads.
 - Decided by Maurice: SPEC-002 and its two recommendations, SPEC-001
   amendment 1.
+
+## 2026-11-04: M2.1, the admin view hooks
+
+- Model: Claude Opus 5.5, Claude Code CLI
+- Asked: begin M2 (the module version stays 0.1.0 until a release,
+  decided by Maurice).
+- Produced: the M2 steps in `docs/milestones.md`; the measurement-only
+  module `tools/probes/ViewProbe/`; `notes/step-13-admin-views.md`;
+  `NOTES.md`.
+- Read: `view/omeka/admin/media/show.phtml`, `show-details.phtml`,
+  `browse.phtml`, `search.phtml`, `view/common/advanced-search.phtml`;
+  `Omeka\View\Helper\Trigger`, `Browse`, `SearchFilters`;
+  `Omeka\ColumnType\ColumnTypeInterface`, `Omeka\Stdlib\Browse`;
+  `AbstractEntityAdapter::sortQuery()`.
+- Measured: each hook fires on its page with what the note lists; a
+  module column shows through `column_defaults` without user settings; a
+  search partial, a filter label and an `api.search.query` condition
+  work together; a hostile string through `escapeHtml` arrives escaped on
+  every page; an unknown `sort_by` is ignored. The test environment was
+  reset afterwards.
+- Reasoned, not measured: the conclusions for the spec in the note.
+- Decided by Maurice: version left at 0.1.0 until release; begin M2.

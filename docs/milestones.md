@@ -61,3 +61,13 @@ Proposed 2026-11-04; one step at a time, each after an "ok".
 **M1 is done (2026-11-04):** the verdict of every new JPEG, PNG and WebP
 equals `vendor/bin/c2pa-verify` on the same file, measured in Omeka S
 4.2.1 (SPEC-002). Next: M2, showing it.
+
+## M2 steps
+
+Proposed 2026-11-04; one step at a time, each after an "ok".
+
+| step | what | status |
+|---|---|---|
+| M2.1 | Measure the admin view hooks: the media page, the browse, a filter; escaping | done 2026-11-04 (`notes/step-13-admin-views.md`) |
+| M2.2 | The M2 spec (`draft`) | proposed |
+| M2.3 | after approval: tests seen red, the implementation, green, Traceability | proposed |
