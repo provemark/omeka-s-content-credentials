@@ -559,3 +559,11 @@ README are where the disclosure lives.
 - Measured: SPEC-002's altered JPEG gives the same verdict with and
   without the bundled lists (for the amendment's claim).
 - Decided by Maurice: approval pending.
+
+## 2026-11-04: SPEC-004 approved
+
+- Decided by Maurice: SPEC-004 approved with all recommendations (change
+  the `CREATE TABLE`, no `upgrade()`; the age warning on the configure page
+  only; custom settings in `Omeka\Settings`; copy the Pixel 10 photo), and
+  with it SPEC-002 amendment 1 and SPEC-003 amendment 1 ("ok, SPEC-004
+  goedgekeurd met alle aanbevelingen, begin").

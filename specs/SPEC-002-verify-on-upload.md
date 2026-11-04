@@ -287,6 +287,17 @@ before its first file.
   *Status 2026-11-04:* answered, copied, the recommendation approved by
   Maurice van Loon with the spec.
 
+## Amendments
+
+- **Amendment 1 (2026-11-04, approved by Maurice van Loon with SPEC-004):**
+  the table gains a column `trust VARCHAR(64) NULL`, after `verifier`, and
+  each verdict is produced with the trust settings of SPEC-004 (the
+  `trust` value names them; NULL for an `error` before verification). The
+  `CREATE TABLE` statement changes; there is no `upgrade()` before the
+  first release. Was: verified without settings, no `trust` column. The
+  criteria above are unchanged; their fixtures give the same verdicts with
+  the bundled lists (SPEC-004, Amendments).
+
 ## Traceability
 
 Filled when status becomes `implemented`. Every acceptance criterion maps to at

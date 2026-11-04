@@ -242,6 +242,14 @@ Deptrac gets a layer `Display` (no Omeka S, may use nothing but
   *Status 2026-11-04:* answered, accepted and to be said in the README,
   approved by Maurice van Loon with the spec.
 
+## Amendments
+
+- **Amendment 1 (2026-11-04, approved by Maurice van Loon with SPEC-004):**
+  the block gains SPEC-004 AC7's trust line after the "Checked …" line,
+  and a row whose `trust` is not NULL and not one of
+  `c2pa-YYYY-MM-DD+digicert`, `c2pa-YYYY-MM-DD`, `custom`, `none` is
+  unreadable. Was: no trust line. Tested under SPEC-004 AC7.
+
 ## Traceability
 
 Filled when status becomes `implemented`. Every acceptance criterion maps to at

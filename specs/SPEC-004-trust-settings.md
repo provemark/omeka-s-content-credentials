@@ -2,9 +2,9 @@
 
 | Field      | Value                                             |
 |------------|---------------------------------------------------|
-| Status     | draft                                             |
+| Status     | approved                                          |
 | Author     | Maurice van Loon                                  |
-| Approved   | —                                                 |
+| Approved   | Maurice van Loon, 2026-11-04                      |
 | Supersedes | —                                                 |
 
 > Lifecycle: `draft` → maintainer approves → `approved` → tests-first →
@@ -257,6 +257,9 @@ without settings, `trust` `none`", not `error`). `Verdict` gains `trust`.
 
 ## Amendments proposed with this spec
 
+Both approved by Maurice van Loon with this spec on 2026-11-04, and
+recorded in the Amendments sections of SPEC-002 and SPEC-003.
+
 - **SPEC-002 amendment 1:** the table gains a column
   `trust VARCHAR(64) NULL`, after `verifier`, and each verdict is
   produced with the settings of this spec's table. Was: verified without
@@ -282,18 +285,26 @@ without settings, `trust` `none`", not `error`). `Verdict` gains `trust`.
   bump, which stays 0.1.0 until release (Maurice, 2026-11-04).
   Recommendation: change the statement, no `upgrade()`; `upgrade()`
   starts with the first release after 0.1.0. *Blocker for approval.*
+  *Status 2026-11-04:* answered, the recommendation approved by Maurice
+  van Loon with the spec.
 - **Where the age warning shows.** Only on the configure page
   (recommendation, as in Tracefern), or on every admin page through
   `view.layout` (measured possible in step 15). Every page reaches
   administrators who never open the configure page, but it shows to
   every editor too, who cannot act on it. *Blocker for approval.*
+  *Status 2026-11-04:* answered, the recommendation approved by Maurice
+  van Loon with the spec.
 - **Where custom settings are stored.** In `Omeka\Settings`
   (recommendation; each request decodes all settings, about 0.2 ms for
   74 KB, step 15), or in a module table read only when verifying.
   *Non-blocker.*
+  *Status 2026-11-04:* answered, the recommendation approved by Maurice
+  van Loon with the spec.
 - **A 5.8 MB fixture.** The Pixel 10 photo is the only file in step 16
   that is `Trusted` by default and stays so until 2035. Recommendation:
   copy it; `Trusted` by default is this spec's point. *Non-blocker.*
+  *Status 2026-11-04:* answered, the recommendation approved by Maurice
+  van Loon with the spec.
 
 ## Traceability
 
