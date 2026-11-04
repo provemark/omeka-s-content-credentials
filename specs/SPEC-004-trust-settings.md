@@ -214,6 +214,13 @@ never logged.
   - Then the database snapshot of SPEC-001 equals the one from before
     installing: no `content_credentials_%` row in `setting`
 
+- **AC11 — the modules page links to the configure page** *(amendment 1)*
+  - Given a global administrator and a site administrator
+  - When each opens `/admin/module`
+  - Then the global administrator sees a link to
+    `/admin/module/configure?id=ContentCredentials` in the module's row,
+    and the site administrator sees the module but no such link
+
 ## References
 
 - Specification: C2PA Technical Specification 2.4, §14.4 (trust lists:
@@ -276,6 +283,16 @@ recorded in the Amendments sections of SPEC-002 and SPEC-003.
   of the four forms (`c2pa-YYYY-MM-DD+digicert`, `c2pa-YYYY-MM-DD`,
   `custom`, `none`) is unreadable. Was: no trust line.
 
+## Amendments
+
+- **Amendment 1 (2026-11-04, approved by Maurice van Loon):** adds AC11.
+  Omeka S shows a module's Configure link only when `config/module.ini`
+  says `configurable = true` (`Module::isConfigurable()`,
+  `view/omeka/admin/module/browse.phtml`, read and measured). Without it
+  the configure page was reachable only by its URL, which is how step 15
+  and this spec's tests opened it. Was: no criterion for reaching the
+  page. Record: `notes/step-19-configure-link.md`.
+
 ## Open questions
 
 - **The table change.** Changing the `CREATE TABLE` before the first
@@ -324,3 +341,4 @@ least one test; every source file maps back to this spec. All tests carry
 | AC8 | `tests/Unit/TrustSettingsTest.php` :: AC8; `tests/Integration/TrustSettingsTest.php` :: AC8 | `Display\SettingsPage::html()`; `Omeka\TrustConfig::form()`; `Omeka\ViewText` |
 | AC9 | `tests/Unit/TrustSettingsTest.php` :: AC9 (two tests); `tests/Integration/TrustSettingsTest.php` :: AC9 | `Trust\BundledLists::isStale()`, `STALE_AFTER_DAYS`; `Display\SettingsPage::html()` (`$stale`) |
 | AC10 | `tests/Integration/TrustSettingsTest.php` :: AC10 | `Module::uninstall()` |
+| AC11 | `tests/Integration/TrustSettingsTest.php` :: AC11 | `config/module.ini` (`configurable`) |

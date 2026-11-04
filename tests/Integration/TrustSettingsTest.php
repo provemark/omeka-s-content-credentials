@@ -256,3 +256,25 @@ it('AC10: uninstall removes the settings', function (): void {
         ->and($omeka->sql("SELECT COUNT(*) FROM setting WHERE id LIKE 'content\\_credentials\\_%'"))->toBe('0');
     spec004Omeka();
 })->group('SPEC-004');
+
+it('AC11: the modules page links to the configure page, for global admins only', function (): void {
+    $omeka = spec004Omeka();
+    $link = 'href="/admin/module/configure?id=ContentCredentials"';
+    $decoded = static fn (string $html): string => html_entity_decode($html, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+
+    $admin = $omeka->get('/admin/module');
+
+    $email = 'spec004-site_admin-'.getmypid().'-'.random_int(0, PHP_INT_MAX).'@example.com';
+    $id = OmekaInstallation::idFrom($omeka->api('POST', '/api/users', ['o:email' => $email, 'o:name' => 'site_admin', 'o:role' => 'site_admin', 'o:is_active' => true]));
+    $omeka->sql("UPDATE user SET password_hash = '".password_hash('spec004-test-only', PASSWORD_DEFAULT)."' WHERE id = {$id}");
+    $siteAdmin = OmekaInstallation::php83();
+    $siteAdmin->logIn($email, 'spec004-test-only');
+    $theirs = $siteAdmin->get('/admin/module');
+    $omeka->sql("DELETE FROM user WHERE id = {$id}");
+
+    expect($admin->status)->toBe(200)
+        ->and($decoded($admin->body))->toContain($link)
+        ->and($theirs->status)->toBe(200)
+        ->and($decoded($theirs->body))->toContain('Content Credentials (C2PA)')
+        ->and($decoded($theirs->body))->not->toContain('configure?id=ContentCredentials');
+})->group('SPEC-004');

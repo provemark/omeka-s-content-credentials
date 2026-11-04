@@ -608,3 +608,16 @@ README are where the disclosure lives.
   container's `local.config.php` was changed for one case and restored.
 - Not measured: scale, concurrency, restart after a stop (M4.2); a host
   with `exec` disabled.
+
+## 2026-11-04: SPEC-004 amendment 1, the Configure link
+
+- Model: Claude Opus 5.5, Claude Code CLI
+- Asked: "Hoe kan ik vanuit het home naar die configuratie?"; then
+  "ok, amendement goedgekeurd, voer het uit".
+- Found: no Configure link on the modules page; Omeka requires
+  `configurable = true` in `module.ini`. My oversight in M3: the page was
+  only ever opened by URL.
+- Decided by Maurice: SPEC-004 amendment 1 (AC11).
+- Produced: the AC11 test (seen red after correcting a too-strict first
+  version, see the note); `config/module.ini`; SPEC-004 AC11, Amendments
+  and Traceability; `notes/step-19-configure-link.md`; NOTES, CHANGELOG.
