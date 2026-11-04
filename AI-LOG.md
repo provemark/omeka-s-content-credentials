@@ -331,8 +331,7 @@ README are where the disclosure lives.
 - Asked: M1.2.
 - Produced: the measurement-only module `tools/probes/StorageProbe/`;
   `notes/step-10-storage-and-after-flush.md`; `docs/adr/ADR-0003-storage.md`
-  (proposed); `NOTES.md`, `docs/milestones.md`. Pint also reformatted
-  `tools/probes/EventProbe/`.
+  (proposed); `NOTES.md`, `docs/milestones.md`.
 - Read: `Omeka\Service\EntityManagerFactory`, Doctrine's
   `UnitOfWork::commit()`, the Mapping module's `Module.php` and
   `config/module.config.php` (GitHub).
