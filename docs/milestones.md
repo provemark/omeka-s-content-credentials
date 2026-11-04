@@ -53,6 +53,6 @@ Proposed 2026-11-04; one step at a time, each after an "ok".
 | step | what | status |
 |---|---|---|
 | M1.1 | Measure the events around a new media item and where the original is, on every route the core offers | done 2026-11-04 (`notes/step-09-events-and-original.md`) |
-| M1.2 | Measure a module-owned table (entity, install and uninstall SQL) and the hook after the flush; ADR-0003 storage | done 2026-11-04 (`notes/step-10-storage-and-after-flush.md`); ADR-0003 proposed |
+| M1.2 | Measure a module-owned table (entity, install and uninstall SQL) and the hook after the flush; ADR-0003 storage | done 2026-11-04 (`notes/step-10-storage-and-after-flush.md`); ADR-0003 accepted 2026-11-04 |
 | M1.3 | Measure loading the verifier without the module's whole `vendor/` | proposed |
 | M1.4 | The M1 spec (`draft`), resting on M1.1 to M1.3 | proposed |

@@ -346,3 +346,8 @@ README are where the disclosure lives.
   request.
 - Decided by Maurice: to do M1.2 ("ok, begin met M1.2"); ADR-0003 awaits
   his decision.
+
+## 2026-11-04: ADR-0003 accepted
+
+- Decided by Maurice: ADR-0003 (storing the verdict) accepted ("ok,
+  ADR-0003 aangenomen").
