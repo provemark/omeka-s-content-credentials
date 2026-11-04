@@ -19,10 +19,15 @@ use Omeka\Module\AbstractModule;
 final class Module extends AbstractModule
 {
     /**
-     * @return array<string, mixed>
+     * @return array<mixed>
      */
     public function getConfig(): array
     {
-        return require __DIR__.'/config/module.config.php';
+        $config = require __DIR__.'/config/module.config.php';
+        if (! is_array($config)) {
+            throw new \UnexpectedValueException('config/module.config.php must return an array.');
+        }
+
+        return $config;
     }
 }

@@ -36,4 +36,5 @@ One concept per step, one commit per step, each built after an "ok".
 | M0.5 | An empty module skeleton (`config/module.ini`, `Module.php`, `config/module.config.php`); measure whether the namespace must equal the directory, and that it installs and uninstalls cleanly in the pinned Omeka S | done 2026-11-03 (`notes/step-05-module-skeleton.md`) |
 | M0.6a | `specs/TEMPLATE.md` and SPEC-000 (`draft`), a port of the verifier's SPEC-000 with one new criterion | done 2026-11-03; SPEC-000 approved 2026-11-04 |
 | M0.6b | after approval: SPEC-000's tests, seen red; `bin/spec-check.php`; green; Traceability filled | done 2026-11-04 (`notes/step-06-spec-check.md`) |
-| M0.7 | `composer check`: spec-check, Pint, PHPStan at level max, Deptrac, Pest (unit, and integration with the install test); green on an empty `src/` | proposed |
+| M0.7a | `composer check`: spec-check, Pint, PHPStan at level max, Deptrac, Pest (unit); green on an empty `src/` | done 2026-11-04 (`notes/step-07-composer-check.md`) |
+| M0.7b | SPEC-001 (install and uninstall), then its integration tests against the Docker environment, in `composer check` | proposed |

@@ -28,6 +28,7 @@ services:
       db:
         condition: service_healthy
     environment:
+      OMEKA_ROOT: /var/www/html
       OMEKA_DB_HOST: db
       OMEKA_DB_NAME: omeka
       OMEKA_DB_USER: omeka

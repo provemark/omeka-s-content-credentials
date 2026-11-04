@@ -22,3 +22,5 @@ day the work was committed.
 - M0: the spec template and SPEC-000, the spec traceability check
   (`bin/spec-check.php`), as the first step of `composer check`; it also
   refuses two spec files with one ID. (2026-11-04)
+- M0: `composer check` runs spec-check, Pint, PHPStan at level max (Omeka S
+  read from the pinned release), Deptrac and the unit tests. (2026-11-04)

@@ -1,0 +1,27 @@
+parameters:
+    level: max
+    paths:
+        - Module.php
+        - config
+        - src
+        - bin
+        - tests
+        - docker/omeka/install.php
+    # Omeka S's own classes, from the pinned release unpacked by
+    # tools/fetch-omeka.sh (ADR-0002): read, never autoloaded. Only the
+    # directories the module's code reaches: Omeka S itself, Laminas, and
+    # Omeka's own forks of Laminas packages (omeka/sanimal-*, e.g. the MVC
+    # application). Not the whole vendor/: it shares packages with this
+    # repository's at other major versions (notes/step-05-module-skeleton.md).
+    scanDirectories:
+        - build/omeka-s/application/src
+        - build/omeka-s/vendor/laminas
+        - build/omeka-s/vendor/omeka
+    excludePaths:
+        analyse:
+            - tests/Fixtures
+    # No ignoreErrors. One excluded path, SPEC-000: tests/Fixtures holds the
+    # fixture trees of SPEC-000's tests, inputs rather than code (their line
+    # numbers are part of the tests, so Pint leaves them alone too). Any
+    # other exception is added here with the spec ID and the reason, never
+    # as a bare pattern.

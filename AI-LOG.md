@@ -195,3 +195,26 @@ README are where the disclosure lives.
   (inferred from the test count).
 - Decided by Maurice: SPEC-000 approved ("ok, SPEC-000 goedgekeurd, begin
   met M0.6b").
+
+## 2026-11-04: `composer check` (M0.7a)
+
+- Model: Claude Opus 5.5, Claude Code CLI
+- Asked: M0.7: the rest of `composer check`.
+- Produced: `pint.json`, `phpstan.neon`, `deptrac.yaml`,
+  `tools/fetch-omeka.sh`, the `check` chain in `composer.json`; type and
+  style fixes in `docker/omeka/install.php` (with `OMEKA_ROOT` in
+  `compose.yaml`), `Module.php` and SPEC-000's AC10 test;
+  `notes/step-07-composer-check.md`; `docs/milestones.md` (M0.7 split into
+  7a and 7b, because the integration test needs SPEC-001 first),
+  `NOTES.md`, `CHANGELOG.md`.
+- Read: the verifier's and Tracefern's `pint.json`, `phpstan.neon` and
+  `deptrac.yaml`, and the verifier's scripts; in the Omeka S release, the
+  signatures of `Application::init()` and `Installer`.
+- Measured: Pint's and PHPStan's findings and their fixes; that PHPStan
+  knows Omeka S only through the scan (falsified without it); that the MVC
+  application is Omeka's fork `omeka/sanimal-mvc`; that Deptrac with
+  `--fail-on-uncovered` passes a class in no layer; `composer check` green;
+  the environment and the module's lifecycle again after the changes.
+  Details in the step note.
+- Reasoned, not measured: nothing new.
+- Decided by Maurice: to start M0.7 ("ok, begin met M0.7").

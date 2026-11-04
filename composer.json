@@ -34,9 +34,19 @@
     },
     "scripts": {
         "spec-check": "@php bin/spec-check.php",
+        "format": "pint",
+        "lint": "pint --test",
+        "analyse": [
+            "sh tools/fetch-omeka.sh",
+            "phpstan analyse --no-progress --memory-limit=1G"
+        ],
+        "deptrac": "deptrac analyse --no-progress",
         "test": "pest --testsuite=Unit",
         "check": [
             "@spec-check",
+            "@lint",
+            "@analyse",
+            "@deptrac",
             "@test"
         ]
     }

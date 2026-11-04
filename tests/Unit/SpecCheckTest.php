@@ -117,10 +117,11 @@ it('AC9: a multi-argument group call counts for every spec it names', function (
 
 it('AC10: spec-check is the first step of composer check', function (): void {
     $composer = json_decode((string) file_get_contents(dirname(__DIR__, 2).'/composer.json'), true, 512, JSON_THROW_ON_ERROR);
+    $scripts = is_array($composer) && is_array($composer['scripts'] ?? null) ? $composer['scripts'] : [];
+    $check = is_array($scripts['check'] ?? null) ? $scripts['check'] : [];
 
-    expect($composer)->toBeArray()
-        ->and($composer['scripts']['check'][0] ?? null)->toBe('@spec-check')
-        ->and($composer['scripts']['spec-check'] ?? null)->toBe('@php bin/spec-check.php');
+    expect($check[0] ?? null)->toBe('@spec-check')
+        ->and($scripts['spec-check'] ?? null)->toBe('@php bin/spec-check.php');
 })->group('SPEC-000');
 
 it('AC11: a test naming a criterion its spec does not trace is a finding naming file, line and criterion', function (): void {

@@ -1,0 +1,12 @@
+# Architecture boundaries for src/, one layer per milestone, each added
+# before the first file in it (so that file lands under a rule instead of
+# before one). Adding an arrow between layers is a decision that belongs in
+# the spec of the code that needs it.
+#
+# M0: src/ is empty and there are no layers yet. M1's layer comes with M1's
+# first spec.
+deptrac:
+  paths:
+    - ./src
+  layers: []
+  ruleset: []

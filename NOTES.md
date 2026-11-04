@@ -123,6 +123,7 @@ omeka.org, only with Maurice's go.
 | M0.4 | [`notes/step-04-dependencies.md`](notes/step-04-dependencies.md): ADR-0001 PHP 8.3 floor, ADR-0002 dependencies, `composer.json`; `omeka/omeka-s` cannot be required |
 | M0.5 | [`notes/step-05-module-skeleton.md`](notes/step-05-module-skeleton.md): the empty module installs and uninstalls cleanly; namespace must equal the directory; never load the module's whole `vendor/` |
 | M0.6 | [`notes/step-06-spec-check.md`](notes/step-06-spec-check.md): the spec template; SPEC-000 implemented, `bin/spec-check.php` the first step of `composer check` |
+| M0.7a | [`notes/step-07-composer-check.md`](notes/step-07-composer-check.md): Pint, PHPStan at max with Omeka S scanned from the pinned release, Deptrac; Deptrac does not enforce a layer per file |
 
 ## To measure before a spec rests on it
 
