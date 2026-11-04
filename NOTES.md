@@ -146,6 +146,7 @@ and committer of every pushed commit.
 | M2.2 | `specs/SPEC-003-show-the-result.md`: the M2 spec; approved 2026-11-04 with both recommendations (filter on admin requests only; the column for administrators with own columns accepted) |
 | M2.3 | [`notes/step-14-show-the-result.md`](notes/step-14-show-the-result.md): SPEC-003 implemented; Pest's `toContain()` takes needles, not a message; Omeka echoes the query, escaped, in its own Advanced search link; `Status::isAdminRequest()` is false for the anonymous REST API (measured) |
 | M3.1 | [`notes/step-15-settings.md`](notes/step-15-settings.md): the configure page is global-admin only and CSRF-checked; a refused form loses the posted text unless the module restores it; a 74 KB setting reads back exactly, also in `postFlush`; every request decodes all settings; a `view.layout` warning shows on every admin page; a module in `needs_upgrade` is not loaded; uninstall leaves a module's settings |
+| M3.2 | [`notes/step-16-trust-lists.md`](notes/step-16-trust-lists.md): Tracefern's list copy is byte-identical to upstream (`47009ee`, unchanged at `d6dec63`); library equals CLI on 52 file × settings pairs; Pixel 10 and OpenAI `Trusted` by default; DigiCert decides Amazon Titan, Lightroom and `c2pa-rs-ocsp`; `fromJson()` costs about 15 ms per upload; the OpenAI image turns `Invalid` on 2027-04-23 |
 
 ## To measure before a spec rests on it
 

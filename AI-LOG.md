@@ -517,3 +517,17 @@ README are where the disclosure lives.
 - Mistake of mine: the first probe used `messenger()` as a view helper,
   and every admin page gave 500 until it was corrected; the note says so.
 - Not measured: a checkbox field, Laminas form elements, PHP 8.2.
+
+## 2026-11-04: M3.2, the verifier with the bundled trust lists measured
+
+- Model: Claude Opus 5.5, Claude Code CLI
+- Asked: "ok, begin met M3.2".
+- Produced: `tools/probes/TrustSettings/` (three measurement scripts and
+  the main result); `notes/step-16-trust-lists.md`; `docs/milestones.md`;
+  `NOTES.md`.
+- Measured: the list copy against upstream (two `gh api` reads of
+  public files, the only network use, from the development machine); 52
+  library-against-CLI pairs; the same inside Omeka with the module's
+  loader; the cost of `fromJson()`; verdicts at five dates and the
+  OpenAI image's expiry by binary search.
+- Reasoned: which fixtures to propose for M3's tests; nothing copied yet.
