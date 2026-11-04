@@ -35,3 +35,8 @@ day the work was committed.
   in the table `content_credentials_verdict` (created on install, dropped
   on uninstall, removed with its media); a failure is stored as `error`
   and never stops the upload (SPEC-002). (2026-11-04)
+- M2: the verdict in the admin interface: a block on the media page and
+  in the Details panel, a column "Content Credentials" in the media
+  browse, and a filter by verdict (admin only); text from the file is
+  escaped and its control and direction characters made visible
+  (SPEC-003). (2026-11-04)

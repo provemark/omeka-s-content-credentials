@@ -2,7 +2,7 @@
 
 | Field      | Value                                             |
 |------------|---------------------------------------------------|
-| Status     | approved                                          |
+| Status     | implemented                                       |
 | Author     | Maurice van Loon                                  |
 | Approved   | Maurice van Loon, 2026-11-04                      |
 | Supersedes | —                                                 |
@@ -245,18 +245,19 @@ Deptrac gets a layer `Display` (no Omeka S, may use nothing but
 ## Traceability
 
 Filled when status becomes `implemented`. Every acceptance criterion maps to at
-least one test; every source file maps back to this spec.
+least one test; every source file maps back to this spec. All tests carry
+`->group('SPEC-003')`; the record is `notes/step-14-show-the-result.md`.
 
 | Acceptance criterion | Test (file :: name / group) | Source (file/symbol) |
 |----------------------|-----------------------------|----------------------|
-| AC1                  | —                           | —                    |
-| AC2                  | —                           | —                    |
-| AC3                  | —                           | —                    |
-| AC4                  | —                           | —                    |
-| AC5                  | —                           | —                    |
-| AC6                  | —                           | —                    |
-| AC7                  | —                           | —                    |
-| AC8                  | —                           | —                    |
-| AC9                  | —                           | —                    |
-| AC10                 | —                           | —                    |
-| AC11                 | —                           | —                    |
+| AC1 | `tests/Unit/ShowTheResultTest.php` :: AC1; `tests/Integration/ShowTheResultTest.php` :: AC1 | `Display\Presentation::of()`, `headline()`; `Omeka\StateColumn`, `StateColumnFactory`; `config/module.config.php` (`column_types`, `column_defaults`) |
+| AC2 | `tests/Unit/ShowTheResultTest.php` :: AC2; `tests/Integration/ShowTheResultTest.php` :: AC2 | `Omeka\AdminDisplay::sidebar()`, `details()`; `Omeka\VerdictHtml::block()`; `Omeka\VerdictReader`; `Omeka\ViewText`; `Module::attachListeners()` |
+| AC3 | `tests/Unit/ShowTheResultTest.php` :: AC3; `tests/Integration/ShowTheResultTest.php` :: AC3 | `Display\Presentation::of()`, `codes()` |
+| AC4 | `tests/Unit/ShowTheResultTest.php` :: AC4; `tests/Integration/ShowTheResultTest.php` :: AC4 | `Display\Presentation::of()`; `Omeka\VerdictHtml::block()` |
+| AC5 | `tests/Unit/ShowTheResultTest.php` :: AC5; `tests/Integration/ShowTheResultTest.php` :: AC5 | `Display\Presentation::REASONS` |
+| AC6 | `tests/Unit/ShowTheResultTest.php` :: AC6; `tests/Integration/ShowTheResultTest.php` :: AC6 | `Display\Presentation::of()`; `Omeka\VerdictReader::row()`, `rowFor()` |
+| AC7 | `tests/Integration/ShowTheResultTest.php` :: AC7 | `Omeka\ViewText::escape()`, `line()`; `Omeka\VerdictHtml`; `Omeka\StateColumn::renderHeader()` |
+| AC8 | `tests/Unit/ShowTheResultTest.php` :: AC8 (three tests); `tests/Integration/ShowTheResultTest.php` :: AC8 | `Display\Text::visible()` |
+| AC9 | `tests/Unit/ShowTheResultTest.php` :: AC10; `tests/Integration/ShowTheResultTest.php` :: AC9 | `Omeka\AdminDisplay::advancedSearch()`, `searchFilters()`, `searchQuery()`; `view/content-credentials/advanced-search.phtml`; `Display\FilterValue` |
+| AC10 | `tests/Unit/ShowTheResultTest.php` :: AC10; `tests/Integration/ShowTheResultTest.php` :: AC10 | `Display\FilterValue::parse()`; `Omeka\AdminDisplay::searchFilters()`, `searchQuery()` |
+| AC11 | `tests/Integration/ShowTheResultTest.php` :: AC11 | `Omeka\AdminDisplay::searchQuery()` (`Status::isAdminRequest()`); listeners on `Omeka\Controller\Admin\Media` only |

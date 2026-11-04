@@ -468,3 +468,27 @@ README are where the disclosure lives.
   filter on admin requests only; the column for administrators with own
   columns accepted, said in the README) ("ok, SPEC-003 goedgekeurd met
   beide aanbevelingen, begin").
+
+## 2026-11-04: M2.3, SPEC-003 implemented
+
+- Model: Claude Opus 5.5, Claude Code CLI
+- Asked: "ok, SPEC-003 goedgekeurd met beide aanbevelingen, begin".
+- Produced: `tests/Unit/ShowTheResultTest.php` and
+  `tests/Integration/ShowTheResultTest.php` (first, seen red: 41 unit
+  failures on missing classes, 10 of 11 integration failures);
+  `src/Display/` (Presentation, Text, FilterValue) and the Deptrac layer
+  `Display`; `src/Omeka/` AdminDisplay, StateColumn(Factory), VerdictHtml,
+  VerdictReader, ViewText; `view/content-credentials/advanced-search.phtml`;
+  `config/module.config.php`; `Module.php`; SPEC-003 Traceability and
+  status `implemented`; `notes/step-14-show-the-result.md`; README,
+  milestones, NOTES, CHANGELOG.
+- Measured: the red and green runs; AC11 made to fail by removing the
+  admin-only guard, then green with it; `composer check` green (88 unit,
+  31 integration tests); the new files lint on PHP 8.2.35.
+- Mistakes of mine, caught by the tests: `toContain()` given a message as
+  a second argument (Pest reads it as a needle); AC10 first checked the
+  whole page for the echoed value, where Omeka's own escaped link holds it.
+- Interpretation for Maurice to confirm: AC10's "never echoed" read as
+  "by the module".
+- Not measured: the browse's cost (one row query per media item), the
+  column picker, the look in a browser.

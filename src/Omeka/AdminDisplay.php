@@ -1,0 +1,132 @@
+<?php
+
+declare(strict_types=1);
+
+namespace ContentCredentials\Omeka;
+
+use ContentCredentials\Display\FilterValue;
+use ContentCredentials\Display\Presentation;
+use ContentCredentials\Entity\StoredVerdict;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\QueryBuilder;
+use Laminas\EventManager\EventInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\View\Renderer\PhpRenderer;
+use Omeka\Api\Adapter\AbstractEntityAdapter;
+use Omeka\Api\Representation\AbstractResourceRepresentation;
+use Omeka\Api\Request;
+use Omeka\Mvc\Status;
+use UnexpectedValueException;
+
+/**
+ * The verdict in the admin interface (SPEC-003): the block on the media
+ * page (`view.show.sidebar`) and in the Details panel (`view.details`),
+ * and the browse filter (`view.advanced_search`, `view.search.filters`,
+ * `api.search.query`). The filter applies to admin requests only: on the
+ * public site and the REST API the parameter changes nothing (AC11).
+ */
+final class AdminDisplay
+{
+    public const SEARCH_PARTIAL = 'content-credentials/advanced-search';
+
+    public function __construct(
+        private readonly VerdictReader $reader,
+        private readonly Status $status,
+    ) {}
+
+    public static function create(ServiceLocatorInterface $services): self
+    {
+        $entityManager = $services->get('Omeka\EntityManager');
+        $status = $services->get('Omeka\Status');
+        if (! $entityManager instanceof EntityManager || ! $status instanceof Status) {
+            throw new UnexpectedValueException('Omeka S did not provide its entity manager and status.');
+        }
+
+        return new self(new VerdictReader($entityManager), $status);
+    }
+
+    /** @param EventInterface<object|string|null, array<mixed>|\ArrayAccess<mixed, mixed>|object> $event */
+    public function sidebar(EventInterface $event): void
+    {
+        $view = $event->getTarget();
+        if ($view instanceof PhpRenderer) {
+            $this->echoBlock($view, $view->vars('media'));
+        }
+    }
+
+    /** @param EventInterface<object|string|null, array<mixed>|\ArrayAccess<mixed, mixed>|object> $event */
+    public function details(EventInterface $event): void
+    {
+        $view = $event->getTarget();
+        if ($view instanceof PhpRenderer) {
+            $this->echoBlock($view, $event->getParam('entity'));
+        }
+    }
+
+    /** @param EventInterface<object|string|null, array<mixed>|\ArrayAccess<mixed, mixed>|object> $event */
+    public function advancedSearch(EventInterface $event): void
+    {
+        $partials = $event->getParam('partials');
+        if (is_array($partials)) {
+            $partials[] = self::SEARCH_PARTIAL;
+            $event->setParam('partials', $partials);
+        }
+    }
+
+    /** @param EventInterface<object|string|null, array<mixed>|\ArrayAccess<mixed, mixed>|object> $event */
+    public function searchFilters(EventInterface $event): void
+    {
+        $view = $event->getTarget();
+        $query = $event->getParam('query');
+        $filters = $event->getParam('filters');
+        if (! $view instanceof PhpRenderer || ! is_array($query) || ! is_array($filters)) {
+            return;
+        }
+        $state = FilterValue::parse($query[FilterValue::PARAMETER] ?? null);
+        if ($state === null) {
+            return;
+        }
+        $text = new ViewText($view);
+        // Plain text: Omeka's search-filters partial escapes labels and values.
+        $label = $text->translate(VerdictHtml::HEADING);
+        $values = is_array($filters[$label] ?? null) ? $filters[$label] : [];
+        $values[] = $state === false
+            ? $text->translate('(unknown value)')
+            : $text->translate(Presentation::HEADLINES[$state]);
+        $filters[$label] = $values;
+        $event->setParam('filters', $filters);
+    }
+
+    /** @param EventInterface<object|string|null, array<mixed>|\ArrayAccess<mixed, mixed>|object> $event */
+    public function searchQuery(EventInterface $event): void
+    {
+        if (! $this->status->isAdminRequest()) {
+            return;
+        }
+        $request = $event->getParam('request');
+        $qb = $event->getParam('queryBuilder');
+        $adapter = $event->getTarget();
+        if (! $request instanceof Request || ! $qb instanceof QueryBuilder || ! $adapter instanceof AbstractEntityAdapter) {
+            return;
+        }
+        $state = FilterValue::parse($request->getContent()[FilterValue::PARAMETER] ?? null);
+        if ($state === null) {
+            return;
+        }
+        if ($state === false) {
+            $qb->andWhere('1 = 0');
+
+            return;
+        }
+        $alias = $adapter->createAlias();
+        $qb->innerJoin(StoredVerdict::class, $alias, 'WITH', "{$alias}.media = omeka_root.id")
+            ->andWhere($qb->expr()->eq("{$alias}.state", $adapter->createNamedParameter($qb, $state)));
+    }
+
+    private function echoBlock(PhpRenderer $view, mixed $media): void
+    {
+        if ($media instanceof AbstractResourceRepresentation) {
+            echo VerdictHtml::block(Presentation::of($this->reader->rowFor($media->id())), new ViewText($view));
+        }
+    }
+}

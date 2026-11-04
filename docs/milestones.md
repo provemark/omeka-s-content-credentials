@@ -70,4 +70,9 @@ Proposed 2026-11-04; one step at a time, each after an "ok".
 |---|---|---|
 | M2.1 | Measure the admin view hooks: the media page, the browse, a filter; escaping | done 2026-11-04 (`notes/step-13-admin-views.md`) |
 | M2.2 | The M2 spec (`draft`) | done 2026-11-04: SPEC-003 `draft`; approved 2026-11-04 |
-| M2.3 | after approval: tests seen red, the implementation, green, Traceability | proposed |
+| M2.3 | after approval: tests seen red, the implementation, green, Traceability | done 2026-11-04 (`notes/step-14-show-the-result.md`) |
+
+**M2 is done (2026-11-04):** an integration test sees each state on the
+media page, in the Details panel and in the browse column; untrusted text
+is escaped and control and direction characters made visible (SPEC-003).
+Next: M3, trust settings.

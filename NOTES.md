@@ -143,6 +143,8 @@ and committer of every pushed commit.
 | M1.4 | `specs/SPEC-002-verify-on-upload.md`: the M1 spec; approved 2026-11-04 with SPEC-001 amendment 1 |
 | M1.5 | [`notes/step-12-verify-on-upload.md`](notes/step-12-verify-on-upload.md): SPEC-002 implemented; every new JPEG, PNG and WebP gets the CLI's verdict, stored after the commit; Omeka's `application.config.php` sets `$url` in its caller's scope |
 | M2.1 | [`notes/step-13-admin-views.md`](notes/step-13-admin-views.md): `view.show.sidebar`, `view.details`, a column type added through `column_defaults`, `view.advanced_search` / `view.search.filters` / `api.search.query` for a filter; output through `escapeHtml` arrives escaped; an unknown `sort_by` is ignored |
+| M2.2 | `specs/SPEC-003-show-the-result.md`: the M2 spec; approved 2026-11-04 with both recommendations (filter on admin requests only; the column for administrators with own columns accepted) |
+| M2.3 | [`notes/step-14-show-the-result.md`](notes/step-14-show-the-result.md): SPEC-003 implemented; Pest's `toContain()` takes needles, not a message; Omeka echoes the query, escaped, in its own Advanced search link; `Status::isAdminRequest()` is false for the anonymous REST API (measured) |
 
 ## To measure before a spec rests on it
 

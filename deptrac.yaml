@@ -20,7 +20,11 @@ deptrac:
       collectors:
         - type: classLike
           value: ^ContentCredentials\\Entity\\
-    - name: Omeka          # M1, SPEC-002: the wiring into Omeka S (events, store, schema, loader)
+    - name: Display        # M2, SPEC-003: what a row says, in the module's words; no Omeka S
+      collectors:
+        - type: classLike
+          value: ^ContentCredentials\\Display\\
+    - name: Omeka          # M1, SPEC-002: the wiring into Omeka S (events, store, schema, loader); M2, SPEC-003: the views
       collectors:
         - type: classLike
           value: ^ContentCredentials\\Omeka\\
@@ -28,4 +32,5 @@ deptrac:
     Requirements: []
     Check: [Requirements]
     Entity: []
-    Omeka: [Check, Entity, Requirements]
+    Display: [Check]
+    Omeka: [Check, Display, Entity, Requirements]

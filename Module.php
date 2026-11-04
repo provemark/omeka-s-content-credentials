@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace ContentCredentials;
 
+use ContentCredentials\Omeka\AdminDisplay;
 use ContentCredentials\Omeka\AfterFlushListener;
 use ContentCredentials\Omeka\Schema;
 use Doctrine\DBAL\Connection;
@@ -24,7 +25,9 @@ use Omeka\Module\Exception\ModuleCannotInstallException;
  * (SPEC-001; module.ini cannot state a PHP version), and creates the
  * verdict table; uninstalling drops it (SPEC-002, ADR-0003). Every new
  * media item is handed to the after-flush listener, which verifies JPEG,
- * PNG and WebP originals once they are committed (SPEC-002).
+ * PNG and WebP originals once they are committed (SPEC-002). The admin
+ * media page, its Details panel, the browse column and the browse filter
+ * show the verdict (SPEC-003).
  *
  * Keep this file parseable on PHP 8.1: Omeka S 4.2 runs from 8.1 and loads it
  * before the module can say it needs 8.3 (ADR-0001).
@@ -32,6 +35,8 @@ use Omeka\Module\Exception\ModuleCannotInstallException;
 final class Module extends AbstractModule
 {
     private ?AfterFlushListener $afterFlush = null;
+
+    private ?AdminDisplay $adminDisplay = null;
 
     /**
      * @return array<mixed>
@@ -78,6 +83,19 @@ final class Module extends AbstractModule
                 // Inside Doctrine's flush: nothing may undo the upload (SPEC-002).
             }
         });
+
+        $adminMedia = 'Omeka\Controller\Admin\Media';
+        $display = function (string $method): \Closure {
+            return function (EventInterface $event) use ($method): void {
+                $this->adminDisplay ??= AdminDisplay::create($this->getServiceLocator());
+                $this->adminDisplay->{$method}($event);
+            };
+        };
+        $sharedEventManager->attach($adminMedia, 'view.show.sidebar', $display('sidebar'));
+        $sharedEventManager->attach($adminMedia, 'view.details', $display('details'));
+        $sharedEventManager->attach($adminMedia, 'view.advanced_search', $display('advancedSearch'));
+        $sharedEventManager->attach($adminMedia, 'view.search.filters', $display('searchFilters'));
+        $sharedEventManager->attach('Omeka\Api\Adapter\MediaAdapter', 'api.search.query', $display('searchQuery'));
     }
 
     private static function connection(ServiceLocatorInterface $serviceLocator): Connection
