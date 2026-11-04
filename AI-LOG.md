@@ -302,3 +302,25 @@ README are where the disclosure lives.
   that a failing step turns the run red (no deliberately red commit was
   pushed).
 - Decided by Maurice: to build CI ("ok, begin met CI").
+
+## 2026-11-04: M1.1, the events around a new media item
+
+- Model: Claude Opus 5.5, Claude Code CLI
+- Asked: begin M1.
+- Produced: the M1 steps in `docs/milestones.md` (proposed); the
+  measurement-only module `tools/probes/EventProbe/`;
+  `notes/step-09-events-and-original.md`; `NOTES.md`.
+- Read: `Omeka\Api\Manager`, `Omeka\Api\Adapter\ItemAdapter` and
+  `MediaAdapter`, `Omeka\File\TempFile`, `Omeka\Media\Ingester\Upload`,
+  `Omeka\Db\Event\Subscriber\Entity` in the pinned 4.2.1 source.
+- Measured: on the admin form, the API (with an item and onto an item) and
+  the URL ingester, `entity.persist.post` on media fires once per new
+  media with the id set and the original present and byte-identical to
+  the upload; `api.create.post` on the media adapter fires only for
+  `POST /api/media`, which falsifies the brief's candidate; media without
+  a file and a refused upload; update; delete of a media and of an item
+  (no media `api.delete.post` then). The test environment was reset
+  afterwards.
+- Reasoned, not measured: that storing must wait until after the flush;
+  which hook that is, CSV Import, File Sideload and batch create.
+- Decided by Maurice: to start M1 ("ok, begin met M1").

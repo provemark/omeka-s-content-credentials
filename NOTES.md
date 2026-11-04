@@ -137,6 +137,7 @@ and committer of every pushed commit.
 | M0.7a | [`notes/step-07-composer-check.md`](notes/step-07-composer-check.md): Pint, PHPStan at max with Omeka S scanned from the pinned release, Deptrac; Deptrac does not enforce a layer per file |
 | M0.7b | same note, second part: SPEC-001 implemented; a module's `src/` is not autoloaded during its own install |
 | CI | [`notes/step-08-ci.md`](notes/step-08-ci.md): GitHub Actions, static checks and unit tests on PHP 8.3–8.5, the integration tests, a parse check on 8.1 and 8.2; first run green |
+| M1.1 | [`notes/step-09-events-and-original.md`](notes/step-09-events-and-original.md): `entity.persist.post` on `Omeka\Entity\Media` fires once per new media on every measured route, original present and byte-identical; `api.create.post` on the media adapter does not (the brief's candidate); deleting an item gives no media `api.delete.post` |
 
 ## To measure before a spec rests on it
 
@@ -147,9 +148,11 @@ Omeka S 4.2.x:
   `config/module.config.php`), and whether the namespace must equal the
   directory;
 - where the original lives, and whether it is byte-identical to the upload
-  on every route (browser upload, URL, sideload, CSV Import, API);
+  on every route: measured for the admin form, the API and the URL
+  ingester (step 09); CSV Import and File Sideload not yet;
 - which event fires once per new media item with the file available, and
-  which on replace and delete;
+  which on update and delete: measured (step 09); which hook fires after
+  the flush has committed, not yet;
 - background jobs, and whether a failing job can break an upload;
 - storage: entity registration, install and uninstall SQL, migrations
   (decision 3);
