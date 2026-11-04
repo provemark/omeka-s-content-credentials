@@ -179,7 +179,7 @@ it('AC6: an error before verification has no trust source', function (): void {
 it('AC6: the page warns when the saved custom settings cannot be used', function (): void {
     $page = spec004Page(custom: 'not json', problem: 'Syntax <error>');
 
-    expect($page)->toContain('The saved custom trust settings cannot be used; new uploads are checked without a trust list.')
+    expect($page)->toContain('The saved custom trust settings cannot be used; new uploads and runs are checked without a trust list.')
         ->and($page)->toContain('Syntax &lt;error&gt;')
         ->and(spec004Page())->not->toContain('cannot be used');
 })->group('SPEC-004');
@@ -211,7 +211,7 @@ it('AC8: the page shows the list, the option, the text and the note', function (
         ->and($page)->toMatch('#<input type="checkbox" name="content_credentials_digicert" id="content-credentials-digicert" value="1" checked>#')
         ->and($page)->toContain('&lt;/textarea&gt;&lt;script&gt;alert(1)&lt;/script&gt;</textarea>')
         ->and($page)->not->toContain('<script>')
-        ->and($page)->toContain('Changes apply to new uploads; media checked before keep their verdict.')
+        ->and($page)->toContain('Changes apply to new uploads and to runs started below; until such a run, media checked before keep their verdict.')
         ->and(spec004Page(digicert: false))->toMatch('#value="1">#')
         ->and(spec004Page(digicert: false))->not->toMatch('#name="content_credentials_digicert"[^>]*checked#');
 })->group('SPEC-004');

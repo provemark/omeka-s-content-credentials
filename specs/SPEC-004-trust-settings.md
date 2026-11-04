@@ -55,7 +55,8 @@ It rests on:
   - a textarea for custom trust settings (the verifier's JSON format);
   - the list date, commit and comparison date;
   - the age warning;
-  - a note that settings apply to new uploads only.
+  - a note that settings apply to new uploads and to runs started
+    afterwards (SPEC-005) *(amendment 2)*.
 - Two Omeka settings: `content_credentials_digicert` and
   `content_credentials_custom_settings`. Nothing is stored on install; an
   absent setting means its default (DigiCert on, no custom settings).
@@ -162,7 +163,7 @@ never logged.
   - Then the image is verified without settings, its row has `trust`
     `none` and the CLI's verdict without settings; the upload proceeds;
     and the configure page warns "The saved custom trust settings cannot
-    be used; new uploads are checked without a trust list." with the
+    be used; new uploads and runs are checked without a trust list." *(amendment 2)* with the
     verifier's reason, escaped. The same holds when a bundled file cannot
     be read
 
@@ -192,8 +193,8 @@ never logged.
     - the DigiCert checkbox, checked when no setting is stored;
     - the textarea with the stored text, escaped, so no `<script>`
       element appears;
-    - "Changes apply to new uploads; media checked before keep their
-      verdict."
+    - "Changes apply to new uploads and to runs started below; until
+      such a run, media checked before keep their verdict." *(amendment 2)*
 
     Saving an empty textarea deletes `content_credentials_custom_settings`.
     A site administrator or an editor cannot open the page (Omeka's
@@ -292,6 +293,16 @@ recorded in the Amendments sections of SPEC-002 and SPEC-003.
   the configure page was reachable only by its URL, which is how step 15
   and this spec's tests opened it. Was: no criterion for reaching the
   page. Record: `notes/step-19-configure-link.md`.
+
+- **Amendment 2 (2026-11-04, approved by Maurice van Loon):** two texts
+  of the configure page now name SPEC-005's runs, which check media again
+  with the settings saved when they start (`notes/step-21-recheck.md`).
+  - Scope, was: "a note that settings apply to new uploads only".
+  - AC8, was: "Changes apply to new uploads; media checked before keep
+    their verdict."
+  - AC6, was: "The saved custom trust settings cannot be used; new
+    uploads are checked without a trust list."
+  Record: `notes/step-22-settings-texts.md`.
 
 ## Open questions
 

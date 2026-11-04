@@ -55,3 +55,6 @@ day the work was committed.
   one at a time, with the trust settings saved when it starts; it shows
   the latest run and links to its job page, where Stop ends it. The job
   log holds only the module's own lines (SPEC-005). (2026-11-04)
+- Changed: the configure page's note and its warning about unusable
+  custom settings now say that runs over existing media use the settings
+  too (SPEC-004 amendment 2). (2026-11-04)

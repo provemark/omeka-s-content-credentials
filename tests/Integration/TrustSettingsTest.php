@@ -191,7 +191,7 @@ it('AC6: settings that cannot be built: checked without them', function (): void
     expect($response->status)->toBe(302)
         ->and($row)->toBe(['Valid', '[]', 'none'])
         ->and($cli)->toBe(['Valid', '[]'])
-        ->and($page)->toContain('The saved custom trust settings cannot be used; new uploads are checked without a trust list.')
+        ->and($page)->toContain('The saved custom trust settings cannot be used; new uploads and runs are checked without a trust list.')
         ->and($page)->not->toContain('not json <b>');
 })->group('SPEC-004');
 
@@ -218,7 +218,7 @@ it('AC8: the configure page', function (): void {
         ->and($page->body)->toMatch('#name="content_credentials_digicert" id="content-credentials-digicert" value="1" checked#')
         ->and($page->body)->not->toContain('<script>alert')
         ->and(spec004Textarea($page->body))->toBe('</textarea><script>alert(1)</script>')
-        ->and($page->body)->toContain('Changes apply to new uploads; media checked before keep their verdict.');
+        ->and($page->body)->toContain('Changes apply to new uploads and to runs started below; until such a run, media checked before keep their verdict.');
 
     expect(spec004Configure($omeka, ['content_credentials_digicert' => '1', 'content_credentials_custom_settings' => ''])->status)->toBe(302)
         ->and(spec004Setting($omeka, 'content_credentials_custom_settings'))->toBe('');

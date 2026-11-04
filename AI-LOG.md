@@ -673,3 +673,13 @@ README are where the disclosure lives.
   apostrophe inside a single-quoted PHP string, made by a `sed` edit;
   seen when reading the edited line back, fixed, then checked with
   `php -l`.
+
+## 2026-11-04: SPEC-004 amendment 2, the settings texts
+
+- Model: Claude Opus 5.5, Claude Code CLI
+- Asked: "ok, stel het amendement voor punt 1 voor"; then "ok, amendement
+  2 goedgekeurd met de AC6-zin, voer het uit".
+- Decided by Maurice: amendment 2, with the AC6 sentence as well.
+- Produced: the four tests (seen red: 4 failed), `SettingsPage`,
+  SPEC-004 (Scope, AC6, AC8, Amendments), `notes/step-22-settings-texts.md`,
+  NOTES, CHANGELOG.

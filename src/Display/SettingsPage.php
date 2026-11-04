@@ -42,7 +42,7 @@ final class SettingsPage
             )).'</p>';
         }
         if ($problem !== null) {
-            $html .= '<p class="content-credentials-warning">'.$t('The saved custom trust settings cannot be used; new uploads are checked without a trust list.')
+            $html .= '<p class="content-credentials-warning">'.$t('The saved custom trust settings cannot be used; new uploads and runs are checked without a trust list.')
                 .' '.$t('Reason:').' '.$escape($problem).'</p>';
         }
         $html .= '<div class="field"><div class="field-meta"><label for="content-credentials-digicert">'.$t('DigiCert timestamps').'</label></div>'
@@ -54,7 +54,7 @@ final class SettingsPage
             .'<div class="inputs"><textarea name="'.self::CUSTOM.'" id="content-credentials-custom-settings" rows="12">'.$escape($custom).'</textarea>'
             .'<p>'.$t('Trust settings in the JSON format of c2patool --settings. They replace the bundled lists entirely; leave empty to use the bundled lists.').'</p>'
             .'</div></div>';
-        $html .= '<p>'.$t('Changes apply to new uploads; media checked before keep their verdict.').'</p>';
+        $html .= '<p>'.$t('Changes apply to new uploads and to runs started below; until such a run, media checked before keep their verdict.').'</p>';
 
         return $html.'</div>';
     }
