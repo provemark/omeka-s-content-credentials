@@ -503,3 +503,17 @@ README are where the disclosure lives.
 - Read: `NOTES.md` §4; the verifier's `docs/trust-settings.md`;
   Tracefern's `specs/SPEC-004-trust-settings.md` (criteria) and
   `trust/README.md`; the list of Tracefern's fixtures. Nothing measured.
+
+## 2026-11-04: M3.1, settings in Omeka S measured
+
+- Model: Claude Opus 5.5, Claude Code CLI
+- Asked: "ok, begin met M3.1".
+- Produced: `tools/probes/SettingsProbe/` (measurement only);
+  `notes/step-15-settings.md`; `docs/milestones.md`; `NOTES.md`.
+- Read: `AbstractModule`, `ModuleController::configureAction()`,
+  `AclFactory`, `AbstractSettings`, `Module\Manager`, `layout-admin.phtml`
+  (Omeka S 4.2.1).
+- Measured: everything in the note's table, in the PHP 8.3 container.
+- Mistake of mine: the first probe used `messenger()` as a view helper,
+  and every admin page gave 500 until it was corrected; the note says so.
+- Not measured: a checkbox field, Laminas form elements, PHP 8.2.
