@@ -89,6 +89,6 @@ SPEC-004; each Omeka equivalent is measured first.
 |---|---|---|
 | M3.1 | Measure Omeka S 4.2.1 for settings: the module configuration form (`getConfigForm()`, `handleConfigForm()`), `Omeka\Settings` (storage, size of a 70 KB value, reading it from the after-flush listener), CSRF on the form, where a warning can show (the configure page, the messenger, the dashboard), and `Module::upgrade()` for a schema change | done 2026-11-04 (`notes/step-15-settings.md`) |
 | M3.2 | Measure the verifier with the bundled lists: our six fixtures and Tracefern's real-world fixtures (Pixel 10, OpenAI, Truepic, Amazon Titan; their licences decide which may be copied), DigiCert on and off, equal to `vendor/bin/c2pa-verify --settings`; and what building the settings adds per upload | done 2026-11-04 (`notes/step-16-trust-lists.md`) |
-| M3.3 | ADR-0004: bundling the trust lists as data (source, commit, CC BY 4.0 attribution, the DigiCert fingerprint, how a copy is refreshed, the age threshold) | proposed |
+| M3.3 | ADR-0004: bundling the trust lists as data (source, commit, CC BY 4.0 attribution, the DigiCert fingerprint, how a copy is refreshed, the age threshold) | done 2026-11-04: ADR-0004 `proposed` |
 | M3.4 | The M3 spec (`draft`), including the column that records the trust source in each row (an amendment to SPEC-002's table) | proposed |
 | M3.5 | after approval: tests seen red, the implementation, green, Traceability | proposed |

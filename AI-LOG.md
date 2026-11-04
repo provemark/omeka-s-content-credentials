@@ -531,3 +531,14 @@ README are where the disclosure lives.
   loader; the cost of `fromJson()`; verdicts at five dates and the
   OpenAI image's expiry by binary search.
 - Reasoned: which fixtures to propose for M3's tests; nothing copied yet.
+
+## 2026-11-04: M3.3, ADR-0004 proposed
+
+- Model: Claude Opus 5.5, Claude Code CLI
+- Asked: "ok, begin met M3.3".
+- Produced: `docs/adr/ADR-0004-bundled-trust-lists.md` (`proposed`);
+  `docs/milestones.md`; `NOTES.md`.
+- Rests on: `notes/step-16-trust-lists.md`; decision 4 in `NOTES.md`.
+- Proposed for Maurice to decide: the age warning counts from the date
+  of the last comparison with upstream, not from the upstream commit
+  date; both are shown.
