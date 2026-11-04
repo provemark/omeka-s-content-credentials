@@ -38,7 +38,7 @@ verdict.
 
 | case | result |
 |---|---|
-| full run, trust built once | 3 097 media in 14.9 s; 3 097 rows afterwards, 0 `error`, 0 recorder failures; memory 12.0 MB at the start, 18.0 MB from item 500 on, peak 18.0 MB; average per item: JPEG 6.0 ms (2 219, including 111 copies of the 5.8 MB photo), PNG 1.7 ms, WebP 2.2 ms |
+| full run, trust built once | 3 097 media in 14.9 s; 3 097 rows afterwards, 0 `error`, 0 recorder failures; memory 12.0 MB at the start, 18.0 MB from item 500 on, peak 18.0 MB; average per item: JPEG 6.0 ms (2 219, including 126 copies of the 5.8 MB photo, counted from the seed mix), PNG 1.7 ms, WebP 2.2 ms |
 | an existing row | replaced in place (`INSERT … ON DUPLICATE KEY UPDATE`): media 1241's `checked_at` went from 12:40:38 to 13:27:48 |
 | first 500 media, trust built per item vs once | 6.6 s vs 1.8 s; per item JPEG 13.8 vs 4.2 ms, PNG 10.6 vs 1.2 ms. Building the bundled settings costs about 9 ms an item (step 16 measured about 15 ms per upload) |
 | stop after 8 s through `/admin/job/{id}/stop`, then a new run after the highest checked id | stop: HTTP 302, job `stopped` after 1 880 items (last id 2736), every checked item stored; the new run from id 2736 checked the remaining 1 217 in 6.0 s; 3 097 rows, `completed` |
