@@ -49,12 +49,12 @@ copies present in both trees counted twice.
 
 | file | none / c2pa / default | source types | SPEC-003 / SPEC-027 (default) | default verdict changes |
 |---|---|---|---|---|
-| OpenAI (2.1 MB, MIT) | Valid / Trusted / Trusted | `c2pa.created` = trained | yes / generated | **2027-04-24**, to Invalid |
+| OpenAI (2.1 MB, MIT) | Valid / Trusted / Trusted | `c2pa.created` = trained | yes / generated | **2027-04-23**, to Invalid |
 | Amazon Titan (1.8 MB, Apache-2.0) | Invalid / Invalid / Valid | `c2pa.created` = trained | yes / generated | no change to 2045 |
-| parent-chain (60 KB, MIT) | Valid / Valid / Valid | active: algorithmicMedia; `parentOf`: trained | **no** / generated | **2036-09-26**, to Invalid |
+| parent-chain (60 KB, MIT) | Valid / Valid / Valid | active: algorithmicMedia; `parentOf`: trained | **no** / generated | **2036-09-25**, to Invalid |
 | `c2pa-rs-ocsp.jpg` (in this repository) | Invalid / Invalid / Valid | active: composite; `componentOf`: trained | no / edited | no change to 2045 |
-| `c2pasign-logo.png` (the verifier's) | Valid / Valid / Valid | `parentOf` twice, then trained; no recorded results | no / **no** | 2030-08-27, to Invalid |
-| `fixture-signed.jpg`, `.png`, `.webp` | Valid / Valid / Valid | `c2pa.created` = **algorithmicMedia** | no / no | **2030-08-27**, to Invalid |
+| `c2pasign-logo.png` (the verifier's) | Valid / Valid / Valid | `parentOf` twice, then trained; no recorded results | no / **no** | 2030-08-26, to Invalid |
+| `fixture-signed.jpg`, `.png`, `.webp` | Valid / Valid / Valid | `c2pa.created` = **algorithmicMedia** | no / no | **2030-08-26**, to Invalid |
 | Pixel 10 photo | Invalid / Trusted / Trusted | computationalCapture | no / no | no change to 2045 |
 | Lightroom | Invalid / Invalid / Valid | none | no / no | no change to 2045 |
 | `fixture-unsigned.jpg` | no manifest | none | no / no | — |
@@ -112,7 +112,7 @@ container; `verify()` takes 0–18 ms on the host.
   - Titan is `Valid` with the statement, to at least 2045, and `Invalid` with
     DigiCert off today, which gives both the positive and the negative;
   - `c2pa-rs-ocsp.jpg`, already here, carries "edited";
-  - parent-chain holds until 2036-09-26;
+  - parent-chain holds until 2036-09-25;
   - OpenAI holds only until April 2027, so no test should rest on it. Nothing
     measured is `Trusted` with the statement and lasts, so a test can set
     `Trusted` on a row, as SPEC-003 AC1 does.
@@ -123,10 +123,38 @@ container; `verify()` takes 0–18 ms on the host.
 
 ## Found on the way: this module's own tests have a date
 
-`fixture-signed.jpg`, `.png` and `.webp` turn `Invalid` on 2030-08-27 under the
-default settings, when the public test certificate expires. Measured by giving
-the verifier a validation time. Ten lines in `tests/` assert or name `Valid`
-for such files, and the module checks by the clock, so those tests will fail
-then. Nothing is wrong today and nothing was changed; this is a date to deal
+`fixture-signed.jpg`, `.png` and `.webp` turn `Invalid` on 2030-08-26 under the
+default settings. Measured by giving the verifier a validation time; for the
+JPEG, without settings, the exact moment is in the correction below, and the
+code is `signingCredential.expired`. The module checks by the clock, and 57
+lines in 9 test files name `fixture-signed`. How many of them assert `Valid`
+was not counted; those tests will fail then. Nothing is wrong today and nothing was changed; this is a date to deal
 with before then, and it applies to the verifier's own tests as well if they
 run by the clock (not checked).
+
+## Correction, the same day
+
+Checking this note after its commit found three things:
+
+- **The dates were up to a day late.** The first version's search stopped
+  within a day, at its upper bound, and printed 2027-04-24, 2036-09-26 and
+  2030-08-27. The table above now gives the day itself. A search to the second,
+  without settings, on the host with PHP 8.5.12, gives the last second of
+  `Valid`, followed by `signingCredential.expired` and
+  `signingCredential.untrusted`:
+
+  | file | last second `Valid` |
+  |---|---|
+  | OpenAI | 2027-04-23T15:51:04Z, as step 16 found |
+  | parent-chain | 2036-09-25T18:03:05Z |
+  | `fixture-signed.jpg` | 2030-08-26T18:46:40Z |
+
+  `.png`, `.webp` and `c2pasign-logo.png` were not searched to the second.
+- **"Ten lines" was the wrong figure.** That grep also counted other files'
+  `Valid`. The section above now gives what was counted.
+- **Two claims had only been read, and now hold when measured:**
+  - `evidenceToJson()` holds neither `digitalSourceType` nor `"assertions"`, on
+    `c2pa-rs-ocsp.jpg`, OpenAI and `fixture-signed.jpg`.
+  - `toArray()` is not cached: `VerificationReport::toArray()` builds its array
+    at each call, and a first call costs 0.012-0.048 ms (median of 7) against
+    0.010-0.041 ms for a repeat. So the 0.04 ms above stands.

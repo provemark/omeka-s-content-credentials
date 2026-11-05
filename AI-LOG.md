@@ -800,3 +800,13 @@ README are where the disclosure lives.
   dates this module's own tests.
 - Reasoned, marked in the note: the consequences for M6.2; the meaning of
   `algorithmicMedia` is from memory and still to be cited.
+
+## 2026-11-05: M6.1, corrections to the note
+
+- Model: Claude Opus 5.5, Claude Code CLI
+- Not asked: found by the assistant when checking its own note after the
+  commit `65528dc`.
+- Corrected in `notes/step-26-ai-statement.md` and `NOTES.md`: the dates were
+  up to a day late (the previous entry's 2030-08-27 is 2030-08-26), and "ten
+  lines" was a wrong count.
+- Measured: expiry to the second; the evidence document holds no assertions.
