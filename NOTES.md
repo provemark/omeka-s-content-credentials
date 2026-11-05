@@ -164,6 +164,7 @@ and committer of every pushed commit.
 | M6.2 | `specs/SPEC-007-ai-label.md`: the M6 spec; approved 2026-11-05 with all recommendations, SPEC-002 amendment 2 and SPEC-003 amendment 3 |
 | M6.3 | [`notes/step-27-the-ai-label.md`](notes/step-27-the-ai-label.md): SPEC-007 implemented, with its amendments 1 and 2; `process-timeout` 0 in `composer.json`; not looked at in a browser by the assistant; no real file is `Trusted` with a label in the tests |
 | M7.1 | [`notes/step-28-the-release-build.md`](notes/step-28-the-release-build.md): a Strauss-prefixed zip installs on a clean Omeka S and refuses PHP 8.2; 10 of 10 fixtures agree with the unprefixed verifier, documents byte-identical; the integration suite gives 105 of 106 against it (AC13 names the folder); without the prefix the module silently uses another module's copy; a forgotten path fails closed on every upload; Strauss 0.30.0 and 0.31.1 give the same tree |
+| M7.2 | [`notes/step-29-uninstall.md`](notes/step-29-uninstall.md): after install, use and uninstall only the module's job rows are left (nothing refers to them); a run under an uninstall ends `completed` with thousands of "not stored", and after a reinstall it fills the new table, unless its row is deleted, which ends it in about a second; `view.details` on the confirmation works only for an active module; the `module.ini` description shows in every state |
 
 ## To measure before a spec rests on it
 

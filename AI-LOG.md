@@ -855,3 +855,11 @@ README are where the disclosure lives.
   meaningless; a wrong `time_source` value and a wrong count; a comparison of a
   column that is empty by the spec.
 - Not done: the zip on PHP 8.4 and 8.5, a build on Linux, a look at a page in a browser.
+
+## 2026-11-05: M7.2, what uninstall leaves behind
+
+- Model: Claude Opus 5.5, Claude Code CLI
+- Asked: "ga gewoon verder" (after M7.1).
+- Produced: `tools/probes/UninstallProbe/`, `notes/step-29-uninstall.md`.
+- Not done: the `session` table and file contents were not compared; no browser; why a
+  job's process ends when its row is deleted was not read.
