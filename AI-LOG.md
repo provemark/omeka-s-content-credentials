@@ -702,3 +702,17 @@ README are where the disclosure lives.
   8.5.12 (host) and 8.3.36 (container); results and the commands in the
   note. The reasoned parts (the size per run, the choices for SPEC-006)
   are marked as such there.
+
+## 2026-11-05: M5.2, evidence in Omeka measured
+
+- Model: Claude Opus 5.5, Claude Code CLI
+- Asked: "ok, begin met M5.2".
+- Produced: `tools/probes/EvidenceRouteProbe/` (never shipped: module,
+  job, controller, view, `scripts/measure.php`),
+  `notes/step-24-evidence-in-omeka.md`, NOTES, milestones.
+- Measured in the PHP 8.3 test environment; commands and results in the
+  note. Over the 1 103 media present, not the 3 000 the plan named (the
+  seed of step 20 was deleted); the 3 000 figure is reasoned.
+- Mistakes of mine, caught while measuring: the first route inherited
+  the admin `__NAMESPACE__` (every request 404; recorded as a finding);
+  a query used `media.is_public`, which lives on `resource`.

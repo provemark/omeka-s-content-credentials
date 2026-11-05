@@ -1,0 +1,11 @@
+<?php
+// Measurement only (M5.2): the latest document, escaped, in the admin layout.
+$this->htmlElement('body')->appendAttribute('class', 'evidence-route-probe');
+?>
+<?= $this->pageTitle('Evidence', 1, $this->translate('Media')) ?>
+<p>EVIDENCE-PROBE-SHOW <?= (int) $this->media->id() ?></p>
+<?php if ($this->row === null): ?>
+<p>EVIDENCE-PROBE-NONE</p>
+<?php else: ?>
+<pre class="evidence-route-probe-document"><?= $this->escapeHtml($this->row['document']) ?></pre>
+<?php endif; ?>
