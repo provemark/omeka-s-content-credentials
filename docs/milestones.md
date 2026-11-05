@@ -230,3 +230,56 @@ follows ADR-0003. If M6.1 shows otherwise, a step is added.
 with generative AI shows "AI-generated (signed)" or "AI-edited (signed)" on the
 media page and in the browse, which can filter on either. This is wider than
 M6's row above, by Maurice's decision in SPEC-007. Next: M7, the release build.
+
+## M7 steps
+
+Proposed 2026-11-05; one step at a time, each after an "ok". The aim
+(above): a zip with a prefixed verifier that installs on a clean Omeka S, an
+uninstall that removes everything, and then the decision on registering on
+omeka.org. Nothing is published in M7 without Maurice's go.
+
+Read, not measured for this module as it is now (this repository's
+`notes/step-11-loading-the-verifier.md`, `notes/step-21-recheck.md`,
+`docs/adr/ADR-0002-dependencies.md`, SPEC-006; Tracefern's `tools/build.sh` and
+SPEC-009):
+- Step 11 measured Strauss 0.30.0 on a build copy of M1: the verifier moves to
+  `vendor-prefixed/` under `ContentCredentials\Vendor\`. The rewrite covers `use`
+  lines and namespace strings, not paths. The path
+  `vendor/provemark/c2pa-verifier/src` is written out in three places
+  (`TrustConfig`, `RecheckJob`, `AfterFlushListener`), so the build has to
+  arrange those. Everything since M1 has never been prefixed.
+- Strauss enters as a build tool with its own ADR or an amendment to ADR-0002,
+  which says so. Strauss 0.31.1 is not measured.
+- Tracefern builds from `git archive HEAD`, with `export-ignore` in
+  `.gitattributes`. This repository has no `.gitattributes` yet, and tests,
+  fixtures, probes, specs and notes must stay out of the zip.
+- The integration tests run against the mounted repository, not against a zip.
+  "Installs on a clean Omeka S" needs an environment of its own, as the tests
+  reinstall the module in the one on port 8088.
+- `Requirements` refuses PHP below 8.3 at install. Whether a built zip still
+  does this on PHP 8.2 is to be measured, as the prefixed verifier is not
+  loadable there.
+- Uninstall drops both tables and deletes the two settings. Left behind, as far
+  as is recorded: the module's rows in Omeka's `job` table (step 21). The uninstall
+  confirmation does not warn that the evidence goes (ADR-0005, SPEC-006). Which
+  hook that page offers has not been measured.
+- A bundled trust list is judged by its age from the last comparison with
+  upstream (ADR-0004), so `tools/trust/compare.sh` belongs before a release.
+
+Open for Maurice, after measuring:
+- whether uninstall deletes the module's job rows, which Omeka itself keeps for
+  its own jobs, or leaves them and says so;
+- whether the warning about the evidence is feasible where the choice is made,
+  and otherwise where it goes;
+- the version number of the first release (it stays 0.1.0 until then);
+- whether CI builds the zip and installs it on every push, or only at a release;
+- whether to register on omeka.org, and when the repository goes public.
+
+| step | what | status |
+|---|---|---|
+| M7.1 | Measure the build on a copy, never shipped: Strauss (0.30.0 against 0.31.1), the prefixed verifier and the paths, what is in the zip and its size; the zip on a clean Omeka S (PHP 8.3, in a separate environment) with verdicts and evidence documents compared with the verifier's CLI per fixture; the refusal on PHP 8.2; next to a module that loads another copy of the verifier | proposed |
+| M7.2 | Measure uninstall: a full comparison of database, settings and files before install and after install, use and uninstall (a check on upload, a re-check, evidence); what the job rows hold and what deleting them does; which hook Omeka's uninstall confirmation offers | proposed |
+| M7.3 | The ADR for the build tool (or an amendment to ADR-0002), on what M7.1 measured | proposed |
+| M7.4 | The M7 spec (`draft`), with the open choices above and recommendations, and the amendments it needs: SPEC-001 (uninstall), SPEC-006 (the warning, if it comes) | proposed |
+| M7.5 | after approval: tests seen red, the implementation (`tools/build.sh`, `.gitattributes`, the verifier's path, uninstall, the CI job if chosen), green, Traceability | proposed |
+| M7.6 | The release check, not the release: the bundled lists compared with upstream, the version number, README and CHANGELOG, what omeka.org asks of an add-on read and written down; Maurice decides on a public repository and registration. Nothing goes public before that go | proposed |

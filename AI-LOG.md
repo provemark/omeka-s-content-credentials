@@ -836,3 +836,11 @@ README are where the disclosure lives.
   not have, a test that contradicted AC6, and `Expr::in()` that gave a 500.
 - Not done: the assistant did not look at the pages in a browser; Maurice was
   given the addresses. No falsification of the cycle guard.
+
+## 2026-11-05: M7 steps proposed
+
+- Model: Claude Opus 5.5, Claude Code CLI
+- Asked: "ok, stel M7-stappen voor".
+- Produced: the M7 section of `docs/milestones.md`, from the records of steps 11
+  and 21, ADR-0002, ADR-0004, ADR-0005, SPEC-006 and Tracefern's `tools/build.sh`.
+  Nothing measured in this step.
