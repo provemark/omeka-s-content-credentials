@@ -716,3 +716,16 @@ README are where the disclosure lives.
 - Mistakes of mine, caught while measuring: the first route inherited
   the admin `__NAMESPACE__` (every request 404; recorded as a finding);
   a query used `media.is_public`, which lives on `resource`.
+
+## 2026-11-05: M5.3, ADR-0005 proposed
+
+- Model: Claude Opus 5.5, Claude Code CLI
+- Asked: "ok, begin met M5.3".
+- Produced: `docs/adr/ADR-0005-evidence-table.md` (`proposed`);
+  `docs/milestones.md`; `NOTES.md`.
+- Rests on: steps 23 and 24; decision 5 and ADR-0003, ADR-0004. Nothing
+  new measured.
+- Proposed for Maurice to decide: keep `fromJson()` and record
+  `trust_sha256`; evidence deleted with its media item and on uninstall;
+  left to SPEC-006: who may see it, every check or only a changed
+  document, and files without a manifest.
