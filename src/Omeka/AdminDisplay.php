@@ -7,6 +7,7 @@ namespace ContentCredentials\Omeka;
 use ContentCredentials\Display\FilterValue;
 use ContentCredentials\Display\Presentation;
 use ContentCredentials\Entity\StoredVerdict;
+use Doctrine\DBAL\Connection;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\QueryBuilder;
 use Laminas\EventManager\EventInterface;
@@ -32,17 +33,19 @@ final class AdminDisplay
     public function __construct(
         private readonly VerdictReader $reader,
         private readonly Status $status,
+        private readonly EvidenceReader $evidence,
     ) {}
 
     public static function create(ServiceLocatorInterface $services): self
     {
         $entityManager = $services->get('Omeka\EntityManager');
         $status = $services->get('Omeka\Status');
-        if (! $entityManager instanceof EntityManager || ! $status instanceof Status) {
-            throw new UnexpectedValueException('Omeka S did not provide its entity manager and status.');
+        $connection = $services->get('Omeka\Connection');
+        if (! $entityManager instanceof EntityManager || ! $status instanceof Status || ! $connection instanceof Connection) {
+            throw new UnexpectedValueException('Omeka S did not provide its entity manager, status and connection.');
         }
 
-        return new self(new VerdictReader($entityManager), $status);
+        return new self(new VerdictReader($entityManager), $status, new EvidenceReader($connection));
     }
 
     /** @param EventInterface<object|string|null, array<mixed>|\ArrayAccess<mixed, mixed>|object> $event */
@@ -126,7 +129,11 @@ final class AdminDisplay
     private function echoBlock(PhpRenderer $view, mixed $media): void
     {
         if ($media instanceof AbstractResourceRepresentation) {
-            echo VerdictHtml::block(Presentation::of($this->reader->rowFor($media->id())), new ViewText($view));
+            $id = $media->id();
+            $count = is_numeric($id) ? $this->evidence->count((int) $id) : 0;
+            $url = $count > 0 ? $view->plugin('url') : null;
+            $href = is_callable($url) ? $url(EvidenceController::MEDIA_ROUTE, ['media-id' => $id]) : null;
+            echo VerdictHtml::block(Presentation::of($this->reader->rowFor($id)), new ViewText($view), $count, is_string($href) ? $href : null);
         }
     }
 }

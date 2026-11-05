@@ -21,6 +21,8 @@ final class BuiltTrust
         public readonly ?TrustSettings $settings,
         public readonly string $source,
         public readonly ?string $problem = null,
+        /** The SHA-256 of the settings text, kept with the evidence (SPEC-006). */
+        public readonly ?string $sha256 = null,
     ) {}
 
     public static function without(string $problem): self

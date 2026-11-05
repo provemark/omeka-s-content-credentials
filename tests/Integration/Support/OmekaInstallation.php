@@ -370,7 +370,11 @@ final class OmekaInstallation
 
         $status = preg_match('#^HTTP/\S+ (\d{3})#', $responseHeaders[0], $m) === 1 ? (int) $m[1] : 0;
         $location = '';
+        $byName = [];
         foreach ($responseHeaders as $header) {
+            if (preg_match('/^([^:\s]+):\s*(.*)$/', $header, $h) === 1) {
+                $byName[strtolower($h[1])][] = trim($h[2]);
+            }
             if (preg_match('/^Set-Cookie:\s*([^=;\s]+)=([^;]*)/i', $header, $c) === 1) {
                 $this->cookies[$c[1]] = $c[2];
             } elseif (preg_match('/^Location:\s*(\S+)/i', $header, $l) === 1) {
@@ -378,7 +382,7 @@ final class OmekaInstallation
             }
         }
 
-        return new HttpResponse($status, $body, $location);
+        return new HttpResponse($status, $body, $location, $byName);
     }
 
     /**

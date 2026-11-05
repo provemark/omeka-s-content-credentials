@@ -7,9 +7,9 @@ upload and opens no network connection. Verification is done by
 [`provemark/c2pa-verifier`](https://github.com/provemark/c2pa-verifier),
 in pure PHP.
 
-Later it will also keep the evidence behind each verdict, the
-certificates, time-stamps and trust lists it rested on, so that what held
-when a file came in stays on record after a certificate has expired.
+It also keeps the evidence behind each verdict, the certificates and
+time-stamps it rested on and the settings it was judged with, so that what
+held when a file came in stays on record after a certificate has expired.
 
 ## Status
 
@@ -26,7 +26,11 @@ without DigiCert timestamps, or against custom trust settings, all on
 the module's configure page (SPEC-004). Milestone M4 is done: a global
 administrator can check existing media again from the configure page,
 all of them or those without a result, as a background job that Omeka's
-job page can stop (SPEC-005). The plan is in [`docs/milestones.md`](docs/milestones.md),
+job page can stop (SPEC-005). Milestone M5 is done: every check with
+Content Credentials keeps the verifier's evidence document, never changed
+afterwards, which whoever can see the media item can view and download
+from the admin interface (SPEC-006). Deleting the media item or
+uninstalling the module deletes its evidence. The plan is in [`docs/milestones.md`](docs/milestones.md),
 the decisions are in [`NOTES.md`](NOTES.md).
 
 ## Requirements (planned)

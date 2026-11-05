@@ -35,32 +35,41 @@ final class MediaCheck
 
     public function check(?string $path, string $phpVersion): Verdict
     {
+        return $this->checked($path, $phpVersion)->verdict;
+    }
+
+    /** The verdict and its evidence (SPEC-006): a document only for a file with a manifest. */
+    public function checked(?string $path, string $phpVersion): Checked
+    {
         $now = new DateTimeImmutable('now', new DateTimeZone('UTC'));
         if (Requirements::phpProblem($phpVersion) !== null) {
-            return Verdict::error(Verdict::REQUIREMENTS, null, null, $now);
+            return new Checked(Verdict::error(Verdict::REQUIREMENTS, null, null, $now));
         }
         try {
             $verifier = ($this->loadVerifier)();
         } catch (Throwable) {
-            return Verdict::error(Verdict::EXCEPTION, null, null, $now);
+            return new Checked(Verdict::error(Verdict::EXCEPTION, null, null, $now));
         }
         if ($path === null || ! is_file($path) || ! is_readable($path)) {
-            return Verdict::error(Verdict::UNREADABLE, $verifier, null, $now);
+            return new Checked(Verdict::error(Verdict::UNREADABLE, $verifier, null, $now));
         }
         $sha256 = hash_file('sha256', $path);
         $stream = @fopen($path, 'rb');
         if ($sha256 === false || $stream === false) {
-            return Verdict::error(Verdict::UNREADABLE, $verifier, null, $now);
+            return new Checked(Verdict::error(Verdict::UNREADABLE, $verifier, null, $now));
         }
         $trust = $this->trust();
         try {
             $report = ($this->verify)($stream, $trust?->settings);
 
             return $report instanceof VerificationReport
-                ? Verdict::fromReport($report, $sha256, $verifier, $now, $trust?->source)
-                : Verdict::error(Verdict::EXCEPTION, $verifier, $sha256, $now);
+                ? new Checked(
+                    Verdict::fromReport($report, $sha256, $verifier, $now, $trust?->source),
+                    $report->hasManifest ? new Evidence($report->evidenceToJson(), $trust?->sha256) : null,
+                )
+                : new Checked(Verdict::error(Verdict::EXCEPTION, $verifier, $sha256, $now));
         } catch (Throwable) {
-            return Verdict::error(Verdict::EXCEPTION, $verifier, $sha256, $now);
+            return new Checked(Verdict::error(Verdict::EXCEPTION, $verifier, $sha256, $now));
         } finally {
             fclose($stream);
         }

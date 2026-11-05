@@ -31,7 +31,8 @@ final class Recorder
     {
         try {
             $this->store->write($mediaId, Verdict::error(Verdict::INTERRUPTED, null, null, new DateTimeImmutable('now', new DateTimeZone('UTC'))));
-            $this->store->write($mediaId, $this->check->check($path, $phpVersion));
+            $checked = $this->check->checked($path, $phpVersion);
+            $this->store->write($mediaId, $checked->verdict, $checked->evidence);
         } catch (Throwable $e) {
             try {
                 ($this->onFailure)($e, $mediaId);

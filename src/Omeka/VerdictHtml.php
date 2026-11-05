@@ -16,13 +16,21 @@ final class VerdictHtml
 {
     public const HEADING = 'Content Credentials';
 
-    public static function block(Presentation $presentation, ViewText $text): string
+    /**
+     * @param  string|null  $evidenceUrl  where the media item's evidence is, when it has any (SPEC-006 AC6)
+     */
+    public static function block(Presentation $presentation, ViewText $text, int $evidenceCount = 0, ?string $evidenceUrl = null): string
     {
         $html = '<div class="meta-group content-credentials">'
             .'<h4>'.$text->escape($text->translate(self::HEADING)).'</h4>'
             .'<div class="value">'.$text->escape($text->translate($presentation->headline())).'</div>';
         foreach ($presentation->lines() as $line) {
             $html .= '<div class="value">'.$text->line($line).'</div>';
+        }
+
+        if ($evidenceCount > 0 && $evidenceUrl !== null) {
+            $line = $evidenceCount === 1 ? ['Evidence: 1 check kept', []] : ['Evidence: %s checks kept', [(string) $evidenceCount]];
+            $html .= '<div class="value"><a href="'.$text->escape($evidenceUrl).'">'.$text->line($line).'</a></div>';
         }
 
         return $html.'</div><!-- /content-credentials -->';

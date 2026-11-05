@@ -92,7 +92,8 @@ function spec003Cells(string $html): array
 /** @return list<int> */
 function spec003BrowseIds(OmekaInstallation $omeka, string $query): array
 {
-    preg_match_all('#name="resource_ids\[\]" value="(\d+)"#', $omeka->get('/admin/media?per_page=1000'.$query)->body, $m);
+    // Past any number of media the test environment gathers over time.
+    preg_match_all('#name="resource_ids\[\]" value="(\d+)"#', $omeka->get('/admin/media?per_page=1000000'.$query)->body, $m);
 
     return array_map('intval', $m[1]);
 }

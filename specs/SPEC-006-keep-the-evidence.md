@@ -2,9 +2,9 @@
 
 | Field      | Value                                             |
 |------------|---------------------------------------------------|
-| Status     | draft                                             |
+| Status     | implemented                                       |
 | Author     | Maurice van Loon                                  |
-| Approved   | —                                                 |
+| Approved   | Maurice van Loon, 2026-11-05                      |
 | Supersedes | —                                                 |
 
 > Lifecycle: `draft` → maintainer approves → `approved` → tests-first →
@@ -172,7 +172,7 @@ fails and runs in `tests/Unit`.
 - **AC7 — the evidence page and the document page**
   - Given a media item with two evidence rows, the second with a document
     the test has set to contain
-    `"active_manifest": "<script>alert(1)</script>‮"`
+    `"active_manifest": "<script>alert(1)</script>\u202e"`
   - When a global administrator opens the evidence page and the second
     row's document page
   - Then:
@@ -181,7 +181,7 @@ fails and runs in `tests/Unit`.
       `checked_sha256`, and links to its document page and its download;
     - the document page shows the document in a `<pre>`, escaped with
       `escapeHtml`: `&lt;script&gt;` appears, `<script>alert(1)` does
-      not, and the `‮` stays the six characters the document holds
+      not, and the `\u202e` stays the six characters the document holds
 
 - **AC8 — the download is the stored document**
   - Given an evidence row
@@ -232,7 +232,7 @@ fails and runs in `tests/Unit`.
     the table `content_credentials_evidence` does not exist and the
     schema equals the one before install (SPEC-001's snapshot)
 
-## SPEC-003 amendment 2 (proposed with this spec)
+## SPEC-003 amendment 2 (approved with this spec)
 
 The block gains, as its last line, AC6's evidence line, when the media
 item has at least one evidence row. It is a link: the first link in the
@@ -321,6 +321,8 @@ Each with my recommendation and the trade-off. Maurice decides.
    denied page, and the line in the block is shown to administrators
    only). Trade-off: more confidentiality for something that is hardly
    confidential, and editors and reviewers without the record.
+   *Status 2026-11-05:* answered, the recommendation approved by Maurice
+   van Loon with the spec.
 2. **Every check, or only a changed document.** Recommended: every check
    adds a row, as decision 5 says ("one row per check").
    - A re-check is a fact of its own: at that time, with those lists,
@@ -331,6 +333,8 @@ Each with my recommendation and the trade-off. Maurice decides.
    Alternative: add a row only when `sha256` differs from the media's
    latest row. Trade-off: about 20% less growth, but the list of checks
    is no longer the list of checks.
+   *Status 2026-11-05:* answered, the recommendation approved by Maurice
+   van Loon with the spec.
 3. **Files without Content Credentials.** Recommended: no evidence row
    for `none` (AC3).
    - The document for such a file says `Invalid` with no manifest (step
@@ -342,22 +346,34 @@ Each with my recommendation and the trade-off. Maurice decides.
    module's `none`. Trade-off: one row for each unsigned file per check,
    a document that contradicts the page, and SPEC-003 AC4 would need a
    change, since a `none` block would then hold a link.
+   *Status 2026-11-05:* answered, the recommendation approved by Maurice
+   van Loon with the spec.
+
+## Amendments
+
+- **Correction (2026-11-05, approved by Maurice van Loon):** AC7's two
+  mentions of `\u202e` held the character U+202E itself, a mistake made
+  when the draft was written. They now hold the six ASCII characters the
+  criterion describes. The meaning is unchanged.
 
 ## Traceability
 
-Filled when status becomes `implemented`.
+Every acceptance criterion maps to at least one test; every source file
+maps back to this spec. All tests carry `->group('SPEC-006')`, except
+SPEC-001's AC1 (`SPEC-001`). The record is
+`notes/step-25-keep-the-evidence.md`.
 
-| Acceptance criterion | Test (file :: name / group) | Source (file/symbol) |
-|----------------------|-----------------------------|----------------------|
-| AC1                  | —                           | —                    |
-| AC2                  | —                           | —                    |
-| AC3                  | —                           | —                    |
-| AC4                  | —                           | —                    |
-| AC5                  | —                           | —                    |
-| AC6                  | —                           | —                    |
-| AC7                  | —                           | —                    |
-| AC8                  | —                           | —                    |
-| AC9                  | —                           | —                    |
-| AC10                 | —                           | —                    |
-| AC11                 | —                           | —                    |
-| AC12                 | —                           | —                    |
+| Acceptance criterion | Test (file :: name) | Source (file/symbol) |
+|----------------------|---------------------|----------------------|
+| AC1 | tests/Integration/EvidenceTest.php :: AC1: an upload keeps its evidence; tests/Unit/EvidenceTest.php :: AC1: a signed file gives the verifier's document | src/Check/MediaCheck.php :: checked(); src/Check/Evidence.php; src/Check/Checked.php; src/Omeka/DbalVerdictStore.php :: write(); src/Omeka/Schema.php :: create() |
+| AC2 | tests/Integration/EvidenceTest.php :: AC2: custom settings and settings that cannot be built | src/Trust/TrustChoice.php :: build(); src/Trust/BuiltTrust.php :: sha256 |
+| AC3 | tests/Integration/EvidenceTest.php :: AC3: a file without Content Credentials keeps no evidence; tests/Unit/EvidenceTest.php :: AC3: a file without Content Credentials gives no document | src/Check/MediaCheck.php :: checked() |
+| AC4 | tests/Integration/EvidenceTest.php :: AC4: an unreadable original keeps no evidence; tests/Unit/EvidenceTest.php :: AC4: a check that ends in error gives no document | src/Check/MediaCheck.php :: checked() |
+| AC5 | tests/Integration/EvidenceTest.php :: AC5: every run adds, nothing is changed | src/Check/Recorder.php :: record(); src/Check/RecheckCounts.php :: write(); src/Omeka/DbalVerdictStore.php :: write() |
+| AC6 | tests/Integration/EvidenceTest.php :: AC6: the block counts and links | src/Omeka/VerdictHtml.php :: block(); src/Omeka/AdminDisplay.php :: echoBlock(); src/Omeka/EvidenceReader.php :: count() |
+| AC7 | tests/Integration/EvidenceTest.php :: AC7: the evidence page and the document page | src/Omeka/EvidenceController.php :: browseAction(), showAction(); src/Omeka/EvidenceHtml.php; src/Omeka/EvidenceReader.php; view/content-credentials/evidence/; config/module.config.php |
+| AC8 | tests/Integration/EvidenceTest.php :: AC8: the download is the stored document | src/Omeka/EvidenceController.php :: downloadAction() |
+| AC9 | tests/Integration/EvidenceTest.php :: AC9: an evidence table that cannot be written: no new verdict, the upload proceeds; AC9: a verdict that cannot be written takes its evidence back; tests/Unit/EvidenceTest.php :: AC9 (2 cases) | src/Omeka/DbalVerdictStore.php :: write() (the transaction); src/Check/Recorder.php :: record() |
+| AC10 | tests/Integration/EvidenceTest.php :: AC10: access follows the media item | Module.php :: onBootstrap(); src/Omeka/EvidenceController.php :: readMedia(); src/Omeka/EvidenceControllerFactory.php |
+| AC11 | tests/Integration/EvidenceTest.php :: AC11: an unknown or malformed address is 404, with nothing inside | config/module.config.php (the route constraints); src/Omeka/EvidenceController.php :: visibleRow() |
+| AC12 | tests/Integration/EvidenceTest.php :: AC12: deleting a media item, and uninstalling; tests/Integration/InstallAndUninstallTest.php :: AC1 (SPEC-001 amendment 3) | src/Omeka/Schema.php :: create(), drop() |

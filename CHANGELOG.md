@@ -58,3 +58,10 @@ day the work was committed.
 - Changed: the configure page's note and its warning about unusable
   custom settings now say that runs over existing media use the settings
   too (SPEC-004 amendment 2). (2026-11-04)
+- M5: keeping the evidence. Every check whose verdict is `Trusted`,
+  `Valid` or `Invalid` adds the verifier's evidence document to a table of
+  its own, in one transaction with the verdict, and rows are never changed.
+  The block on the media page counts the checks kept and links to pages
+  that list them, show a document and download it. Who can see the media
+  item can see its evidence. Files without Content Credentials and checks
+  that end in `error` keep none (SPEC-006, ADR-0005). (2026-11-05)

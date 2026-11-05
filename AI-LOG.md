@@ -746,3 +746,36 @@ README are where the disclosure lives.
 - Rests on: steps 23 and 24, ADR-0005, decision 5; the Omeka S 4.2.1
   files it cites (checked to exist). Nothing new measured.
 - Decided by Maurice: approval pending.
+
+## 2026-11-05: SPEC-006 approved
+
+- Decided by Maurice: SPEC-006 approved with all three recommendations
+  (access follows the media item; every check adds a row; no row for
+  `none`), and with it SPEC-003 amendment 2 ("ok, SPEC-006 goedgekeurd met
+  alle aanbevelingen, begin met M5.5").
+
+## 2026-11-05: M5.5, SPEC-006 implemented
+
+- Model: Claude Opus 5.5, Claude Code CLI
+- Asked: "ok, SPEC-006 goedgekeurd met alle aanbevelingen, begin met M5.5";
+  then "ok, amendement 3 en de U+202E-correctie goedgekeurd, rond af".
+- Decided by Maurice: SPEC-001 amendment 3; the correction of U+202E in
+  SPEC-006 AC7.
+- Produced: `src/Check/Evidence.php`, `Checked.php`, `MediaCheck.php`,
+  `Recorder.php`, `RecheckCounts.php`, `VerdictStore.php`;
+  `src/Trust/BuiltTrust.php`, `TrustChoice.php`;
+  `src/Display/Presentation.php`; `src/Omeka/EvidenceController.php`,
+  `EvidenceControllerFactory.php`, `EvidenceHtml.php`, `EvidenceReader.php`,
+  `DbalVerdictStore.php`, `Schema.php`, `VerdictHtml.php`,
+  `AdminDisplay.php`; `Module.php`, `config/module.config.php`,
+  `view/content-credentials/evidence/`; `tests/Unit/EvidenceTest.php`,
+  `tests/Integration/EvidenceTest.php`, `HttpResponse`; SPEC-001, SPEC-003,
+  SPEC-006; `notes/step-25-keep-the-evidence.md`; README, CHANGELOG, NOTES,
+  milestones.
+- Tests seen red before the code; AC3, AC11 and the second AC9 test
+  falsified. AC11's check of the response body could not be falsified (see
+  the note).
+- Mistakes of mine: no SPEC-001 amendment proposed with ADR-0005 and the
+  draft; the character U+202E written into SPEC-006 and a test instead of
+  six ASCII characters, and the spec corrected before Maurice approved it;
+  a test that turned a correct null into 'missing'.

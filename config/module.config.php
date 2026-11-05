@@ -1,7 +1,10 @@
 <?php
 
 declare(strict_types=1);
+use ContentCredentials\Omeka\EvidenceController;
+use ContentCredentials\Omeka\EvidenceControllerFactory;
 use ContentCredentials\Omeka\StateColumnFactory;
+use Laminas\Router\Http\Segment;
 
 return [
     // SPEC-002 / ADR-0003: the verdict table as a Doctrine entity, mapped as
@@ -25,7 +28,38 @@ return [
             ],
         ],
     ],
-    // SPEC-003: the filter's field in the advanced search.
+    // SPEC-006: the evidence pages. Each route has its own __NAMESPACE__, or
+    // it inherits the admin route's and ends in a silent 404 (step 24).
+    'router' => [
+        'routes' => [
+            'admin' => [
+                'child_routes' => [
+                    'content-credentials-media-evidence' => [
+                        'type' => Segment::class,
+                        'options' => [
+                            'route' => '/content-credentials/media/:media-id/evidence',
+                            'constraints' => ['media-id' => '\d+'],
+                            'defaults' => ['__NAMESPACE__' => 'ContentCredentials\Omeka', 'controller' => 'EvidenceController', 'action' => 'browse'],
+                        ],
+                    ],
+                    'content-credentials-evidence' => [
+                        'type' => Segment::class,
+                        'options' => [
+                            'route' => '/content-credentials/evidence/:id[/:action]',
+                            'constraints' => ['id' => '\d+', 'action' => 'download'],
+                            'defaults' => ['__NAMESPACE__' => 'ContentCredentials\Omeka', 'controller' => 'EvidenceController', 'action' => 'show'],
+                        ],
+                    ],
+                ],
+            ],
+        ],
+    ],
+    'controllers' => [
+        'factories' => [
+            EvidenceController::class => EvidenceControllerFactory::class,
+        ],
+    ],
+    // SPEC-003: the filter's field in the advanced search. SPEC-006: the pages.
     'view_manager' => [
         'template_path_stack' => [
             dirname(__DIR__).'/view',

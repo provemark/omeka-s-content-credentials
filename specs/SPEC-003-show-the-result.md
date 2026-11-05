@@ -249,6 +249,11 @@ Deptrac gets a layer `Display` (no Omeka S, may use nothing but
   and a row whose `trust` is not NULL and not one of
   `c2pa-YYYY-MM-DD+digicert`, `c2pa-YYYY-MM-DD`, `custom`, `none` is
   unreadable. Was: no trust line. Tested under SPEC-004 AC7.
+- **Amendment 2 (2026-11-05, approved by Maurice van Loon with SPEC-006):**
+  the block gains, as its last line, SPEC-006 AC6's evidence line when
+  the media item has at least one evidence row: a link, the block's
+  first. AC4 still holds, since a `none` check keeps no evidence
+  (SPEC-006 AC3). Was: no evidence line. Tested under SPEC-006 AC6.
 
 ## Traceability
 

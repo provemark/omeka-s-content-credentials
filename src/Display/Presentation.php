@@ -116,7 +116,7 @@ final class Presentation
      *
      * @return array{string, list<string>}|false|null
      */
-    private static function trustLine(mixed $trust): array|false|null
+    public static function trustLine(mixed $trust): array|false|null
     {
         if ($trust === null) {
             return null;

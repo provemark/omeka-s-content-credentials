@@ -8,6 +8,7 @@ declare(strict_types=1);
  * vendor/bin/c2pa-verify on the same bytes.
  */
 
+use ContentCredentials\Check\Evidence;
 use ContentCredentials\Check\MediaCheck;
 use ContentCredentials\Check\Recorder;
 use ContentCredentials\Check\Verdict;
@@ -29,7 +30,7 @@ final class Spec002MemoryStore implements VerdictStore
     /** @var list<array{int, Verdict}> */
     public array $writes = [];
 
-    public function write(int $mediaId, Verdict $verdict): void
+    public function write(int $mediaId, Verdict $verdict, ?Evidence $evidence = null): void
     {
         $this->writes[] = [$mediaId, $verdict];
     }
@@ -148,7 +149,7 @@ it('AC10: the interrupted row is written before the verifier runs', function ():
 it('AC11: a store that fails is reported, never thrown', function (): void {
     $store = new class implements VerdictStore
     {
-        public function write(int $mediaId, Verdict $verdict): void
+        public function write(int $mediaId, Verdict $verdict, ?Evidence $evidence = null): void
         {
             throw new RuntimeException('table is gone');
         }

@@ -44,7 +44,7 @@ function spec001IniVersion(): string
     return is_string($version) ? $version : throw new RuntimeException('No version in config/module.ini.');
 }
 
-it('AC1: installing adds one row and one empty table', function (): void {
+it('AC1: installing adds one row and the module\'s empty tables', function (): void {
     $omeka = spec001Php83();
     spec001Uninstalled($omeka);
     $before = $omeka->snapshot();
@@ -56,11 +56,12 @@ it('AC1: installing adds one row and one empty table', function (): void {
         ->and($response->location)->toEndWith('/admin/module/configure?id='.SPEC001_MODULE)
         ->and(OmekaInstallation::messages($omeka->get('/admin/module')->body))->toContain('The module was successfully installed')
         ->and($omeka->moduleRow(SPEC001_MODULE))->toBe(['id' => SPEC001_MODULE, 'is_active' => '1', 'version' => spec001IniVersion()])
-        // amendment 1: SPEC-002's table, empty, and otherwise only the
-        // module row (the module table's count goes from 0 to 1, its one
+        // amendments 1 and 3: SPEC-002's and SPEC-006's tables, empty, and
+        // otherwise only the module row (the module table's count goes from 0 to 1, its one
         // row added at the end)
         ->and($omeka->sql('SELECT COUNT(*) FROM content_credentials_verdict'))->toBe('0')
-        ->and($omeka->snapshot(['content_credentials_verdict']))->toBe(str_replace("\nmodule 0\n", "\nmodule 1\n", $before).SPEC001_MODULE."\t1\t".spec001IniVersion());
+        ->and($omeka->sql('SELECT COUNT(*) FROM content_credentials_evidence'))->toBe('0')
+        ->and($omeka->snapshot(['content_credentials_verdict', 'content_credentials_evidence']))->toBe(str_replace("\nmodule 0\n", "\nmodule 1\n", $before).SPEC001_MODULE."\t1\t".spec001IniVersion());
 })->group('SPEC-001');
 
 it('AC2: an active module breaks no page', function (): void {

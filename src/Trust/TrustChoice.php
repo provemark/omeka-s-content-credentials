@@ -31,7 +31,7 @@ final class TrustChoice
             return BuiltTrust::without($e->getMessage());
         }
         try {
-            return new BuiltTrust(TrustSettings::fromJson($json), $isCustom ? self::CUSTOM : BundledLists::source($digicert));
+            return new BuiltTrust(TrustSettings::fromJson($json), $isCustom ? self::CUSTOM : BundledLists::source($digicert), null, hash('sha256', $json));
         } catch (TrustException $e) {
             return BuiltTrust::without($e->getMessage());
         } catch (Throwable) {

@@ -62,7 +62,7 @@ Acceptance criteria as Given/When/Then. AC1–AC4 and AC6 run in
 rows of every table, every `setting` row, and the `module` table; the
 `session` table's row count is left out, because logging in adds to it.
 
-- **AC1 — installing adds one row and one empty table** *(amendments 1 and 2)*
+- **AC1 — installing adds one row and the module's empty tables** *(amendments 1, 2 and 3)*
   - Given a freshly reset environment, where the modules page lists
     ContentCredentials as not installed
   - When the administrator installs it through the modules page
@@ -71,7 +71,8 @@ rows of every table, every `setting` row, and the `module` table; the
     was successfully installed", the `module` table holds
     `ContentCredentials`, active, with the version of `config/module.ini`,
     and the snapshot differs from the one before only in that row and in
-    the table `content_credentials_verdict` (SPEC-002), with no rows
+    the tables `content_credentials_verdict` (SPEC-002) and
+    `content_credentials_evidence` (SPEC-006), with no rows
 
 - **AC2 — an active module breaks no page**
   - Given the module installed and active
@@ -183,6 +184,12 @@ anything outside the compose project `content-credentials-test`.
   (`ModuleController::installAction()`), which SPEC-004 amendment 1 added.
   Was: "a redirect to the modules page". The message, the module row and
   the snapshot are unchanged. Record: `notes/step-19-configure-link.md`.
+- **Amendment 3 (2026-11-05, approved by Maurice van Loon):** AC1 allows
+  the empty table `content_credentials_evidence` of SPEC-006 next to
+  `content_credentials_verdict`. Was: only the verdict table. The message,
+  the redirect and the module row are unchanged, and so is AC4: uninstalling
+  leaves the snapshot as it was before installing. Record:
+  `notes/step-25-keep-the-evidence.md`.
 
 ## Traceability
 
@@ -191,7 +198,7 @@ least one test; every source file maps back to this spec.
 
 | Acceptance criterion | Test (file :: name / group) | Source (file/symbol) |
 |----------------------|-----------------------------|----------------------|
-| AC1 | tests/Integration/InstallAndUninstallTest.php :: AC1: installing adds one row and one empty table / SPEC-001 | Module.php :: Module (the skeleton); tests/Integration/Support/OmekaInstallation.php :: snapshot(), moduleAction() |
+| AC1 | tests/Integration/InstallAndUninstallTest.php :: AC1: installing adds one row and the module's empty tables / SPEC-001 | Module.php :: Module (the skeleton); tests/Integration/Support/OmekaInstallation.php :: snapshot(), moduleAction() |
 | AC2 | tests/Integration/InstallAndUninstallTest.php :: AC2: an active module breaks no page / SPEC-001 | Module.php :: Module::getConfig() |
 | AC3 | tests/Integration/InstallAndUninstallTest.php :: AC3: deactivating and activating / SPEC-001 | Module.php :: Module |
 | AC4 | tests/Integration/InstallAndUninstallTest.php :: AC4: uninstalling leaves the installation as it was / SPEC-001 | Module.php :: Module (inherits an empty uninstall()) |

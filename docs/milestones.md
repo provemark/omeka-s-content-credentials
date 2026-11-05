@@ -172,5 +172,11 @@ Open for Maurice, after measuring:
 | M5.1 | Measure the evidence document with the module's fixtures and settings, outside Omeka: its size per fixture (the Pixel 10 photo, the OCSP fixture, an unsigned file, an altered one), whether it is ASCII and deterministic, what `trust_lists` holds with `fromJson()` and with `fromTrustLists()` (and whether the verdicts stay the same), what `none` and `error` give, and what writing it costs per check | done: [`notes/step-23-evidence-document.md`](../notes/step-23-evidence-document.md) |
 | M5.2 | Measure viewing and downloading in Omeka S: a route, controller and ACL of the module's own (a probe module); a download with `Content-Type: application/json` and `Content-Disposition`; a link from the media page's block; which roles can reach it, compared with who can see the media; a MariaDB `LONGTEXT` that gives the document back byte-identical; the table's growth over repeated runs (M4.2's 3 000 media) | done: [`notes/step-24-evidence-in-omeka.md`](../notes/step-24-evidence-in-omeka.md); measured over the 1 103 media present, not 3 000 |
 | M5.3 | ADR-0005, the evidence table: columns, keys and indexes; append-only; what a media deletion and an uninstall do to it; and, if M5.1 calls for it, the move to `fromTrustLists()` | done: [`ADR-0005`](adr/ADR-0005-evidence-table.md), accepted 2026-11-05 |
-| M5.4 | The M5 spec (`draft`), with the open choices above and recommendations | [`SPEC-006`](../specs/SPEC-006-keep-the-evidence.md) `draft`, awaiting Maurice |
-| M5.5 | after approval: tests seen red, the implementation, green, Traceability | proposed |
+| M5.4 | The M5 spec (`draft`), with the open choices above and recommendations | done: [`SPEC-006`](../specs/SPEC-006-keep-the-evidence.md), approved 2026-11-05 with all recommendations |
+| M5.5 | after approval: tests seen red, the implementation, green, Traceability | done: [`notes/step-25-keep-the-evidence.md`](../notes/step-25-keep-the-evidence.md) |
+
+**M5 is done (2026-11-05):** every check with Content Credentials keeps
+the verifier's evidence document, byte-identical to `evidenceToJson()`
+and never changed afterwards. A row from an older verifier stays as it
+was through later runs (SPEC-006 AC5, with a row the test set to `0.9.0`;
+no real verifier update was performed). Next: M6, the AI label.

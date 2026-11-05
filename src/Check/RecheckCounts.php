@@ -16,9 +16,9 @@ final class RecheckCounts implements VerdictStore
 
     public function __construct(private readonly VerdictStore $store) {}
 
-    public function write(int $mediaId, Verdict $verdict): void
+    public function write(int $mediaId, Verdict $verdict, ?Evidence $evidence = null): void
     {
-        $this->store->write($mediaId, $verdict);
+        $this->store->write($mediaId, $verdict, $evidence);
         if ($verdict->reason !== Verdict::INTERRUPTED) {
             $this->counts[$verdict->state] = ($this->counts[$verdict->state] ?? 0) + 1;
         }

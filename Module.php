@@ -14,12 +14,14 @@ use Laminas\EventManager\EventInterface;
 use Laminas\EventManager\SharedEventManagerInterface;
 use Laminas\Http\Request;
 use Laminas\Mvc\Controller\AbstractController;
+use Laminas\Mvc\MvcEvent;
 use Laminas\ServiceManager\ServiceLocatorInterface;
 use Laminas\Stdlib\Parameters;
 use Laminas\View\Renderer\PhpRenderer;
 use Omeka\Module\AbstractModule;
 use Omeka\Module\Exception\ModuleCannotInstallException;
 use Omeka\Mvc\Controller\Plugin\Messenger;
+use Omeka\Permissions\Acl;
 use Omeka\Settings\Settings;
 
 /**
@@ -37,7 +39,10 @@ use Omeka\Settings\Settings;
  * media page, its Details panel, the browse column and the browse filter
  * show the verdict (SPEC-003). The configure page holds the trust settings
  * every check uses (SPEC-004); uninstalling removes them. The same page
- * starts a run over existing media and shows the latest (SPEC-005).
+ * starts a run over existing media and shows the latest (SPEC-005). Every
+ * check keeps its evidence; the admin pages that show it are open to every
+ * role, and read the media item first, so access follows the media
+ * (SPEC-006, ADR-0005).
  *
  * Keep this file parseable on PHP 8.1: Omeka S 4.2 runs from 8.1 and loads it
  * before the module can say it needs 8.3 (ADR-0001).
@@ -62,6 +67,16 @@ final class Module extends AbstractModule
         }
 
         return $config;
+    }
+
+    public function onBootstrap(MvcEvent $event): void
+    {
+        parent::onBootstrap($event);
+        // The limit is the controller's read of the media item (SPEC-006 AC10).
+        $acl = $this->getServiceLocator()->get('Omeka\Acl');
+        if ($acl instanceof Acl) {
+            $acl->allow(null, 'ContentCredentials\Omeka\EvidenceController');
+        }
     }
 
     public function install(ServiceLocatorInterface $serviceLocator): void

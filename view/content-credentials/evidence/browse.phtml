@@ -1,0 +1,6 @@
+<?php
+// SPEC-006 AC7: a media item's checks; the content is built and escaped in EvidenceHtml.
+use ContentCredentials\Omeka\EvidenceHtml;
+
+echo $this->pageTitle($this->translate('Evidence'), 1, $this->translate('Content Credentials'));
+echo EvidenceHtml::browse($this, $this->mediaId, $this->rows);

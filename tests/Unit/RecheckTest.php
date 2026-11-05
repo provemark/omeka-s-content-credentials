@@ -8,6 +8,7 @@ declare(strict_types=1);
  * with a store that throws (AC7) and a PHP version below 8.3 (AC13).
  */
 
+use ContentCredentials\Check\Evidence;
 use ContentCredentials\Check\MediaCheck;
 use ContentCredentials\Check\Recheck;
 use ContentCredentials\Check\Verdict;
@@ -23,7 +24,7 @@ final class Spec005Store implements VerdictStore
 
     public function __construct(private readonly ?int $throwFor = null) {}
 
-    public function write(int $mediaId, Verdict $verdict): void
+    public function write(int $mediaId, Verdict $verdict, ?Evidence $evidence = null): void
     {
         if ($mediaId === $this->throwFor) {
             throw new RuntimeException('SQLSTATE[HY000]: /var/www/html/secret/path.jpg could not be written');
