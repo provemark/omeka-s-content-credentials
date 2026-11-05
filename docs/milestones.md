@@ -180,3 +180,48 @@ the verifier's evidence document, byte-identical to `evidenceToJson()`
 and never changed afterwards. A row from an older verifier stays as it
 was through later runs (SPEC-006 AC5, with a row the test set to `0.9.0`;
 no real verifier update was performed). Next: M6, the AI label.
+
+## M6 steps
+
+Proposed 2026-11-05; one step at a time, each after an "ok". The aim
+(above): the label "AI-generated (signed)", only on a manifest that
+verifies, as SPEC-003 of Tracefern.
+
+Read, not measured here (Tracefern's `specs/SPEC-003-ai-label.md`,
+`specs/SPEC-027-ai-in-the-history.md`, `notes/m3-ai-label.md`, measured
+there with older verifier versions; this repository's
+`notes/step-16-trust-lists.md`, `notes/step-13-admin-views.md`):
+- The statement is an IPTC digital source type on an action, in
+  `toArray()`: `manifests[…].assertions[]`, `c2pa.actions` or
+  `c2pa.actions.v2`, `data.actions[].digitalSourceType`. Tracefern reads
+  it from there and never from `$report->store`, which is `@internal`.
+- Tracefern's SPEC-003 counted only the exact URI of
+  `trainedAlgorithmicMedia` in the active manifest. Its SPEC-027 later
+  found that this misses two kinds of real file: an AI image processed
+  afterwards, with the statement in a `parentOf` ingredient, and a photo
+  edited with AI (`compositeWithTrainedAlgorithmicMedia`). It added
+  "AI-edited (signed)" and a gate on ingredients.
+- The evidence document holds no assertions (the verifier's
+  `docs/evidence-format.md`), so the statement cannot be read back from
+  it; it needs a column of its own, as `trust` got (SPEC-002 amendment 1).
+- This module has no fixture with such a statement. Tracefern's OpenAI
+  image turns `Invalid` on 2027-04-23 (step 16), so a test built on it
+  would break then. Tracefern also has `c2pa-verifier-ai-parent-chain.png`
+  (MIT) and Amazon Titan (Apache-2.0).
+- Where a label can be shown is measured (step 13); the block, the column
+  and the filter exist (SPEC-003).
+
+Open for Maurice, after measuring:
+- only the active manifest, as M6's row says, or the history and
+  "AI-edited (signed)" too, as Tracefern ended up doing;
+- whether the browse filter gets the label as well;
+- which fixtures to copy, and whether to make one with a long life.
+
+| step | what | status |
+|---|---|---|
+| M6.1 | Measure the statement outside Omeka with verifier 0.10.0 and the module's settings: per fixture (this module's and Tracefern's AI fixtures) the verdict, the source types per manifest and their ingredient relationships, what `toArray()` gives for a malformed or tampered statement, how long each verdict holds (as in step 16), and which fixture can carry the tests for years | proposed |
+| M6.2 | The M6 spec (`draft`), with the open choices above and recommendations, and the amendments it needs: SPEC-002 (the column), SPEC-003 (the label in the block and the column), and any other spec the change touches | proposed |
+| M6.3 | after approval: tests seen red, the implementation, green, Traceability | proposed |
+
+No ADR is foreseen: no new dependency, and a column in the module's table
+follows ADR-0003. If M6.1 shows otherwise, a step is added.

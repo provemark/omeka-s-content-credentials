@@ -779,3 +779,11 @@ README are where the disclosure lives.
   draft; the character U+202E written into SPEC-006 and a test instead of
   six ASCII characters, and the spec corrected before Maurice approved it;
   a test that turned a correct null into 'missing'.
+
+## 2026-11-05: M6 steps proposed
+
+- Model: Claude Opus 5.5, Claude Code CLI
+- Asked: "ok, stel M6-stappen voor".
+- Produced: `docs/milestones.md` ("M6 steps").
+- Read: Tracefern's SPEC-003, SPEC-027 and `notes/m3-ai-label.md`; the
+  verifier's `docs/evidence-format.md`; steps 13 and 16. Nothing measured.
