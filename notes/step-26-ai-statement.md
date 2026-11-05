@@ -132,6 +132,15 @@ was not counted; those tests will fail then. Nothing is wrong today and nothing 
 with before then, and it applies to the verifier's own tests as well if they
 run by the clock (not checked).
 
+## Added in M6.2
+
+`tools/probes/AiProbe/deltas.php`, on the verifier's `tests/Fixtures/` (668
+files, PHP 8.5.12, no settings): of 132 ingredients that name a manifest, in
+every manifest of the store, 125 have a delta under the URI the gate builds,
+also the second ingredient of a manifest (`c2pa.ingredient.v3__1`). The 7 others
+include manifests not reached from the active one; which of them are reached was
+not counted. An ingredient without a delta is not followed.
+
 ## Correction, the same day
 
 Checking this note after its commit found three things:

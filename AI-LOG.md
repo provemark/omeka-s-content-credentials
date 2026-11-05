@@ -810,3 +810,14 @@ README are where the disclosure lives.
   up to a day late (the previous entry's 2030-08-27 is 2030-08-26), and "ten
   lines" was a wrong count.
 - Measured: expiry to the second; the evidence document holds no assertions.
+
+## 2026-11-05: M6.2, SPEC-007 drafted
+
+- Model: Claude Opus 5.5, Claude Code CLI
+- Asked: "ok, begin met M6.2".
+- Produced: `specs/SPEC-007-ai-label.md` (draft, with seven open questions and
+  recommendations, and two proposed amendments, not yet applied),
+  `tools/probes/AiProbe/deltas.php`, an addition to step 26.
+- Measured: the delta URI on 668 files. Read: the IPTC vocabulary through a
+  summarising fetch, marked as such in the spec. Tracefern's SPEC-027 is the
+  source of the rule; C2PA 2.4 was not opened again.

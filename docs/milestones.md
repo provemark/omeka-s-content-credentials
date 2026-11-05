@@ -220,7 +220,7 @@ Open for Maurice, after measuring:
 | step | what | status |
 |---|---|---|
 | M6.1 | Measure the statement outside Omeka with verifier 0.10.0 and the module's settings: per fixture (this module's and Tracefern's AI fixtures) the verdict, the source types per manifest and their ingredient relationships, what `toArray()` gives for a malformed or tampered statement, how long each verdict holds (as in step 16), and which fixture can carry the tests for years | done: [`notes/step-26-ai-statement.md`](../notes/step-26-ai-statement.md) |
-| M6.2 | The M6 spec (`draft`), with the open choices above and recommendations, and the amendments it needs: SPEC-002 (the column), SPEC-003 (the label in the block and the column), and any other spec the change touches | proposed |
+| M6.2 | The M6 spec (`draft`), with the open choices above and recommendations, and the amendments it needs: SPEC-002 (the column), SPEC-003 (the label in the block and the column), and any other spec the change touches | draft: [`specs/SPEC-007-ai-label.md`](../specs/SPEC-007-ai-label.md) |
 | M6.3 | after approval: tests seen red, the implementation, green, Traceability | proposed |
 
 No ADR is foreseen: no new dependency, and a column in the module's table
