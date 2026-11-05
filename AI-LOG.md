@@ -787,3 +787,16 @@ README are where the disclosure lives.
 - Produced: `docs/milestones.md` ("M6 steps").
 - Read: Tracefern's SPEC-003, SPEC-027 and `notes/m3-ai-label.md`; the
   verifier's `docs/evidence-format.md`; steps 13 and 16. Nothing measured.
+
+## 2026-11-05: M6.1, the AI statement measured
+
+- Model: Claude Opus 5.5, Claude Code CLI
+- Asked: "ok, begin met M6.1".
+- Produced: `tools/probes/AiProbe/` (never shipped),
+  `notes/step-26-ai-statement.md`, NOTES, milestones.
+- Measured: 17 files with three settings on PHP 8.5.12 and 8.3.36, and a
+  census of 570 files, with verifier 0.10.0; no fixture added to the
+  repository. Found: `fixture-signed` turns `Invalid` on 2030-08-27, which
+  dates this module's own tests.
+- Reasoned, marked in the note: the consequences for M6.2; the meaning of
+  `algorithmicMedia` is from memory and still to be cited.
