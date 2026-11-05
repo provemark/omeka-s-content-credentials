@@ -277,7 +277,7 @@ Open for Maurice, after measuring:
 
 | step | what | status |
 |---|---|---|
-| M7.1 | Measure the build on a copy, never shipped: Strauss (0.30.0 against 0.31.1), the prefixed verifier and the paths, what is in the zip and its size; the zip on a clean Omeka S (PHP 8.3, in a separate environment) with verdicts and evidence documents compared with the verifier's CLI per fixture; the refusal on PHP 8.2; next to a module that loads another copy of the verifier | proposed |
+| M7.1 | Measure the build on a copy, never shipped: Strauss (0.30.0 against 0.31.1), the prefixed verifier and the paths, what is in the zip and its size; the zip on a clean Omeka S (PHP 8.3, in a separate environment) with verdicts and evidence documents compared with the verifier's CLI per fixture; the refusal on PHP 8.2; next to a module that loads another copy of the verifier | done: [`notes/step-28-the-release-build.md`](../notes/step-28-the-release-build.md) |
 | M7.2 | Measure uninstall: a full comparison of database, settings and files before install and after install, use and uninstall (a check on upload, a re-check, evidence); what the job rows hold and what deleting them does; which hook Omeka's uninstall confirmation offers | proposed |
 | M7.3 | The ADR for the build tool (or an amendment to ADR-0002), on what M7.1 measured | proposed |
 | M7.4 | The M7 spec (`draft`), with the open choices above and recommendations, and the amendments it needs: SPEC-001 (uninstall), SPEC-006 (the warning, if it comes) | proposed |

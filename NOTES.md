@@ -163,6 +163,7 @@ and committer of every pushed commit.
 | M6.1 | [`notes/step-26-ai-statement.md`](notes/step-26-ai-statement.md): the statement in `toArray()` with verifier 0.10.0; a tampered image keeps it, so the verdict must gate the label; the active manifest alone misses parent-chain and ocsp; Titan is `Valid` with the statement to at least 2045, OpenAI turns `Invalid` in April 2027; `fixture-signed` turns `Invalid` on 2030-08-26, which dates this module's own tests |
 | M6.2 | `specs/SPEC-007-ai-label.md`: the M6 spec; approved 2026-11-05 with all recommendations, SPEC-002 amendment 2 and SPEC-003 amendment 3 |
 | M6.3 | [`notes/step-27-the-ai-label.md`](notes/step-27-the-ai-label.md): SPEC-007 implemented, with its amendments 1 and 2; `process-timeout` 0 in `composer.json`; not looked at in a browser by the assistant; no real file is `Trusted` with a label in the tests |
+| M7.1 | [`notes/step-28-the-release-build.md`](notes/step-28-the-release-build.md): a Strauss-prefixed zip installs on a clean Omeka S and refuses PHP 8.2; 10 of 10 fixtures agree with the unprefixed verifier, documents byte-identical; the integration suite gives 105 of 106 against it (AC13 names the folder); without the prefix the module silently uses another module's copy; a forgotten path fails closed on every upload; Strauss 0.30.0 and 0.31.1 give the same tree |
 
 ## To measure before a spec rests on it
 

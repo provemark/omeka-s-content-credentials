@@ -844,3 +844,14 @@ README are where the disclosure lives.
 - Produced: the M7 section of `docs/milestones.md`, from the records of steps 11
   and 21, ADR-0002, ADR-0004, ADR-0005, SPEC-006 and Tracefern's `tools/build.sh`.
   Nothing measured in this step.
+
+## 2026-11-05: M7.1, the release build measured on a copy
+
+- Model: Claude Opus 5.5, Claude Code CLI
+- Asked: "ok, begin met M7.1".
+- Produced: `tools/probes/BuildProbe/`, `notes/step-28-the-release-build.md`.
+- The assistant's own errors, found while measuring and recorded in the note: a
+  `sed` that left the second copy's version unchanged, which made one run
+  meaningless; a wrong `time_source` value and a wrong count; a comparison of a
+  column that is empty by the spec.
+- Not done: the zip on PHP 8.4 and 8.5, a build on Linux, a look at a page in a browser.
