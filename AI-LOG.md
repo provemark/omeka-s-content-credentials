@@ -729,3 +729,20 @@ README are where the disclosure lives.
   `trust_sha256`; evidence deleted with its media item and on uninstall;
   left to SPEC-006: who may see it, every check or only a changed
   document, and files without a manifest.
+
+## 2026-11-05: ADR-0005 accepted
+
+- Decided by Maurice: ADR-0005 accepted as proposed (`fromJson()` kept
+  with `trust_sha256`; evidence deleted with its media item and on
+  uninstall) ("ok, ADR-0005 aangenomen, begin met M5.4").
+
+## 2026-11-05: M5.4, SPEC-006 as a draft
+
+- Model: Claude Opus 5.5, Claude Code CLI
+- Asked: "ok, ADR-0005 aangenomen, begin met M5.4".
+- Produced: `specs/SPEC-006-keep-the-evidence.md` (`draft`, 12 criteria,
+  SPEC-003 amendment 2 proposed, three open questions); ADR-0005's
+  status; `docs/milestones.md`; `NOTES.md`.
+- Rests on: steps 23 and 24, ADR-0005, decision 5; the Omeka S 4.2.1
+  files it cites (checked to exist). Nothing new measured.
+- Decided by Maurice: approval pending.
