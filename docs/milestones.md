@@ -169,7 +169,7 @@ Open for Maurice, after measuring:
 
 | step | what | status |
 |---|---|---|
-| M5.1 | Measure the evidence document with the module's fixtures and settings, outside Omeka: its size per fixture (the Pixel 10 photo, the OCSP fixture, an unsigned file, an altered one), whether it is ASCII and deterministic, what `trust_lists` holds with `fromJson()` and with `fromTrustLists()` (and whether the verdicts stay the same), what `none` and `error` give, and what writing it costs per check | proposed |
+| M5.1 | Measure the evidence document with the module's fixtures and settings, outside Omeka: its size per fixture (the Pixel 10 photo, the OCSP fixture, an unsigned file, an altered one), whether it is ASCII and deterministic, what `trust_lists` holds with `fromJson()` and with `fromTrustLists()` (and whether the verdicts stay the same), what `none` and `error` give, and what writing it costs per check | done: [`notes/step-23-evidence-document.md`](../notes/step-23-evidence-document.md) |
 | M5.2 | Measure viewing and downloading in Omeka S: a route, controller and ACL of the module's own (a probe module); a download with `Content-Type: application/json` and `Content-Disposition`; a link from the media page's block; which roles can reach it, compared with who can see the media; a MariaDB `LONGTEXT` that gives the document back byte-identical; the table's growth over repeated runs (M4.2's 3 000 media) | proposed |
 | M5.3 | ADR-0005, the evidence table: columns, keys and indexes; append-only; what a media deletion and an uninstall do to it; and, if M5.1 calls for it, the move to `fromTrustLists()` | proposed |
 | M5.4 | The M5 spec (`draft`), with the open choices above and recommendations | proposed |

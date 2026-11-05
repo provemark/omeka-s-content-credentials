@@ -155,6 +155,7 @@ and committer of every pushed commit.
 | M4.2 | [`notes/step-20-recheck-at-scale.md`](notes/step-20-recheck-at-scale.md): the module's check as a job: 3 097 media in 14.9 s, memory flat at 18 MB; trust built once per run (per item triples the time); stop and carry on by id works; two runs at once and an upload during a run do no harm |
 | M4.4 | [`notes/step-21-recheck.md`](notes/step-21-recheck.md): SPEC-005 implemented; runs started from the configure page, one at a time, with the trust settings of the start; the job log holds only the module's own lines; opcache delays a change to `local.config.php` by up to 2 s (measured) |
 | — | [`notes/step-22-settings-texts.md`](notes/step-22-settings-texts.md): SPEC-004 amendment 2; the configure page's note and warning now name SPEC-005's runs |
+| M5.1 | [`notes/step-23-evidence-document.md`](notes/step-23-evidence-document.md): a report, so a document, for every input (empty, noise, truncated included); 194 B without a manifest to 35 KB for two manifests; ASCII; byte-identical for a fixed time and across PHP 8.3 and 8.5; by the clock only `judged_at` changes; `trust_lists` empty with a settings document; `fromTrustLists()` gives the same verdicts; a file without a manifest says `Invalid` where the module shows `none`; under 0.2 ms to write |
 
 ## To measure before a spec rests on it
 

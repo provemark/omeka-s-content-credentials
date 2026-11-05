@@ -691,3 +691,14 @@ README are where the disclosure lives.
 - Produced: `docs/milestones.md` ("M4 is done", "M5 steps").
 - Read: the verifier's `docs/evidence-format.md`, the `TrustSettings`
   signatures, decision 5 in `NOTES.md`. Nothing measured.
+
+## 2026-11-05: M5.1, the evidence document measured
+
+- Model: Claude Opus 5.5, Claude Code CLI
+- Asked: "ok, begin met M5.1".
+- Produced: `tools/probes/EvidenceProbe/measure.php` (never shipped),
+  `notes/step-23-evidence-document.md`, NOTES, milestones.
+- Measured: 13 inputs × 5 trust settings with verifier 0.10.0, on PHP
+  8.5.12 (host) and 8.3.36 (container); results and the commands in the
+  note. The reasoned parts (the size per run, the choices for SPEC-006)
+  are marked as such there.
