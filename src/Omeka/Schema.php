@@ -9,7 +9,8 @@ namespace ContentCredentials\Omeka;
  * verdict of each media item (ADR-0003, SPEC-002) and the evidence of each
  * check (ADR-0005, SPEC-006). Text from the file goes into LONGTEXT columns,
  * so no length the file chooses can make a write fail. `trust` names the
- * trust settings a check used (SPEC-004, SPEC-002 amendment 1).
+ * trust settings a check used (SPEC-004, SPEC-002 amendment 1), and
+ * `ai_statement` what a file that verifies says about AI (SPEC-007).
  *
  * Required by Module.php during install and uninstall, when Omeka S has not
  * put src/ on the autoloader (step 07): this file depends on nothing.
@@ -38,6 +39,7 @@ final class Schema
             .'reason VARCHAR(16) DEFAULT NULL, '
             .'verifier VARCHAR(32) DEFAULT NULL, '
             .'trust VARCHAR(64) DEFAULT NULL, '
+            .'ai_statement VARCHAR(16) DEFAULT NULL, '
             .'checked_sha256 CHAR(64) DEFAULT NULL, '
             .'checked_at DATETIME NOT NULL, '
             .'PRIMARY KEY(media_id)'

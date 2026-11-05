@@ -220,8 +220,13 @@ Open for Maurice, after measuring:
 | step | what | status |
 |---|---|---|
 | M6.1 | Measure the statement outside Omeka with verifier 0.10.0 and the module's settings: per fixture (this module's and Tracefern's AI fixtures) the verdict, the source types per manifest and their ingredient relationships, what `toArray()` gives for a malformed or tampered statement, how long each verdict holds (as in step 16), and which fixture can carry the tests for years | done: [`notes/step-26-ai-statement.md`](../notes/step-26-ai-statement.md) |
-| M6.2 | The M6 spec (`draft`), with the open choices above and recommendations, and the amendments it needs: SPEC-002 (the column), SPEC-003 (the label in the block and the column), and any other spec the change touches | draft: [`specs/SPEC-007-ai-label.md`](../specs/SPEC-007-ai-label.md) |
-| M6.3 | after approval: tests seen red, the implementation, green, Traceability | proposed |
+| M6.2 | The M6 spec (`draft`), with the open choices above and recommendations, and the amendments it needs: SPEC-002 (the column), SPEC-003 (the label in the block and the column), and any other spec the change touches | done: [`specs/SPEC-007-ai-label.md`](../specs/SPEC-007-ai-label.md), approved 2026-11-05 |
+| M6.3 | after approval: tests seen red, the implementation, green, Traceability | done: [`notes/step-27-the-ai-label.md`](../notes/step-27-the-ai-label.md) |
 
 No ADR is foreseen: no new dependency, and a column in the module's table
 follows ADR-0003. If M6.1 shows otherwise, a step is added.
+
+**M6 is done (2026-11-05):** a file that verifies and says it was made or edited
+with generative AI shows "AI-generated (signed)" or "AI-edited (signed)" on the
+media page and in the browse, which can filter on either. This is wider than
+M6's row above, by Maurice's decision in SPEC-007. Next: M7, the release build.

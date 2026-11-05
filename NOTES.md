@@ -161,7 +161,8 @@ and committer of every pushed commit.
 | M5.4 | `specs/SPEC-006-keep-the-evidence.md`: the M5 spec; approved 2026-11-05 with all recommendations (access follows the media item; every check adds a row; no row for `none`), with SPEC-003 amendment 2 (the evidence line in the block) |
 | M5.5 | [`notes/step-25-keep-the-evidence.md`](notes/step-25-keep-the-evidence.md): SPEC-006 implemented; SPEC-001 amendment 3 (the second table); the verdict and its evidence in one transaction, tested from both sides; Omeka hides an exception's message on its 404 page; an installation without the table stores `error`/`interrupted` until it is installed again |
 | M6.1 | [`notes/step-26-ai-statement.md`](notes/step-26-ai-statement.md): the statement in `toArray()` with verifier 0.10.0; a tampered image keeps it, so the verdict must gate the label; the active manifest alone misses parent-chain and ocsp; Titan is `Valid` with the statement to at least 2045, OpenAI turns `Invalid` in April 2027; `fixture-signed` turns `Invalid` on 2030-08-26, which dates this module's own tests |
-| M6.2 | `specs/SPEC-007-ai-label.md`: the M6 spec (draft), with SPEC-002 amendment 2 and SPEC-003 amendment 3 proposed |
+| M6.2 | `specs/SPEC-007-ai-label.md`: the M6 spec; approved 2026-11-05 with all recommendations, SPEC-002 amendment 2 and SPEC-003 amendment 3 |
+| M6.3 | [`notes/step-27-the-ai-label.md`](notes/step-27-the-ai-label.md): SPEC-007 implemented, with its amendments 1 and 2; `process-timeout` 0 in `composer.json`; not looked at in a browser by the assistant; no real file is `Trusted` with a label in the tests |
 
 ## To measure before a spec rests on it
 

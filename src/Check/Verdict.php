@@ -50,6 +50,7 @@ final class Verdict
         public readonly ?string $checkedSha256,
         public readonly DateTimeImmutable $checkedAt,
         public readonly ?string $trust = null,
+        public readonly ?string $aiStatement = null,
     ) {}
 
     /**
@@ -59,6 +60,8 @@ final class Verdict
     {
         $state = $report->hasManifest ? $report->result->state->value : self::NONE;
         $signature = $report->hasManifest ? ($report->signatureInfo ?? []) : [];
+        // Only a file that verifies may say this (SPEC-007).
+        $aiStatement = $state === 'Trusted' || $state === 'Valid' ? AiStatement::read($report->toArray()) : null;
         $codes = [];
         if ($state === 'Invalid') {
             $statuses = $report->toArray()['validation_status'] ?? [];
@@ -82,6 +85,7 @@ final class Verdict
             $sha256,
             $checkedAt,
             $trust,
+            $aiStatement,
         );
     }
 

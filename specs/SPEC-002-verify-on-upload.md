@@ -297,6 +297,12 @@ before its first file.
   first release. Was: verified without settings, no `trust` column. The
   criteria above are unchanged; their fixtures give the same verdicts with
   the bundled lists (SPEC-004, Amendments).
+- **Amendment 2 (2026-11-05, approved by Maurice van Loon with SPEC-007):**
+  the table gains a column `ai_statement VARCHAR(16) NULL`, after `trust`:
+  `generated`, `edited` or NULL by SPEC-007's rule, set only when the state
+  is `Trusted` or `Valid`. The `CREATE TABLE` statement changes; there is no
+  `upgrade()` before the first release. Was: no such column. The criteria
+  above are unchanged. Tested under SPEC-007.
 
 ## Traceability
 

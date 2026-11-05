@@ -1,4 +1,4 @@
-# C2PA fixtures (SPEC-002, SPEC-004)
+# C2PA fixtures (SPEC-002, SPEC-004, SPEC-007)
 
 Copied unchanged from `provemark/c2pa-verifier` at tag v0.10.0 (commit
 `4bcd6ae`), `tests/Fixtures/`; each file's SHA-256 was compared with
@@ -32,3 +32,19 @@ gives their origin; the short version:
 
 Their verdicts are stable from 2026-11-04 to at least 2035-01-01
 (`notes/step-16-trust-lists.md`, measured).
+
+## Added for SPEC-007 (the AI label)
+
+Copied unchanged from `provemark/tracefern-image-check` `tests/Fixtures/`
+(checkout at `adcfd3c`); SHA-256 compared on 2026-11-05 with that copy's origin,
+the verifier's `writers/amazon-20240925-titan-g1.png` and
+`ai-history/parent-chain.png`.
+
+| file | from | licence | used for |
+|---|---|---|---|
+| `amazon-20240925-titan-g1.png` | `TrustNXT/c2pa-ts`, `tests/fixtures/amazon-titan-g1.png` (14f8ad7), via the verifier's `writers/` | Apache-2.0, see `LICENSE-TrustNXT-c2pa-ts` | says `trainedAlgorithmicMedia` in the active manifest: `Valid` with DigiCert, `Invalid` without |
+| `c2pa-verifier-ai-parent-chain.png` | the verifier's `ai-history/parent-chain.png` (its step 178, commit `0cf13e4`), renamed: signed with a throw-away key that was deleted | MIT (the verifier's) | says `trainedAlgorithmicMedia` only in a `parentOf` manifest: `Valid` |
+
+Under the default settings, Titan holds to at least 2045 and parent-chain until
+2036-09-25 (`notes/step-26-ai-statement.md`, measured). The OpenAI image is left
+out on purpose: it turns `Invalid` on 2027-04-23.

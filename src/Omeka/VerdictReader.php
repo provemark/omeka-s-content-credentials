@@ -60,6 +60,7 @@ final class VerdictReader
             'reason' => $stored->getReason(),
             'verifier' => $stored->getVerifier(),
             'trust' => $stored->getTrust(),
+            'ai_statement' => $stored->getAiStatement(),
             'checked_sha256' => $stored->getCheckedSha256(),
             'checked_at' => $stored->getCheckedAt()->format('Y-m-d H:i:s'),
         ];

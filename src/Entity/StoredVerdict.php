@@ -57,6 +57,9 @@ class StoredVerdict
     /** @Column(type="string", length=64, nullable=true) */
     protected ?string $trust = null;
 
+    /** @Column(name="ai_statement", type="string", length=16, nullable=true) */
+    protected ?string $aiStatement = null;
+
     /** @Column(name="checked_sha256", type="string", length=64, nullable=true) */
     protected ?string $checkedSha256 = null;
 
@@ -119,6 +122,11 @@ class StoredVerdict
     public function getTrust(): ?string
     {
         return $this->trust;
+    }
+
+    public function getAiStatement(): ?string
+    {
+        return $this->aiStatement;
     }
 
     public function getCheckedSha256(): ?string

@@ -24,6 +24,10 @@ final class VerdictHtml
         $html = '<div class="meta-group content-credentials">'
             .'<h4>'.$text->escape($text->translate(self::HEADING)).'</h4>'
             .'<div class="value">'.$text->escape($text->translate($presentation->headline())).'</div>';
+        $label = $presentation->aiLabel();
+        if ($label !== null) {
+            $html .= '<div class="value">'.$text->escape($text->translate($label)).'</div>';
+        }
         foreach ($presentation->lines() as $line) {
             $html .= '<div class="value">'.$text->line($line).'</div>';
         }
@@ -38,6 +42,9 @@ final class VerdictHtml
 
     public static function cell(Presentation $presentation, ViewText $text): string
     {
-        return '<span class="content-credentials-headline">'.$text->escape($text->translate($presentation->headline())).'</span>';
+        $html = '<span class="content-credentials-headline">'.$text->escape($text->translate($presentation->headline())).'</span>';
+        $label = $presentation->aiLabel();
+
+        return $label === null ? $html : $html.'<br><span class="content-credentials-ai">'.$text->escape($text->translate($label)).'</span>';
     }
 }

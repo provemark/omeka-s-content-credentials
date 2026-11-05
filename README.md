@@ -30,7 +30,14 @@ job page can stop (SPEC-005). Milestone M5 is done: every check with
 Content Credentials keeps the verifier's evidence document, never changed
 afterwards, which whoever can see the media item can view and download
 from the admin interface (SPEC-006). Deleting the media item or
-uninstalling the module deletes its evidence. The plan is in [`docs/milestones.md`](docs/milestones.md),
+uninstalling the module deletes its evidence. Milestone M6 is done: a file
+that verifies and says it was made or edited with generative AI shows
+"AI-generated (signed)" or "AI-edited (signed)", and the media browse can
+filter on either (SPEC-007). The label repeats a signed statement in the file;
+it is not a detection. A file without that statement says nothing either way,
+and a statement further down the file's history is only shown when each step
+to it holds a recorded result that the verifier agrees with, so a file can
+carry a statement the label does not show. The plan is in [`docs/milestones.md`](docs/milestones.md),
 the decisions are in [`NOTES.md`](NOTES.md).
 
 ## Requirements (planned)

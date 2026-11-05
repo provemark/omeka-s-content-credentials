@@ -2,9 +2,9 @@
 
 | Field      | Value                                             |
 |------------|---------------------------------------------------|
-| Status     | draft                                             |
+| Status     | implemented                                       |
 | Author     | Maurice van Loon                                  |
-| Approved   | —                                                 |
+| Approved   | Maurice van Loon, 2026-11-05                      |
 | Supersedes | —                                                 |
 
 > Lifecycle: `draft` → maintainer approves → `approved` → tests-first →
@@ -95,7 +95,7 @@ as a parent counts as generated.
 - An `upgrade()` step: the module is unreleased at 0.1.0. A development
   installation is reinstalled, as with SPEC-004's and SPEC-006's table changes.
 
-**Proposed amendments to other specs, approved with this spec**
+**Amendments to other specs, approved with this spec**
 
 - **SPEC-002 amendment 2:** the table gains `ai_statement` (this spec's rule and
   gate), so the `CREATE TABLE` statement changes, with no `upgrade()`. Its
@@ -332,58 +332,89 @@ final class AiFilterValue
 
 ## Open questions
 
-Each with a recommendation, for Maurice to decide with the approval.
-
 1. **Which rule.** Only the active manifest, as the milestone's row says, or also
    the chain and "AI-edited (signed)". Recommendation: the chain and both labels,
    as written here. The narrow rule is simpler, but it shows nothing on an AI image
    that was processed afterwards, and an archive relying on the label is misled
    there. *Blocker.*
+   *Status 2026-11-05:* answered, the recommendation approved by Maurice
+   van Loon with the spec.
 2. **The filter.** Recommendation: yes, for both labels, as written. The filter
    machinery exists, and "show me everything that says it is AI" is what an archive
    would ask. Tracefern filters on "generated" only. *Blocker.*
+   *Status 2026-11-05:* answered, the recommendation approved by Maurice
+   van Loon with the spec.
 3. **The gate on ingredients.** `c2pasign-logo.png` is `Valid`, its chain says
    *trained*, and its ingredients record no results, so it gets no label (AC5). The
    verifier's delta alone would let it through, since that is what the verifier
    found itself. Recommendation: keep both conditions, as Tracefern does: the
    difference is a missing label, and the other way round is a label resting on less
    than was measured on any fixture. Say the limit in the README. *Blocker.*
+   *Status 2026-11-05:* answered, the recommendation approved by Maurice
+   van Loon with the spec.
 4. **What the column holds on a file that does not verify.** Tracefern stores the
    flag for every state and gates at display. Recommendation: NULL unless `Trusted`
    or `Valid`, and gate at display and in the filter as well. The table then never
    holds a claim nobody can stand behind, and a re-check recomputes it anyway. The
    price: "`Invalid` and claims AI" cannot be asked of the table later without a
    re-check. *Blocker.*
+   *Status 2026-11-05:* answered, the recommendation approved by Maurice
+   van Loon with the spec.
 5. **`compositeSynthetic`.** IPTC calls it "Composite including generative AI
    elements", yet no fixture measured carries it (step 26). Recommendation: leave it
    out until a file that verifies shows it: no rule without a measurement. An
    archive then sees no label on such a file. *Non-blocker.*
+   *Status 2026-11-05:* answered, the recommendation approved by Maurice
+   van Loon with the spec.
 6. **The fixtures.** Recommendation: copy Titan (1.8 MB, Apache-2.0, adds a licence
    file) and parent-chain (60 KB, the verifier's MIT), not OpenAI, which turns
    `Invalid` on 2027-04-23. `Trusted` with a label is then tested on a row set by
    hand (AC9), since no measured file holds that for long. *Blocker.*
+   *Status 2026-11-05:* answered, the recommendation approved by Maurice
+   van Loon with the spec.
 7. **The wording.** "AI-generated (signed)" and "AI-edited (signed)", as in
    Tracefern. "(signed)" says it is the file's signed statement, not the module's
    finding. Recommendation: keep. *Blocker.*
+   *Status 2026-11-05:* answered, the recommendation approved by Maurice
+   van Loon with the spec.
+
+## Amendments
+
+Both approved by Maurice van Loon on 2026-11-05, while building. Each one is
+something the approved text asked for that the running system refuses. The
+criteria above keep their original words; these amendments say how they now read.
+
+1. **AC9, the hostile value.** `<script>alert(1)</script>` is 25 characters and
+   `ai_statement` is `VARCHAR(16)`: the test's `UPDATE` exits with an error, so such
+   a row cannot exist. AC9 uses `<i>spec007</i>` instead. And "appears nowhere in
+   the page" cannot hold for `true`, a word Omeka's own page contains: `true` and the
+   empty string are checked in the block and the column, the hostile value in the
+   whole page as well. `Presentation` is also tested with the original 25
+   characters, as a unit, for every state.
+2. **AC13, the public page.** `/s/{slug}/media` answers 404 in Omeka S 4.2.1: there
+   is no public media browse. AC13 asks for the public media page
+   `/s/{slug}/media/{id}` of a labelled media item instead, which must not show the
+   label, and for the REST API as written.
 
 ## Traceability
 
-Filled when status becomes `implemented`. Every acceptance criterion maps to at
-least one test; every source file maps back to this spec.
+Every acceptance criterion maps to at least one test; every source file maps
+back to this spec. All tests carry `->group('SPEC-007')`. The record is
+`notes/step-27-the-ai-label.md`.
 
-| Acceptance criterion | Test (file :: name / group) | Source (file/symbol) |
-|----------------------|-----------------------------|----------------------|
-| AC1                  | —                           | —                    |
-| AC2                  | —                           | —                    |
-| AC3                  | —                           | —                    |
-| AC4                  | —                           | —                    |
-| AC5                  | —                           | —                    |
-| AC6                  | —                           | —                    |
-| AC7                  | —                           | —                    |
-| AC8                  | —                           | —                    |
-| AC9                  | —                           | —                    |
-| AC10                 | —                           | —                    |
-| AC11                 | —                           | —                    |
-| AC12                 | —                           | —                    |
-| AC13                 | —                           | —                    |
-| AC14                 | —                           | —                    |
+| Acceptance criterion | Test (file :: name) | Source (file/symbol) |
+|----------------------|---------------------|----------------------|
+| AC1 | tests/Integration/AiLabelTest.php :: AC1: the real files | src/Check/AiStatement.php :: read(); src/Check/Verdict.php :: fromReport(); src/Omeka/Schema.php; src/Omeka/DbalVerdictStore.php; src/Entity/StoredVerdict.php; src/Omeka/VerdictReader.php; src/Omeka/VerdictHtml.php |
+| AC2 | tests/Unit/AiStatementTest.php :: AC2: generated, in the active manifest and down a parent chain | src/Check/AiStatement.php :: read(), sourceTypes(), typesIn() |
+| AC3 | tests/Unit/AiStatementTest.php :: AC3: edited; AC3: a relationship the rule does not name counts as any other than a parent | src/Check/AiStatement.php :: read() |
+| AC4 | tests/Unit/AiStatementTest.php :: AC4: generated wins, and needs the parent line | src/Check/AiStatement.php :: read() (two walks) |
+| AC5 | tests/Unit/AiStatementTest.php :: AC5: an ingredient that is not followed; AC5: a branch that is not followed leaves another branch open; AC5: an unknown signer on an ingredient is followed | src/Check/AiStatement.php :: followed(), tolerable() |
+| AC6 | tests/Unit/AiStatementTest.php :: AC6: source types that do not count; AC6: malformed reports read as nothing, without a warning; AC6: a relationship that is missing or not a string is not followed; AC6: a cycle ends; AC6: labels of digits only read as any other label | src/Check/AiStatement.php :: sourceTypes(), listAt(), label() |
+| AC7 | tests/Integration/AiLabelTest.php :: AC7: a file that does not verify has no label | src/Check/Verdict.php :: fromReport() (the gate at writing) |
+| AC8 | tests/Integration/AiLabelTest.php :: AC8: a re-check sets the column, either way, and leaves the evidence the verifier's | src/Omeka/DbalVerdictStore.php :: upsert() |
+| AC9 | tests/Integration/AiLabelTest.php :: AC9: the label follows the state on every page; AC9: a value the module never writes is unreadable and never echoed; tests/Unit/AiStatementTest.php :: AC9: the label follows the state; AC9: a value the module never writes makes the row unreadable, whatever its state; AC9: a row without the key has no label | src/Display/Presentation.php :: of(), aiLabel(), AI_LABELS; src/Omeka/VerdictHtml.php :: block(), cell() |
+| AC10 | tests/Integration/AiLabelTest.php :: AC10: the filter | src/Omeka/AdminDisplay.php :: searchQuery(), searchFilters(); view/content-credentials/advanced-search.phtml |
+| AC11 | tests/Integration/AiLabelTest.php :: AC11: the filter follows the state too | src/Omeka/AdminDisplay.php :: searchQuery() (the gate in the filter) |
+| AC12 | tests/Integration/AiLabelTest.php :: AC12: a filter value that is not a label matches nothing; tests/Unit/AiStatementTest.php :: AC12: what a filter value means | src/Display/AiFilterValue.php :: parse() |
+| AC13 | tests/Integration/AiLabelTest.php :: AC13: only the admin side | src/Omeka/AdminDisplay.php :: searchQuery() (`isAdminRequest()`) |
+| AC14 | tests/Unit/AiStatementTest.php :: AC14: the module reads only the public report | all of src/; src/Check/AiStatement.php reads `toArray()` only |

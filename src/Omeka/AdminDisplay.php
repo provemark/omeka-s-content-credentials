@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace ContentCredentials\Omeka;
 
+use ContentCredentials\Display\AiFilterValue;
 use ContentCredentials\Display\FilterValue;
 use ContentCredentials\Display\Presentation;
 use ContentCredentials\Entity\StoredVerdict;
@@ -86,16 +87,24 @@ final class AdminDisplay
             return;
         }
         $state = FilterValue::parse($query[FilterValue::PARAMETER] ?? null);
-        if ($state === null) {
+        $ai = AiFilterValue::parse($query[AiFilterValue::PARAMETER] ?? null);
+        if ($state === null && $ai === null) {
             return;
         }
         $text = new ViewText($view);
         // Plain text: Omeka's search-filters partial escapes labels and values.
         $label = $text->translate(VerdictHtml::HEADING);
         $values = is_array($filters[$label] ?? null) ? $filters[$label] : [];
-        $values[] = $state === false
-            ? $text->translate('(unknown value)')
-            : $text->translate(Presentation::HEADLINES[$state]);
+        if ($state !== null) {
+            $values[] = $state === false
+                ? $text->translate('(unknown value)')
+                : $text->translate(Presentation::HEADLINES[$state]);
+        }
+        if ($ai !== null) {
+            $values[] = $ai === false
+                ? $text->translate('(unknown value)')
+                : $text->translate(Presentation::AI_LABELS[$ai]);
+        }
         $filters[$label] = $values;
         $event->setParam('filters', $filters);
     }
@@ -113,17 +122,25 @@ final class AdminDisplay
             return;
         }
         $state = FilterValue::parse($request->getContent()[FilterValue::PARAMETER] ?? null);
-        if ($state === null) {
-            return;
-        }
-        if ($state === false) {
+        $ai = AiFilterValue::parse($request->getContent()[AiFilterValue::PARAMETER] ?? null);
+        if ($state === false || $ai === false) {
             $qb->andWhere('1 = 0');
 
             return;
         }
-        $alias = $adapter->createAlias();
-        $qb->innerJoin(StoredVerdict::class, $alias, 'WITH', "{$alias}.media = omeka_root.id")
-            ->andWhere($qb->expr()->eq("{$alias}.state", $adapter->createNamedParameter($qb, $state)));
+        if ($state !== null) {
+            $alias = $adapter->createAlias();
+            $qb->innerJoin(StoredVerdict::class, $alias, 'WITH', "{$alias}.media = omeka_root.id")
+                ->andWhere($qb->expr()->eq("{$alias}.state", $adapter->createNamedParameter($qb, $state)));
+        }
+        if ($ai !== null) {
+            // The filter lists what the label shows: only on a file that verifies (SPEC-007 AC11).
+            $alias = $adapter->createAlias();
+            $qb->innerJoin(StoredVerdict::class, $alias, 'WITH', "{$alias}.media = omeka_root.id")
+                ->andWhere($qb->expr()->eq("{$alias}.aiStatement", $adapter->createNamedParameter($qb, $ai)))
+                // Expr::in() would quote a placeholder as a literal.
+                ->andWhere("{$alias}.state IN (".$adapter->createNamedParameter($qb, [Presentation::TRUSTED, Presentation::VALID]).')');
+        }
     }
 
     private function echoBlock(PhpRenderer $view, mixed $media): void

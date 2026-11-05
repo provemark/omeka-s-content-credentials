@@ -65,3 +65,12 @@ day the work was committed.
   that list them, show a document and download it. Who can see the media
   item can see its evidence. Files without Content Credentials and checks
   that end in `error` keep none (SPEC-006, ADR-0005). (2026-11-05)
+- M6: the AI label. A file that verifies and says, in its signed actions,
+  that it was made or edited with generative AI shows "AI-generated (signed)"
+  or "AI-edited (signed)" in the block and the browse column, and the browse
+  can filter on either, in admin only. A file that does not verify shows no
+  label. The verdict table gains a column `ai_statement`; a development
+  installation is installed again (SPEC-007). (2026-11-05)
+- Changed: `composer check` has no time limit of Composer's own any more
+  (`process-timeout` 0): the integration tests can outlast its 300 seconds.
+  (2026-11-05)

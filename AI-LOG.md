@@ -821,3 +821,18 @@ README are where the disclosure lives.
 - Measured: the delta URI on 668 files. Read: the IPTC vocabulary through a
   summarising fetch, marked as such in the spec. Tracefern's SPEC-027 is the
   source of the rule; C2PA 2.4 was not opened again.
+
+## 2026-11-05: M6.3, SPEC-007 implemented
+
+- Model: Claude Opus 5.5, Claude Code CLI
+- Asked: "akkoord met de aanbevelingen", then "ok, amendementen goedgekeurd,
+  process-timeout op 0, rond af".
+- Produced: `src/Check/AiStatement.php`, `src/Display/AiFilterValue.php`, the
+  column, the labels and the filter, two fixtures, the tests,
+  `notes/step-27-the-ai-label.md`, SPEC-002 amendment 2, SPEC-003 amendment 3,
+  SPEC-007 amendments 1 and 2, `process-timeout` in `composer.json`.
+- The assistant's own errors, found while building and recorded in the note: a
+  hostile value too long for the column it specified, a public page Omeka S does
+  not have, a test that contradicted AC6, and `Expr::in()` that gave a 500.
+- Not done: the assistant did not look at the pages in a browser; Maurice was
+  given the addresses. No falsification of the cycle guard.

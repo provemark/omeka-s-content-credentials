@@ -254,6 +254,14 @@ Deptrac gets a layer `Display` (no Omeka S, may use nothing but
   the media item has at least one evidence row: a link, the block's
   first. AC4 still holds, since a `none` check keeps no evidence
   (SPEC-006 AC3). Was: no evidence line. Tested under SPEC-006 AC6.
+- **Amendment 3 (2026-11-05, approved by Maurice van Loon with SPEC-007):**
+  on a `Trusted` or `Valid` row with an `ai_statement`, the block gains the
+  label "AI-generated (signed)" or "AI-edited (signed)" as its first line
+  under the headline, and the column as a second line under the headline.
+  The advanced search gains a second filter field, and the active filters
+  its label. A row whose `ai_statement` is not NULL, `generated` or `edited`
+  is unreadable. Was: the headline alone, one filter. The "AI label (M6)"
+  line under Out of scope is met by SPEC-007. Tested under SPEC-007.
 
 ## Traceability
 

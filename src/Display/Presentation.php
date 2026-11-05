@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace ContentCredentials\Display;
 
+use ContentCredentials\Check\AiStatement;
 use ContentCredentials\Check\Verdict;
 
 /**
@@ -35,6 +36,12 @@ final class Presentation
         Verdict::ERROR => 'Could not be checked',
     ];
 
+    /** The labels of SPEC-007: English source strings, for `translate`. */
+    public const AI_LABELS = [
+        AiStatement::GENERATED => 'AI-generated (signed)',
+        AiStatement::EDITED => 'AI-edited (signed)',
+    ];
+
     public const NOT_CHECKED = 'Not checked';
 
     public const UNREADABLE = 'Result unreadable';
@@ -52,6 +59,7 @@ final class Presentation
     private function __construct(
         private readonly string $headline,
         private readonly array $lines,
+        private readonly ?string $aiLabel = null,
     ) {}
 
     /**
@@ -67,7 +75,9 @@ final class Presentation
         $codes = self::codes($row['codes'] ?? null);
         $reason = $row['reason'] ?? null;
         $trust = self::trustLine($row['trust'] ?? null);
+        $statement = $row['ai_statement'] ?? null;
         if (! is_string($state) || ! in_array($state, self::STATES, true) || $codes === null || $trust === false
+            || ($statement !== null && (! is_string($statement) || ! isset(self::AI_LABELS[$statement])))
             || ($state === Verdict::ERROR && (! is_string($reason) || ! isset(self::REASONS[$reason])))) {
             return new self(self::UNREADABLE, []);
         }
@@ -106,7 +116,10 @@ final class Presentation
             $lines[] = $trust;
         }
 
-        return new self(self::HEADLINES[$state], $lines);
+        // The label follows the verdict, whatever the column holds (SPEC-007 AC9).
+        $verifies = $state === self::TRUSTED || $state === self::VALID;
+
+        return new self(self::HEADLINES[$state], $lines, $verifies && is_string($statement) ? self::AI_LABELS[$statement] : null);
     }
 
     /**
@@ -141,6 +154,12 @@ final class Presentation
     public function headline(): string
     {
         return $this->headline;
+    }
+
+    /** "AI-generated (signed)", "AI-edited (signed)" or null: for `translate`. */
+    public function aiLabel(): ?string
+    {
+        return $this->aiLabel;
     }
 
     /**

@@ -1,15 +1,17 @@
 <?php
 /*
- * SPEC-003: the browse filter's field in the admin media advanced search.
- * Only the module's own states and headlines are written here; the query's
- * value is compared, never echoed.
+ * SPEC-003 and SPEC-007: the browse filters' fields in the admin media
+ * advanced search. Only the module's own states, statements, headlines and
+ * labels are written here; the query's value is compared, never echoed.
  */
+use ContentCredentials\Display\AiFilterValue;
 use ContentCredentials\Display\FilterValue;
 use ContentCredentials\Display\Presentation;
 
 $translate = $this->plugin('translate');
 $escape = $this->plugin('escapeHtml');
 $current = FilterValue::parse(is_array($query ?? null) ? ($query[FilterValue::PARAMETER] ?? null) : null);
+$currentAi = AiFilterValue::parse(is_array($query ?? null) ? ($query[AiFilterValue::PARAMETER] ?? null) : null);
 ?>
 <div class="field">
     <div class="field-meta">
@@ -20,6 +22,19 @@ $current = FilterValue::parse(is_array($query ?? null) ? ($query[FilterValue::PA
             <option value=""><?php echo $escape($translate('Any')); ?></option>
             <?php foreach (Presentation::HEADLINES as $state => $headline): ?>
             <option value="<?php echo $escape($state); ?>"<?php echo $current === $state ? ' selected' : ''; ?>><?php echo $escape($translate($headline)); ?></option>
+            <?php endforeach; ?>
+        </select>
+    </div>
+</div>
+<div class="field">
+    <div class="field-meta">
+        <label for="content-credentials-ai"><?php echo $escape($translate('Content Credentials: AI statement')); ?></label>
+    </div>
+    <div class="inputs">
+        <select name="<?php echo AiFilterValue::PARAMETER; ?>" id="content-credentials-ai">
+            <option value=""><?php echo $escape($translate('Any')); ?></option>
+            <?php foreach (Presentation::AI_LABELS as $statement => $label): ?>
+            <option value="<?php echo $escape($statement); ?>"<?php echo $currentAi === $statement ? ' selected' : ''; ?>><?php echo $escape($translate($label)); ?></option>
             <?php endforeach; ?>
         </select>
     </div>
