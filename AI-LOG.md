@@ -939,3 +939,12 @@ README are where the disclosure lives.
 - Model: Claude Opus 5.5, Claude Code CLI
 - Asked: "ok, akkoord met 1 tot en met 5" (point 5).
 - Produced: four probe files with relative paths, the section in step 34. The probes were not run again.
+
+## 2026-11-06: the code review, recorded
+
+- Model: Claude Opus 5.5, Claude Code CLI
+- Asked: "Ik wil wel een goede review nu.", then "ok, leg vast en begin met punt 1".
+- Produced: the review (a separate agent's read, then the assistant's checks and measurements),
+  `notes/step-35-the-code-review.md`, `tools/probes/ReleaseCheck/review-*.php`, milestones M7.11 to
+  M7.14.
+- These are defects in the assistant's own earlier work, which its tests had not found.

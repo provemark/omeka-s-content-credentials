@@ -287,6 +287,10 @@ Open for Maurice, after measuring:
 | M7.8 | The zip's tests on PHP 8.4 and 8.5, as the README promises "8.3 or later" | done: [`notes/step-33-the-zip-on-newer-php.md`](../notes/step-33-the-zip-on-newer-php.md) |
 | M7.9 | README and CHANGELOG ready to publish; the version stays 0.1.0 | done: `README.md`, `CHANGELOG.md`; [`notes/step-34-readme-and-paths.md`](../notes/step-34-readme-and-paths.md) |
 | M7.10 | The probes' local paths made relative; the history is not rewritten | done: [`notes/step-34-readme-and-paths.md`](../notes/step-34-readme-and-paths.md) |
+| M7.11 | A run whose process has gone can be ended from the configure page (review finding 1, SPEC-005) | proposed |
+| M7.12 | A run that failed is not `completed` (review finding 2, SPEC-005) | proposed |
+| M7.13 | The AI label reads instance labels (review finding 3, SPEC-007) | proposed |
+| M7.14 | The smaller findings 4 to 8 of the review | proposed |
 
 **M7.5 is done (2026-11-06):** `tools/build.sh` makes the zip, which holds `vendor-prefixed/` and no
 `vendor/` (ADR-0006; M7's row above says "prefixed `vendor/`"), and which is tested in a clean
@@ -297,5 +301,6 @@ evidence. What ships is a list in the build, not `.gitattributes`. Next: M7.6, t
 decisions in step 31: the lists, the version, the README, the zip on PHP 8.4 and 8.5, a public
 repository, the registration. M7 is done when the zip is released, or when he decides otherwise.
 
-**M7.7 to M7.10 are done (2026-11-06).** What is left of M7 is Maurice's: his look at the zip in a
-browser, a public repository, the release and the registration on omeka.org.
+**M7.7 to M7.10 are done (2026-11-06).** Maurice has looked at the zip in a browser. The review of
+[step 35](../notes/step-35-the-code-review.md) added M7.11 to M7.14, which come before a release. After them,
+what is left of M7 is Maurice's: a public repository, the release and the registration on omeka.org.
