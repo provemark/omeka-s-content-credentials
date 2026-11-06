@@ -1,0 +1,74 @@
+# The clean Omeka S the built zip is tested in (SPEC-008): the same pinned
+# images as compose.yaml, its own project, volumes and ports, and no module
+# mounted: tools/env/release.sh unpacks the zip in modules/. Test-only: the
+# passwords are not secrets, and the ports listen on 127.0.0.1 only.
+name: content-credentials-release
+
+x-db: &db
+  image: mariadb:11.4@sha256:d1891ede5a559f1086f55053bb8cc1569b0298338c4d72d71725a7f74f6ba620
+  environment:
+    MARIADB_DATABASE: omeka
+    MARIADB_USER: omeka
+    MARIADB_PASSWORD: omeka
+    MARIADB_ROOT_PASSWORD: root
+  healthcheck:
+    test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+    interval: 2s
+    timeout: 5s
+    retries: 30
+
+x-omeka-environment: &omeka-environment
+  OMEKA_ROOT: /var/www/html
+  OMEKA_DB_NAME: omeka
+  OMEKA_DB_USER: omeka
+  OMEKA_DB_PASSWORD: omeka
+  OMEKA_ADMIN_EMAIL: admin@example.com
+  OMEKA_ADMIN_PASSWORD: test-only-admin-password
+
+services:
+  db:
+    <<: *db
+    volumes:
+      - db:/var/lib/mysql
+
+  omeka:
+    build: ../../docker/omeka
+    image: content-credentials-test/omeka:4.2.1-php8.3
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      <<: *omeka-environment
+      OMEKA_DB_HOST: db
+    ports:
+      - "127.0.0.1:8090:80"
+    volumes:
+      - files:/var/www/html/files
+
+  db-php82:
+    <<: *db
+    volumes:
+      - db-php82:/var/lib/mysql
+
+  omeka-php82:
+    build:
+      context: ../../docker/omeka
+      args:
+        BASE_IMAGE: php:8.2-apache@sha256:89e5f7bde208a146519d12100c11e71a1d0119a10703cfc454d1bdca274147ec
+    image: content-credentials-test/omeka:4.2.1-php8.2
+    depends_on:
+      db-php82:
+        condition: service_healthy
+    environment:
+      <<: *omeka-environment
+      OMEKA_DB_HOST: db-php82
+    ports:
+      - "127.0.0.1:8091:80"
+    volumes:
+      - files-php82:/var/www/html/files
+
+volumes:
+  db:
+  files:
+  db-php82:
+  files-php82:

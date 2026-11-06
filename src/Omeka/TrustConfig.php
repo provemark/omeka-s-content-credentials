@@ -103,6 +103,6 @@ final class TrustConfig
 
     private function loadVerifier(): void
     {
-        VerifierLoader::register($this->moduleDirectory.'/vendor/provemark/c2pa-verifier/src');
+        VerifierLoader::register($this->moduleDirectory);
     }
 }

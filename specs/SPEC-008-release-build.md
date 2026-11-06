@@ -2,9 +2,9 @@
 
 | Field      | Value                                             |
 |------------|---------------------------------------------------|
-| Status     | draft                                             |
+| Status     | implemented                                       |
 | Author     | Maurice van Loon                                  |
-| Approved   | —                                                 |
+| Approved   | Maurice van Loon, 2026-11-06                      |
 | Supersedes | —                                                 |
 
 > Lifecycle: `draft` → maintainer approves → `approved` → tests-first →
@@ -53,9 +53,10 @@ This spec is M7 of `docs/milestones.md`, without the release itself (M7.6). It r
 - Removing the module's folder from disk, which Omeka S does not do either.
 - A signed zip or a checksum file.
 
-## Choices proposed (for Maurice)
+## Choices
 
-Each has a recommendation; the criteria below follow the recommendation.
+Proposed with recommendations; Maurice approved all six recommendations on 2026-11-06. The
+criteria below follow them.
 
 1. **Job rows: delete in `uninstall()`** (recommended), before the tables are dropped.
    This reaches M7's aim, and also ends a run at once, so that a reinstall starts empty
@@ -264,9 +265,25 @@ $connection->executeStatement(Schema::drop());
 - **What the zip does not prove:** PHP 8.4 and 8.5 stay unmeasured on the zip unless CI's matrix
   is widened, and the zip's first look in a browser is Maurice's.
 
+## Amendments
+
+- **Amendment 1 (2026-11-06, approved by Maurice van Loon):** `tools/build.sh` takes an optional
+  tree-ish, HEAD by default, and `tools/env/release.sh` gives it a tree of the working tree, through
+  a temporary index. Otherwise `composer check` before a commit would test the previous commit, and
+  a new build would never be tested. Was: no argument. AC1 is unchanged.
+- **Amendment 2 (2026-11-06, approved by Maurice van Loon):** AC4's last clause holds for the PHP
+  source: no file in the zip's `src/` or the verifier's `src/`. The verifier's `composer.json`, which
+  ADR-0006 keeps and nothing loads, still names its namespace. Was: "no file in the zip's `src/` or
+  verifier".
+- **Amendment 3 (2026-11-06, approved by Maurice van Loon):** AC11 and AC14 are in `tests/Release`,
+  as they compare every row and start thousands of checks, which takes a clean installation. AC11
+  leaves the whole of `api_key` out, the helper's table, whose last-used time moves with each call.
+  Was: criteria on the module's source in `tests/Unit` or `tests/Integration`.
+
 ## Open questions
 
 - All six choices above: blockers, for Maurice.
+  *Status 2026-11-06:* answered: Maurice approved all six recommendations with the spec.
 
 ## Traceability
 
@@ -274,18 +291,18 @@ Filled when status becomes `implemented`.
 
 | Acceptance criterion | Test (file :: name / group) | Source (file/symbol) |
 |----------------------|-----------------------------|----------------------|
-| AC1                  | —                           | —                    |
-| AC2                  | —                           | —                    |
-| AC3                  | —                           | —                    |
-| AC4                  | —                           | —                    |
-| AC5                  | —                           | —                    |
-| AC6                  | —                           | —                    |
-| AC7                  | —                           | —                    |
-| AC8                  | —                           | —                    |
-| AC9                  | —                           | —                    |
-| AC10                 | —                           | —                    |
-| AC11                 | —                           | —                    |
-| AC12                 | —                           | —                    |
-| AC13                 | —                           | —                    |
-| AC14                 | —                           | —                    |
-| AC15                 | —                           | —                    |
+| AC1 | tests/Release/BuildTest.php :: AC1: the zip comes from the committed HEAD / SPEC-008 | tools/build.sh |
+| AC2 | tests/Release/BuildTest.php :: AC2: a phar that is not the pinned one stops the build / SPEC-008 | tools/build.sh |
+| AC3 | tests/Release/BuildTest.php :: AC3: the zip holds what ADR-0006 lists, and nothing else / SPEC-008 | tools/build.sh; composer.json :: extra.strauss |
+| AC4 | tests/Release/BuildTest.php :: AC4: nothing but the prefix changed / SPEC-008 | tools/build.sh; composer.json :: extra.strauss |
+| AC5 | tests/Release/ZipInOmekaTest.php :: AC5: it installs, and gives the verifier's verdicts / SPEC-008 | tools/build.sh; tools/env/release.sh; src/Omeka/VerifierLoader.php |
+| AC6 | tests/Release/ZipInOmekaTest.php :: AC6: it refuses PHP 8.2 / SPEC-008 | Module.php :: install(); src/Requirements.php |
+| AC7 | tests/Release/ZipInOmekaTest.php :: AC7: another module's copy does not reach it / SPEC-008 | tools/build.sh; composer.json :: extra.strauss |
+| AC8 | tests/Release/BuildTest.php :: AC8: the integration tests hold on the zip / SPEC-008; the run: .github/workflows/ci.yml :: release | tools/env/release.sh --integration; tests/Integration/Support/included-files.php |
+| AC9 | tests/Unit/VerifierLoaderTest.php :: AC9: both layouts / SPEC-008 | src/Omeka/VerifierLoader.php :: sourceDirectory() |
+| AC10 | tests/Release/ZipInOmekaTest.php :: AC10: no verifier at all / SPEC-008 | src/Omeka/VerifierLoader.php :: register() |
+| AC11 | tests/Release/UninstallTest.php :: AC11: uninstalling after use leaves nothing of the module / SPEC-008 | Module.php :: uninstall(); src/Omeka/Schema.php |
+| AC12 | tests/Integration/UninstallJobsTest.php :: AC12: only the module's job rows go / SPEC-008 | src/Omeka/Schema.php :: DELETE_JOBS, JOB_CLASS |
+| AC13 | tests/Integration/UninstallJobsTest.php :: AC13: from a deactivated module too; tests/Unit/VerifierLoaderTest.php :: AC13: from a deactivated module too: the class written out is the job / SPEC-008 | Module.php :: uninstall(); src/Omeka/Schema.php :: JOB_CLASS |
+| AC14 | tests/Release/UninstallTest.php :: AC14: uninstalling during a run / SPEC-008 | Module.php :: uninstall() |
+| AC15 | tests/Integration/UninstallJobsTest.php :: AC15: the warning / SPEC-008 | config/module.ini :: description |

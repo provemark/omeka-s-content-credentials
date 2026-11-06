@@ -51,7 +51,9 @@ function spec002IncludedFiles(string $omekaRoot, string $ingestUrl): void
     $em->clear();
     $stored = isset($mediaIds[0]) ? $em->find(StoredVerdict::class, $mediaIds[0]) : null;
 
-    $vendor = dirname(__DIR__, 3).'/vendor/';
+    // SPEC-002 amendment 3: the folder the module runs on.
+    $module = dirname(__DIR__, 3);
+    $vendor = $module.(is_dir($module.'/vendor-prefixed') ? '/vendor-prefixed/' : '/vendor/');
     $verifierSrc = $vendor.'provemark/c2pa-verifier/src/';
     $fromVendor = array_values(array_filter(
         get_included_files(),

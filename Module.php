@@ -98,6 +98,9 @@ final class Module extends AbstractModule
     {
         // An inactive module's src/ is not autoloaded either.
         require_once __DIR__.'/src/Omeka/Schema.php';
+        // The job rows first: a run still going ends at its next look at its row,
+        // before it could write into the tables of a later install (SPEC-008).
+        self::connection($serviceLocator)->executeStatement(Schema::DELETE_JOBS, [Schema::JOB_CLASS]);
         self::connection($serviceLocator)->executeStatement(Schema::drop());
         // Omeka S leaves a module's settings behind (step 15); the keys are
         // those of SPEC-004, written out because src/ is not loaded here.

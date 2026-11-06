@@ -11,7 +11,8 @@ namespace ContentCredentials\Omeka;
  * platform check kills PHP 8.2 (step 11, SPEC-002 AC13).
  *
  * The namespace string is rewritten by Strauss in the release build (step
- * 11); the directory is the caller's, so the build can point it elsewhere.
+ * 11). Strauss leaves paths alone, so the loader looks which layout it is in
+ * (SPEC-008): the zip has vendor-prefixed/, the repository vendor/.
  */
 final class VerifierLoader
 {
@@ -19,12 +20,22 @@ final class VerifierLoader
 
     private static bool $registered = false;
 
-    public static function register(string $sourceDirectory): void
+    /** Which source directory the module runs on: the prefixed one when it exists. */
+    public static function sourceDirectory(string $moduleDirectory): string
+    {
+        $source = '/provemark/c2pa-verifier/src';
+        $prefixed = $moduleDirectory.'/vendor-prefixed'.$source;
+
+        return is_dir($prefixed) ? $prefixed : $moduleDirectory.'/vendor'.$source;
+    }
+
+    public static function register(string $moduleDirectory): void
     {
         if (self::$registered) {
             return;
         }
         self::$registered = true;
+        $sourceDirectory = self::sourceDirectory($moduleDirectory);
         spl_autoload_register(static function (string $class) use ($sourceDirectory): void {
             if (! str_starts_with($class, self::PREFIX)) {
                 return;

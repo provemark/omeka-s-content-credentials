@@ -64,7 +64,7 @@ final class RecheckJob extends AbstractJob
         }
         $check = new MediaCheck(
             static function () use ($directory): string {
-                VerifierLoader::register($directory.'/vendor/provemark/c2pa-verifier/src');
+                VerifierLoader::register($directory);
 
                 return Verifier::VERSION;
             },

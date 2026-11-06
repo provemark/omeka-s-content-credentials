@@ -58,7 +58,7 @@ final class AfterFlushListener
         }
         $check = new MediaCheck(
             static function () use ($moduleDirectory): string {
-                VerifierLoader::register($moduleDirectory.'/vendor/provemark/c2pa-verifier/src');
+                VerifierLoader::register($moduleDirectory);
 
                 return Verifier::VERSION;
             },

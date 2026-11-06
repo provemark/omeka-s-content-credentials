@@ -303,6 +303,12 @@ before its first file.
   is `Trusted` or `Valid`. The `CREATE TABLE` statement changes; there is no
   `upgrade()` before the first release. Was: no such column. The criteria
   above are unchanged. Tested under SPEC-007.
+- **Amendment 3 (2026-11-06, approved by Maurice van Loon with SPEC-008):**
+  AC13 follows the folder the module runs on, as the release zip has
+  `vendor-prefixed/` and no `vendor/`: of that folder, only
+  `provemark/c2pa-verifier/src/` is included, and at least one file from there.
+  Omeka's `Psr\Log\LoggerInterface` as before. Was: "no file of the module's
+  `vendor/` outside `vendor/provemark/c2pa-verifier/src/`".
 
 ## Traceability
 

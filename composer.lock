@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b1ea38410833d59f05d42ff41ee73ec7",
+    "content-hash": "179173f02ab2083463adff696f9957f3",
     "packages": [
         {
             "name": "provemark/c2pa-verifier",

@@ -28,6 +28,19 @@
             "ContentCredentials\\Tests\\": "tests/"
         }
     },
+    "extra": {
+        "strauss": {
+            "target_directory": "vendor-prefixed",
+            "namespace_prefix": "ContentCredentials\\Vendor\\",
+            "packages": [
+                "provemark/c2pa-verifier"
+            ],
+            "update_call_sites": [
+                "src"
+            ],
+            "delete_vendor_packages": true
+        }
+    },
     "config": {
         "platform": {
             "php": "8.3.0"
@@ -54,11 +67,13 @@
             "@analyse",
             "@deptrac",
             "@test",
-            "@test:integration"
+            "@test:integration",
+            "@test:release"
         ],
         "test:integration": [
             "sh tools/env/up.sh",
             "pest --testsuite=Integration"
-        ]
+        ],
+        "test:release": "sh tools/env/release.sh"
     }
 }

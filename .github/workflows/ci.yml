@@ -37,7 +37,7 @@ jobs:
           key: composer-${{ runner.os }}-php${{ matrix.php }}-${{ hashFiles('composer.lock') }}
           restore-keys: composer-${{ runner.os }}-php${{ matrix.php }}-
 
-      # composer.lock is committed (the module ships its vendor/), so this
+      # composer.lock is committed (the release zip is built from it), so this
       # installs exactly what is locked.
       - run: composer install --no-interaction --prefer-dist --no-progress
 
@@ -68,6 +68,25 @@ jobs:
 
       - if: failure()
         run: docker compose logs --no-color
+
+  # SPEC-008: the zip, built on Linux, in a clean Omeka S: its own tests, then
+  # the whole of tests/Integration on it (AC8).
+  release:
+    name: the release zip (built on PHP 8.3, in Omeka S 4.2.1)
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          coverage: none
+
+      - run: composer install --no-interaction --prefer-dist --no-progress
+
+      - run: sh tools/env/release.sh
+
+      - run: sh tools/env/release.sh --integration
 
   # ADR-0001: Omeka S 4.2 loads Module.php on PHP 8.1 and 8.2, and on a
   # refused install also src/Requirements.php, before the module can say it

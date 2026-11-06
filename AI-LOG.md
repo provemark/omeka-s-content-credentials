@@ -880,3 +880,15 @@ README are where the disclosure lives.
   draft with six choices and recommendations, and a proposed amendment to SPEC-002 AC13.
 - Read, not measured: why a job's process ends when its row is deleted, and a possible race at
   the end of a run; both marked in the spec.
+
+## 2026-11-06: M7.5, SPEC-008 implemented
+
+- Model: Claude Opus 5.5, Claude Code CLI
+- Asked: "ok, SPEC-008 goedgekeurd met alle aanbevelingen, begin met M7.5", then "ok,
+  amendementen goedgekeurd, rond af".
+- Produced: `tools/build.sh`, `tools/env/release.sh`, `tools/env/compose.release.yaml`, the loader's
+  two layouts, the job rows in `uninstall()`, the sentence in the description, the tests, the CI job,
+  `notes/step-30-the-release-build-built.md`, SPEC-002 amendment 3, SPEC-008 amendments 1 to 3.
+- The assistant's own errors, recorded in the note: a test that compared the helper's own API key,
+  seven PHPStan errors in new tests, a command that hung, two falsifications that had to be redone.
+- Not done: the build on Linux is left to CI; the zip on PHP 8.4 and 8.5; no browser.

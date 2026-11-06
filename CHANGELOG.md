@@ -74,3 +74,9 @@ day the work was committed.
 - Changed: `composer check` has no time limit of Composer's own any more
   (`process-timeout` 0): the integration tests can outlast its 300 seconds.
   (2026-11-05)
+- M7: the release build: `tools/build.sh` makes a zip with the verifier prefixed by Strauss 0.31.1,
+  tested in a clean Omeka S by `composer check` and at every push, where the integration tests run on
+  it too (ADR-0006, SPEC-008). (2026-11-06)
+- Changed: uninstalling also deletes the module's job rows, which ends a run that is going on, and
+  the module's description says that uninstalling deletes its verdicts and evidence (SPEC-008).
+  (2026-11-06)

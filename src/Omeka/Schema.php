@@ -22,6 +22,15 @@ final class Schema
     public const EVIDENCE_TABLE = 'content_credentials_evidence';
 
     /**
+     * The module's job, written out as src/ is not on the autoloader for an
+     * inactive module; a unit test holds it to the class (SPEC-008 AC13).
+     */
+    public const JOB_CLASS = 'ContentCredentials\\Omeka\\RecheckJob';
+
+    /** Deletes the module's job rows, whose only other effect is ending a run (SPEC-008). */
+    public const DELETE_JOBS = 'DELETE FROM job WHERE class = ?';
+
+    /**
      * @return list<string>
      */
     public static function create(): array

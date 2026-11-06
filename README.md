@@ -37,13 +37,25 @@ filter on either (SPEC-007). The label repeats a signed statement in the file;
 it is not a detection. A file without that statement says nothing either way,
 and a statement further down the file's history is only shown when each step
 to it holds a recorded result that the verifier agrees with, so a file can
-carry a statement the label does not show. The plan is in [`docs/milestones.md`](docs/milestones.md),
+carry a statement the label does not show. Milestone M7 is under way: there is a
+release build, tested in a clean Omeka S, not yet a release (SPEC-008). The plan is in [`docs/milestones.md`](docs/milestones.md),
 the decisions are in [`NOTES.md`](NOTES.md).
 
 ## Requirements (planned)
 
 - Omeka S 4.2.x
 - PHP 8.3 or later (the verifier's floor; Omeka S itself runs from 8.1)
+
+## Building the zip
+
+`tools/build.sh` makes `build/ContentCredentials-<version>.zip` from the committed HEAD, with the
+verifier prefixed under `ContentCredentials\Vendor\`, so that another module's copy cannot reach it
+(ADR-0006). It needs PHP, Composer, `zip`, and once the network, to fetch a Strauss checked by its
+SHA-256. Unpack the zip in Omeka S's `modules/` and install the module from the modules page.
+
+Uninstalling deletes every verdict and evidence document the module has stored, its settings and
+the rows of its jobs in Omeka's job list, and ends a run that is going on. Back up the database
+first if you want to keep them.
 
 ## How this is built
 
