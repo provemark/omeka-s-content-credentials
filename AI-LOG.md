@@ -933,3 +933,9 @@ README are where the disclosure lives.
 - Asked: "ok, akkoord met 1 tot en met 5" (point 4).
 - Produced: `README.md` rewritten for someone installing the module, the changelog's section for
   0.1.0, `notes/step-34-readme-and-paths.md`.
+
+## 2026-11-06: M7.10, the probes' paths
+
+- Model: Claude Opus 5.5, Claude Code CLI
+- Asked: "ok, akkoord met 1 tot en met 5" (point 5).
+- Produced: four probe files with relative paths, the section in step 34. The probes were not run again.

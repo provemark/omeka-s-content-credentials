@@ -5,14 +5,14 @@ declare(strict_types=1);
 // Needs a checkout of provemark/tracefern-image-check next to this
 // repository (../C2PA_Verifier_WP) for its trust/ files and fixtures.
 // Usage: php measure.php <output directory>
-require '/Users/maurice/Documenten/omeka-s-content-credentials/vendor/autoload.php';
+require dirname(__DIR__, 3).'/vendor/autoload.php';
 use Provemark\C2paVerifier\Trust\TrustSettings;
 use Provemark\C2paVerifier\Verifier\Verifier;
 
 $out = $argv[1];
-$tf = '/Users/maurice/Documenten/C2PA_Verifier_WP/trust/';
-$tfx = '/Users/maurice/Documenten/C2PA_Verifier_WP/tests/Fixtures/';
-$own = '/Users/maurice/Documenten/omeka-s-content-credentials/tests/Fixtures/c2pa/';
+$tf = dirname(dirname(__DIR__, 3)).'/C2PA_Verifier_WP/trust/';
+$tfx = dirname(dirname(__DIR__, 3)).'/C2PA_Verifier_WP/tests/Fixtures/';
+$own = dirname(__DIR__, 3).'/tests/Fixtures/c2pa/';
 $e = fn (string $path, string $kind): array => ['trust_anchors' => file_get_contents($path), 'trust_kind' => $kind];
 $variants = [
     'none' => null,
@@ -36,7 +36,7 @@ foreach (['google-20250919-pixel10-npld-picnic-table.jpg', 'openai-20260826-c2pa
     $fixtures[$f] = $tfx.$f;
 }
 
-$cli = '/Users/maurice/Documenten/omeka-s-content-credentials/vendor/bin/c2pa-verify';
+$cli = dirname(__DIR__, 3).'/vendor/bin/c2pa-verify';
 $rows = [];
 foreach ($fixtures as $name => $path) {
     foreach ($variants as $v => $anchors) {

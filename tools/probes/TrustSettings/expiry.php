@@ -5,12 +5,12 @@ declare(strict_types=1);
 // Needs a checkout of provemark/tracefern-image-check next to this
 // repository (../C2PA_Verifier_WP) for its trust/ files and fixtures.
 // Usage: php expiry.php <output directory>
-require '/Users/maurice/Documenten/omeka-s-content-credentials/vendor/autoload.php';
+require dirname(__DIR__, 3).'/vendor/autoload.php';
 use Provemark\C2paVerifier\Trust\TrustSettings;
 use Provemark\C2paVerifier\Verifier\Verifier;
 
 $S = $argv[1];
-$fx = '/Users/maurice/Documenten/C2PA_Verifier_WP/tests/Fixtures/';
+$fx = dirname(dirname(__DIR__, 3)).'/C2PA_Verifier_WP/tests/Fixtures/';
 $set = TrustSettings::fromJson(file_get_contents("$S/settings-c2pa+digicert.json"));
 $c2pa = TrustSettings::fromJson(file_get_contents("$S/settings-c2pa.json"));
 foreach (['google-20250919-pixel10-npld-picnic-table.jpg' => $c2pa, 'openai-20260826-c2pa_2x.png' => $c2pa, 'amazon-20240925-titan-g1.png' => $set, 'adobe-20260425-lightroom-classic-church.jpg' => $set, 'c2pa-rs-ocsp.jpg' => $set] as $f => $s) {

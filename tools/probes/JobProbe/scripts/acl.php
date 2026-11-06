@@ -1,7 +1,7 @@
 <?php
 
 declare(strict_types=1);
-require '/Users/maurice/Documenten/omeka-s-content-credentials/vendor/autoload.php';
+require dirname(__DIR__, 4).'/vendor/autoload.php';
 use ContentCredentials\Tests\Integration\Support\OmekaInstallation;
 
 $o = OmekaInstallation::php83();

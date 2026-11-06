@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 // M4.1 measurement (notes/step-18-jobs.md), never shipped. Usage: php measure.php [all|cli|sync|badpath]
-require '/Users/maurice/Documenten/omeka-s-content-credentials/vendor/autoload.php';
+require dirname(__DIR__, 4).'/vendor/autoload.php';
 use ContentCredentials\Tests\Integration\Support\OmekaInstallation;
 
 $o = OmekaInstallation::php83();

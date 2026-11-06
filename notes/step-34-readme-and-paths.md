@@ -24,3 +24,17 @@ The states and labels were taken from `Presentation`, the requirements from `con
 and `Requirements`, the formats from `AfterFlushListener::MEDIA_TYPES`, and "the public site and the
 API show nothing" from SPEC-003 AC11. The README's sentences on what a state means are a summary
 written for this step, and no one has yet read them in the zip but the assistant.
+
+## M7.10: the probes' paths
+
+Four probe files (`tools/probes/JobProbe/scripts/acl.php`, `measure.php`,
+`tools/probes/TrustSettings/expiry.php`, `measure.php`) named a folder on one machine. They now
+find the repository from `__DIR__`, and the sister repository `C2PA_Verifier_WP` as a folder next
+to it, as their comments already said. Measured: `git grep /Users/maurice` now finds only step 31's
+description, and each of the four files' paths resolves to the same folders as before (`php -r`,
+`realpath`). The probes were not run again: they are records of earlier measurements, and their
+results stand on the code of that day.
+
+As Maurice decided, the history is not rewritten: the old paths stay on 9 lines in it. They name a
+user name and a local folder, not a secret.
+

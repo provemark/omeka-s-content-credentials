@@ -172,6 +172,7 @@ and committer of every pushed commit.
 | M7.7 | Maurice's decisions on step 31 (2026-11-06): refresh the lists, version 0.1.0, the zip on PHP 8.4 and 8.5, README and CHANGELOG ready, the probes' paths relative without rewriting history. A public repository, the registration and his own look at the zip are open. [`notes/step-32-refreshing-the-lists.md`](notes/step-32-refreshing-the-lists.md): the lists at `64b3f9c`, 2026-11-04 |
 | M7.8 | [`notes/step-33-the-zip-on-newer-php.md`](notes/step-33-the-zip-on-newer-php.md): SPEC-008 amendment 4, AC16; the zip passes on PHP 8.4 and 8.5; with deprecations on, 8.5 logs none from the module and a few from Omeka S itself, which are off by default |
 | M7.9 | [`notes/step-34-readme-and-paths.md`](notes/step-34-readme-and-paths.md): the README written for someone installing the module; every relative link holds from the zip; the four absolute links lead nowhere while the repository is private |
+| M7.10 | [`notes/step-34-readme-and-paths.md`](notes/step-34-readme-and-paths.md): the four probes find their folders from `__DIR__`; the history is not rewritten |
 
 ## To measure before a spec rests on it
 
