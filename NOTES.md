@@ -168,6 +168,7 @@ and committer of every pushed commit.
 | M7.3 | [`docs/adr/ADR-0006-prefixing-the-verifier.md`](docs/adr/ADR-0006-prefixing-the-verifier.md) (accepted 2026-11-06): Strauss 0.31.1 as a pinned phar, in the build only; prefix `ContentCredentials\Vendor\`; the zip holds `vendor-prefixed/` with the verifier's `src/` (no `Cli/`), `LICENSE` and `composer.json`, and no `vendor/`, autoloader or `composer.json` of the module |
 | M7.4 | [`specs/SPEC-008-release-build.md`](specs/SPEC-008-release-build.md) (approved 2026-11-06): six choices, all as recommended: job rows deleted in `uninstall()`, the warning in the description, the loader looks for the folder, what ships is a list in the build, the zip's name holds the version, the zip tested in `composer check` and at every push |
 | M7.5 | [`notes/step-30-the-release-build-built.md`](notes/step-30-the-release-build-built.md): the build, the clean environment, the loader and the uninstall; SPEC-008 implemented with three amendments; 14 falsifications |
+| M7.6 | [`notes/step-31-the-release-check.md`](notes/step-31-the-release-check.md): upstream added one root to both lists (Samsung, `64b3f9c`, 2026-11-04), no fixture's verdict changes, and refreshing needs an amendment; what omeka.org asks is met but for a public repository, a release and a README that is ready; the name is still free; no secret by pattern in the history, four probes hold a local path; no `upgrade()` yet |
 
 ## To measure before a spec rests on it
 

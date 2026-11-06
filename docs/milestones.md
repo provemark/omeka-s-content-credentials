@@ -282,9 +282,13 @@ Open for Maurice, after measuring:
 | M7.3 | The ADR for the build tool (or an amendment to ADR-0002), on what M7.1 measured | done: [`docs/adr/ADR-0006-prefixing-the-verifier.md`](adr/ADR-0006-prefixing-the-verifier.md), accepted 2026-11-06 |
 | M7.4 | The M7 spec (`draft`), with the open choices above and recommendations, and the amendments it needs: SPEC-001 (uninstall), SPEC-006 (the warning, if it comes) | done: [`specs/SPEC-008-release-build.md`](../specs/SPEC-008-release-build.md), approved 2026-11-06 |
 | M7.5 | after approval: tests seen red, the implementation (`tools/build.sh`, `.gitattributes`, the verifier's path, uninstall, the CI job if chosen), green, Traceability | done: [`notes/step-30-the-release-build-built.md`](../notes/step-30-the-release-build-built.md) |
-| M7.6 | The release check, not the release: the bundled lists compared with upstream, the version number, README and CHANGELOG, what omeka.org asks of an add-on read and written down; Maurice decides on a public repository and registration. Nothing goes public before that go | proposed |
+| M7.6 | The release check, not the release: the bundled lists compared with upstream, the version number, README and CHANGELOG, what omeka.org asks of an add-on read and written down; Maurice decides on a public repository and registration. Nothing goes public before that go | checked: [`notes/step-31-the-release-check.md`](../notes/step-31-the-release-check.md); the decisions are open |
 
 **M7.5 is done (2026-11-06):** `tools/build.sh` makes the zip, which holds `vendor-prefixed/` and no
 `vendor/` (ADR-0006; M7's row above says "prefixed `vendor/`"), and which is tested in a clean
 Omeka S. Uninstalling removes the module's job rows too, and the description warns about the
 evidence. What ships is a list in the build, not `.gitattributes`. Next: M7.6, the release check.
+
+**M7.6's check is done (2026-11-06);** nothing is published. What follows depends on Maurice's
+decisions in step 31: the lists, the version, the README, the zip on PHP 8.4 and 8.5, a public
+repository, the registration. M7 is done when the zip is released, or when he decides otherwise.

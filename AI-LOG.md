@@ -899,3 +899,12 @@ README are where the disclosure lives.
 - Asked: nothing new; the job `release` of CI failed on the commit of M7.5.
 - Produced: AC1's and AC2's setup without `git clone --shared`, recorded in step 30. The assistant's
   error: a test setup that does not work on CI's shallow checkout.
+
+## 2026-11-06: M7.6, the release check
+
+- Model: Claude Opus 5.5, Claude Code CLI
+- Asked: "ok, begin met M7.6".
+- Produced: `notes/step-31-the-release-check.md`, `tools/probes/ReleaseCheck/`. Nothing in the module
+  changed, and nothing published.
+- The assistant's own error, recorded in the note: a first comparison that used the bundled lists
+  twice; its own check showed it. omeka.org's pages were read through a summarising fetch.
