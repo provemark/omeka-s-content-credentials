@@ -20,6 +20,9 @@ final class RecheckSection
 
     public const WITHOUT_RESULT = 'without_result';
 
+    /** The button of AC14; its value is the job's id, so that it holds for the run on the page only. */
+    public const END_FIELD = 'content_credentials_end_run';
+
     /** Omeka's job statuses, in the module's words. */
     public const STATUSES = [
         'starting' => 'Starting',
@@ -32,10 +35,13 @@ final class RecheckSection
 
     public const RUNNING = ['starting', 'in_progress', 'stopping'];
 
+    /** Where a run can be marked as ended: a live one leaves these by itself (AC14). */
+    public const ENDABLE = ['starting', 'stopping'];
+
     /**
      * @param  Closure(string): string  $translate
      * @param  Closure(string): string  $escape
-     * @param  array{status: string, started: ?string, ended: ?string}|null  $latest
+     * @param  array{id: int, status: string, started: ?string, ended: ?string}|null  $latest
      */
     public static function html(Closure $translate, Closure $escape, ?array $latest, ?string $jobUrl): string
     {
@@ -56,8 +62,12 @@ final class RecheckSection
                 $html .= ' <a href="'.$escape($jobUrl).'">'.$t('Job page').'</a>';
             }
             $html .= '</p>';
-            if ($running) {
+            if ($latest['status'] === 'in_progress') {
                 $html .= '<p>'.$t('A run is in progress. To stop it, use Stop on its job page.').'</p>';
+            }
+            if (in_array($latest['status'], self::ENDABLE, true)) {
+                $html .= '<p>'.$t('This run has not finished. A run that is still working moves on within moments; one that stays like this no longer has a process.').'</p>'
+                    .'<p><button type="submit" name="'.self::END_FIELD.'" value="'.$escape((string) $latest['id']).'">'.$t('Mark this run as ended').'</button></p>';
             }
         }
         if (! $running) {

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace ContentCredentials;
 
+use ContentCredentials\Display\RecheckSection;
 use ContentCredentials\Omeka\AdminDisplay;
 use ContentCredentials\Omeka\AfterFlushListener;
 use ContentCredentials\Omeka\RecheckRuns;
@@ -122,6 +123,17 @@ final class Module extends AbstractModule
         $request = $controller->getRequest();
         $post = $request instanceof Request ? $request->getPost() : null;
         $fields = $post instanceof Parameters ? $post->toArray() : [];
+        // Marking a run as ended: nothing else, and nothing saved (SPEC-005 AC14).
+        if (array_key_exists(RecheckSection::END_FIELD, $fields)) {
+            $problem = RecheckRuns::create($this->getServiceLocator())->end($fields[RecheckSection::END_FIELD]);
+            if ($problem === null) {
+                (new Messenger)->addSuccess('The run was marked as ended.');
+            } else {
+                (new Messenger)->addError($problem);
+            }
+
+            return true;
+        }
         // A start button: start a run, and save nothing (SPEC-005 AC11).
         $start = $fields['content_credentials_recheck'] ?? null;
         if ($start !== null) {

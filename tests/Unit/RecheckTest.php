@@ -13,6 +13,7 @@ use ContentCredentials\Check\MediaCheck;
 use ContentCredentials\Check\Recheck;
 use ContentCredentials\Check\Verdict;
 use ContentCredentials\Check\VerdictStore;
+use ContentCredentials\Display\RecheckSection;
 use ContentCredentials\Tests\Support\VerifierCli;
 use Provemark\C2paVerifier\Verifier\Verifier;
 
@@ -95,4 +96,39 @@ it('AC13: below PHP 8.3 in the job process no verifier is loaded: error / requir
     expect($loaded)->toBeFalse()
         ->and($store->rows[7]->state)->toBe('error')
         ->and($store->rows[7]->reason)->toBe('requirements');
+})->group('SPEC-005');
+
+/** The section with marked text, so that what went through $escape shows. */
+function spec005SectionFor(string $status): string
+{
+    return RecheckSection::html(
+        static fn (string $source): string => $source,
+        static fn (string $value): string => '['.$value.']',
+        ['id' => 7, 'status' => $status, 'started' => null, 'ended' => null],
+        null,
+    );
+}
+
+it('AC14: the button belongs to a run that is starting or stopping', function (string $status, bool $button): void {
+    $html = spec005SectionFor($status);
+
+    expect(str_contains($html, 'name="[content_credentials_end_run]"') || str_contains($html, 'name="content_credentials_end_run"'))->toBe($button)
+        ->and(str_contains($html, '[Mark this run as ended]'))->toBe($button)
+        ->and(str_contains($html, 'no longer has a process'))->toBe($button);
+    if ($button) {
+        expect($html)->toMatch('#name="\\[?content_credentials_end_run\\]?" value="\\[7\\]"#')
+            ->and($html)->not->toContain('name="content_credentials_recheck"');
+    }
+})->with([
+    'starting' => ['starting', true],
+    'stopping' => ['stopping', true],
+    'in_progress' => ['in_progress', false],
+    'completed' => ['completed', false],
+    'stopped' => ['stopped', false],
+    'error' => ['error', false],
+])->group('SPEC-005');
+
+it('AC14: in progress, the way to Stop stays', function (): void {
+    expect(spec005SectionFor('in_progress'))->toContain('use Stop on its job page')
+        ->and(spec005SectionFor('stopping'))->not->toContain('use Stop on its job page');
 })->group('SPEC-005');

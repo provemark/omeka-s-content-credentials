@@ -948,3 +948,12 @@ README are where the disclosure lives.
   `notes/step-35-the-code-review.md`, `tools/probes/ReleaseCheck/review-*.php`, milestones M7.11 to
   M7.14.
 - These are defects in the assistant's own earlier work, which its tests had not found.
+
+## 2026-11-06: M7.11, ending a run whose process has gone
+
+- Model: Claude Opus 5.5, Claude Code CLI
+- Asked: "ok, AC14 goedgekeurd met beide keuzes, schrijf de tests", then "ok, bouw het".
+- Produced: `RecheckRuns::end()`, the button in `RecheckSection`, the path in `handleConfigForm()`, the
+  tests, SPEC-005 amendment 2, `notes/step-36-ending-a-run-that-has-gone.md`, a sentence in the README.
+- The assistant's own errors, recorded in the note: a test that held up the next one's set-up for five
+  minutes while red, and a falsification of the access test that left `site_admin` green at first.

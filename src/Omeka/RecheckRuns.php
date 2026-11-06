@@ -9,6 +9,7 @@ use Doctrine\DBAL\Connection;
 use Laminas\ServiceManager\ServiceLocatorInterface;
 use Laminas\View\Renderer\PhpRenderer;
 use Omeka\Job\Dispatcher;
+use Throwable;
 use UnexpectedValueException;
 
 /**
@@ -66,6 +67,29 @@ final class RecheckRuns
 
         // Omeka's dispatch() may return null; no job is no run (fail closed).
         return $job === null || $job->getStatus() === 'error' ? 'The run could not start; see its job page.' : null;
+    }
+
+    /**
+     * Marks a run whose process has gone as ended (AC14); returns null, or why
+     * nothing changed. One statement, so a run that has moved on is left alone.
+     */
+    public function end(mixed $id): ?string
+    {
+        $refused = 'No run was marked as ended.';
+        if (! is_string($id) || ! ctype_digit($id) || (int) $id < 1) {
+            return $refused;
+        }
+        $marks = implode(', ', array_fill(0, count(RecheckSection::ENDABLE), '?'));
+        try {
+            $changed = $this->connection->executeStatement(
+                "UPDATE job SET status = 'error', ended = ?, pid = NULL, log = CONCAT(IFNULL(log, ''), ?) WHERE id = ? AND class = ? AND status IN ({$marks})",
+                [date('Y-m-d H:i:s'), date('c')." INFO (6): Marked as ended by an administrator.\n", (int) $id, RecheckJob::class, ...RecheckSection::ENDABLE],
+            );
+        } catch (Throwable) {
+            return $refused;
+        }
+
+        return $changed === 1 ? null : $refused;
     }
 
     public function html(PhpRenderer $view): string

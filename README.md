@@ -51,7 +51,9 @@ this is on the module's configure page, which shows the lists' date and warns wh
 than six months old. New lists come with a new version of the module. The module does not fetch them.
 
 **Existing media.** A global administrator can check media again from the configure page, all of
-them or only those without a result, as a background job that Omeka's job page can stop.
+them or only those without a result, as a background job that Omeka's job page can stop. If its process
+has gone, for example after a server restart, use Stop on the job page and then "Mark this run as
+ended" on the configure page, as no new run can start before that.
 
 **Evidence.** Every check of a file with Content Credentials keeps the verifier's evidence document,
 never changed afterwards. Whoever can see the media item can view and download it in the admin

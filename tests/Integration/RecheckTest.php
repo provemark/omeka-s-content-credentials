@@ -19,6 +19,7 @@ use ContentCredentials\Tests\Support\VerifierCli;
 const SPEC005_PAGE = '/admin/module/configure?id=ContentCredentials';
 const SPEC005_CSRF = 'module_ContentCredentials_configure_csrf';
 const SPEC005_START = 'content_credentials_recheck';
+const SPEC005_END = 'content_credentials_end_run';
 const SPEC005_CLASS = 'ContentCredentials\\\\Omeka\\\\RecheckJob'; // as an SQL literal
 const SPEC005_ORIGINALS = '/var/www/html/files/original';
 const SPEC005_CHECKABLE = "has_original = 1 AND media_type IN ('image/jpeg', 'image/png', 'image/webp')";
@@ -418,3 +419,143 @@ it('AC12: uploads during a run', function (): void {
         ->and($omeka->sql("SELECT state FROM content_credentials_verdict WHERE media_id = {$media}"))->toBe('Valid')
         ->and($status)->toBe('completed');
 })->group('SPEC-005');
+
+/** Everything AC14 must leave alone: verdicts, evidence and settings. */
+function spec005Untouched(OmekaInstallation $omeka): string
+{
+    return spec005Rows($omeka)
+        .'|'.$omeka->sql('SELECT COUNT(*), IFNULL(MAX(id), 0) FROM content_credentials_evidence')
+        .'|'.$omeka->sql("SELECT COUNT(*) FROM setting WHERE id LIKE 'content\\_credentials\\_%'");
+}
+
+/** A finished run of this module, its row set to $status. */
+function spec005RunIn(OmekaInstallation $omeka, string $status): int
+{
+    $id = spec005Run($omeka);
+    $omeka->sql("UPDATE job SET status = '{$status}', ended = NULL WHERE id = {$id}");
+
+    return $id;
+}
+
+it('AC14: a run whose process has gone can be marked as ended', function (): void {
+    $omeka = spec005Omeka();
+    spec005Clones($omeka, 3000);
+    $id = spec005Start($omeka);
+    spec005WaitForRows($omeka, 10);
+    $pid = $omeka->sql("SELECT pid FROM job WHERE id = {$id}");
+    expect($pid)->not->toBe('');
+    $omeka->rootShell("kill -9 {$pid}");
+
+    try {
+        $killed = $omeka->sql("SELECT status FROM job WHERE id = {$id}");
+        $whileInProgress = spec005Section($omeka->get(SPEC005_PAGE)->body);
+        spec005Stop($omeka, $id);
+        sleep(1);
+        $stopping = $omeka->sql("SELECT status FROM job WHERE id = {$id}");
+        $whileStopping = spec005Section($omeka->get(SPEC005_PAGE)->body);
+        $before = spec005Untouched($omeka);
+
+        $response = spec005Configure($omeka, [SPEC005_END => (string) $id]);
+
+        $after = spec005Untouched($omeka);
+        $row = $omeka->sql("SELECT status, ended IS NOT NULL, pid IS NULL FROM job WHERE id = {$id}");
+        $log = $omeka->sql("SELECT log FROM job WHERE id = {$id}");
+        $page = spec005Section($omeka->get(SPEC005_PAGE)->body);
+    } finally {
+        $omeka->sql("UPDATE job SET status = 'error', ended = NOW(), pid = NULL WHERE id = {$id} AND status IN ('in_progress', 'stopping')");
+    }
+    $next = spec005Latest($omeka);
+    spec005RemoveClones($omeka);
+
+    expect($killed)->toBe('in_progress')
+        ->and($whileInProgress)->not->toContain('name="'.SPEC005_END.'"')
+        ->and($whileInProgress)->toContain('use Stop on its job page')
+        ->and($stopping)->toBe('stopping')
+        ->and($whileStopping)->toContain('Mark this run as ended')
+        ->and($whileStopping)->toContain('no longer has a process')
+        ->and($whileStopping)->toMatch('#name="'.SPEC005_END.'" value="'.$id.'"#')
+        ->and($response->status)->toBe(302)
+        ->and($row)->toBe("error\t1\t1")
+        ->and($log)->toContain('Marked as ended by an administrator.')
+        ->and($after)->toBe($before)
+        ->and($page)->toContain('Latest run: Failed')
+        ->and($page)->toContain('name="'.SPEC005_START.'"')
+        ->and($page)->not->toContain('name="'.SPEC005_END.'"')
+        ->and($next)->toBe($id);
+})->group('SPEC-005');
+
+it('AC14: a run stuck at starting too, and a new run can start afterwards', function (): void {
+    $omeka = spec005Omeka();
+    $id = spec005RunIn($omeka, 'starting');
+    $page = spec005Section($omeka->get(SPEC005_PAGE)->body);
+
+    spec005Configure($omeka, [SPEC005_END => (string) $id]);
+    $status = $omeka->sql("SELECT status FROM job WHERE id = {$id}");
+    // A row left at `starting` would hold up the next test's set-up.
+    $omeka->sql("UPDATE job SET status = 'stopped', ended = NOW() WHERE id = {$id} AND status = 'starting'");
+
+    expect($page)->toMatch('#name="'.SPEC005_END.'" value="'.$id.'"#')
+        ->and($page)->not->toContain('name="'.SPEC005_START.'"')
+        ->and($status)->toBe('error')
+        ->and(spec005Run($omeka))->toBeGreaterThan($id);
+})->group('SPEC-005');
+
+it('AC14: a run in any other status stays as it is, and the page says so', function (string $status): void {
+    $omeka = spec005Omeka();
+    $id = spec005RunIn($omeka, $status);
+    $ended = $omeka->sql("SELECT IFNULL(ended, '-'), IFNULL(log, '-') FROM job WHERE id = {$id}");
+    $before = spec005Untouched($omeka);
+
+    $response = spec005Configure($omeka, [SPEC005_END => (string) $id]);
+    $messages = OmekaInstallation::messages($omeka->get('/admin/module')->body);
+    $row = $omeka->sql("SELECT status FROM job WHERE id = {$id}");
+    $sameEnd = $omeka->sql("SELECT IFNULL(ended, '-'), IFNULL(log, '-') FROM job WHERE id = {$id}");
+    $omeka->sql("UPDATE job SET status = 'stopped', ended = NOW() WHERE id = {$id}");
+
+    expect($response->status)->toBe(302)
+        ->and($messages)->toContain('No run was marked as ended.')
+        ->and($row)->toBe($status)
+        ->and($sameEnd)->toBe($ended)
+        ->and(spec005Untouched($omeka))->toBe($before);
+})->with(['in_progress', 'completed', 'stopped', 'error'])->group('SPEC-005');
+
+it('AC14: a job of another class, or a value that is no job, is refused', function (): void {
+    $omeka = spec005Omeka();
+    $omeka->sql("INSERT INTO job (status, class, started) VALUES ('stopping', 'Some\\\\Other\\\\Job', NOW())");
+    $other = (int) $omeka->sql('SELECT MAX(id) FROM job');
+
+    try {
+        $messages = [];
+        foreach ([(string) $other, 'not-a-number', '0', '999999999', ''] as $value) {
+            spec005Configure($omeka, [SPEC005_END => $value]);
+            $messages[] = OmekaInstallation::messages($omeka->get('/admin/module')->body);
+        }
+        $row = $omeka->sql("SELECT status, ended IS NULL FROM job WHERE id = {$other}");
+    } finally {
+        $omeka->sql("DELETE FROM job WHERE id = {$other}");
+    }
+
+    expect($row)->toBe("stopping\t1");
+    foreach ($messages as $seen) {
+        expect($seen)->toContain('No run was marked as ended.');
+    }
+})->group('SPEC-005');
+
+it('AC14: global administrators only', function (string $role): void {
+    $omeka = spec005Omeka();
+    $id = spec005RunIn($omeka, 'stopping');
+    [$user, $delete] = spec005User($omeka, $role);
+    try {
+        $page = $user->get(SPEC005_PAGE);
+        $post = $user->post(SPEC005_PAGE, [SPEC005_END => (string) $id, SPEC005_CSRF => 'x']);
+    } finally {
+        $delete();
+    }
+    $status = $omeka->sql("SELECT status FROM job WHERE id = {$id}");
+    $omeka->sql("UPDATE job SET status = 'stopped', ended = NOW() WHERE id = {$id}");
+
+    expect($page->status)->not->toBe(200)
+        ->and($page->body)->not->toContain('name="'.SPEC005_END.'"')
+        ->and($post->status)->not->toBe(302)
+        ->and($status)->toBe('stopping');
+})->with(['site_admin', 'editor', 'author'])->group('SPEC-005');

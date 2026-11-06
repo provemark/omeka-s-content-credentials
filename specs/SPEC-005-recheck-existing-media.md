@@ -193,6 +193,20 @@ writes, and nothing read from a file is shown.
   - Then it loads no verifier and stores `error` with reason
     `requirements`, as an upload would
 
+- **AC14 — a run whose process has gone** *(error path; added by amendment 2)*
+  - Given the latest run is `stopping` or `starting`
+  - When the configure page is opened
+  - Then it explains that a run still working moves on within moments and that one staying like
+    this no longer has a process, with a button "Mark this run as ended"; every string escaped
+  - When a global administrator presses it
+  - Then that job row is `error`, with `ended` set and `pid` empty, and its log holds "Marked as
+    ended by an administrator."; the page shows "Failed" and the start buttons again; no verdict,
+    evidence or setting changed (as AC11), and no job of another class
+  - Error: for a run in any other status, a job of another class, or a value that is no job, nothing
+    changes and the page says "No run was marked as ended."
+  - In `in_progress` there is no button: the way there is Stop on the job page first
+  - Global administrators only, as AC10
+
 ## References
 
 - Specification: the Omeka S developer documentation (`Jobs`, under
@@ -298,6 +312,17 @@ Each with my recommendation and the trade-off. Maurice decides.
   `c2pa-2026-10-17` is now `c2pa-2026-11-04`, with and without `+digicert`.
   The behaviour is unchanged. Record: `notes/step-32-refreshing-the-lists.md`.
 
+- **Amendment 2 (2026-11-06, approved by Maurice van Loon):** adds AC14, from finding 1 of the code
+  review: a run whose process was killed stayed `in_progress` and blocked every new run, and Stop
+  leaves it at `stopping` for good (`notes/step-35-the-code-review.md`). Two choices:
+  - In two steps, Stop first, as a live run leaves `stopping` by itself. Not a direct button at
+    `in_progress`, as a live run would go on beside a new one.
+  - The status is `error`, shown as "Failed", as the run did not end cleanly. Not `stopped`, which
+    says it stopped on request.
+  Known limit: a run still just alive when the button is pressed can then overwrite the status with
+  `stopped`, or from `starting` go on. It stays one run, and the outcome is then true. Telling for
+  certain whether its process lives is not possible on every server.
+
 ## Traceability
 
 Filled when status becomes `implemented`.
@@ -317,3 +342,4 @@ Filled when status becomes `implemented`.
 | AC11 | `tests/Integration/RecheckTest.php` :: AC11 | `Module::handleConfigForm()` |
 | AC12 | `tests/Integration/RecheckTest.php` :: AC12 | `Omeka\RecheckJob` |
 | AC13 | `tests/Unit/RecheckTest.php` :: AC13 | `Check\MediaCheck` via `Check\Recheck::run($total, $phpVersion)` |
+| AC14 | `tests/Integration/RecheckTest.php` :: AC14 (5 tests); `tests/Unit/RecheckTest.php` :: AC14 (2 tests) | `Omeka\RecheckRuns::end()`, `Display\RecheckSection::ENDABLE`, `Module::handleConfigForm()` |
