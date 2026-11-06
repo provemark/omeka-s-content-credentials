@@ -957,3 +957,14 @@ README are where the disclosure lives.
   tests, SPEC-005 amendment 2, `notes/step-36-ending-a-run-that-has-gone.md`, a sentence in the README.
 - The assistant's own errors, recorded in the note: a test that held up the next one's set-up for five
   minutes while red, and a falsification of the access test that left `site_admin` green at first.
+
+## 2026-11-06: M7.12, a run that fails is not `completed`
+
+- Model: Claude Opus 5.5, Claude Code CLI
+- Asked: "ok, begin met punt 2", "ok, AC15 goedgekeurd met beide keuzes, schrijf de tests", then "ok,
+  bouw het".
+- Produced: `Check\RunFailed`, the count in `Check\Recheck`, the path in `RecheckJob::perform()`, the
+  tests, SPEC-005 amendment 3, `notes/step-37-a-run-that-fails.md`, a sentence in the README,
+  `tools/probes/ReleaseCheck/review-failed-run.php`.
+- The defect is in the assistant's own earlier work. The inconclusive measurement of a killed
+  connection during the review was the assistant's too: it waited too briefly.

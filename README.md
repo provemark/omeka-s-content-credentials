@@ -53,7 +53,8 @@ than six months old. New lists come with a new version of the module. The module
 **Existing media.** A global administrator can check media again from the configure page, all of
 them or only those without a result, as a background job that Omeka's job page can stop. If its process
 has gone, for example after a server restart, use Stop on the job page and then "Mark this run as
-ended" on the configure page, as no new run can start before that.
+ended" on the configure page, as no new run can start before that. A run shows as "Failed" when it
+ended early or could not store every check; its job log says how many, and "Check all media" repeats it.
 
 **Evidence.** Every check of a file with Content Credentials keeps the verifier's evidence document,
 never changed afterwards. Whoever can see the media item can view and download it in the admin

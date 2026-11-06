@@ -175,6 +175,7 @@ and committer of every pushed commit.
 | M7.10 | [`notes/step-34-readme-and-paths.md`](notes/step-34-readme-and-paths.md): the four probes find their folders from `__DIR__`; the history is not rewritten |
 | review | [`notes/step-35-the-code-review.md`](notes/step-35-the-code-review.md): ten findings checked; a killed run blocks every new run, a run that stored nothing is `completed`, the AI label misses `__n` labels; M7.11 to M7.14 before a release, finding 9 stays a known limit |
 | M7.11 | [`notes/step-36-ending-a-run-that-has-gone.md`](notes/step-36-ending-a-run-that-has-gone.md): SPEC-005 amendment 2, AC14: Stop first, then "Mark this run as ended"; the status `error`; 10 falsifications |
+| M7.12 | [`notes/step-37-a-run-that-fails.md`](notes/step-37-a-run-that-fails.md): SPEC-005 amendment 3, AC15: a run that fails, or with a check not stored, is `error` with only the module's own lines; a stop stays `stopped`; 10 falsifications; a killed connection measured: the run goes on and says what it lost |
 
 ## To measure before a spec rests on it
 

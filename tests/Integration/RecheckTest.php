@@ -559,3 +559,115 @@ it('AC14: global administrators only', function (string $role): void {
         ->and($post->status)->not->toBe(302)
         ->and($status)->toBe('stopping');
 })->with(['site_admin', 'editor', 'author'])->group('SPEC-005');
+
+/**
+ * The lines of a job log that are not the module's own (AC7, AC15).
+ *
+ * @return list<string>
+ */
+function spec005OwnLines(string $log): array
+{
+    $own = '#^\S+ (INFO \(6\): (Checking \d+ media\.|Checked \d+ of \d+ media\.|Checked \d+ media: \d+ Trusted, \d+ Valid, \d+ Invalid, \d+ none, \d+ error\.|Stopped after \d+ of \d+ media\.|The check of media \d+ was not stored\.|\d+ checks? (was|were) not stored\.|The run ended early because of an error\.)|ERR \(3\): The run failed\.)$#';
+    $lines = array_values(array_filter(explode("\n", $log), static fn (string $line): bool => $line !== ''));
+
+    return array_values(array_filter($lines, static fn (string $line): bool => preg_match($own, $line) !== 1));
+}
+
+it('AC15: a run that throws is failed, in the module\'s own words', function (): void {
+    $omeka = spec005Omeka();
+    $omeka->sql('RENAME TABLE content_credentials_verdict TO spec005_verdict_aside');
+    try {
+        // "without a result" joins the renamed table in its first query.
+        $id = spec005Start($omeka, 'without_result');
+        $status = spec005Wait($omeka, $id);
+        $log = $omeka->sql("SELECT log FROM job WHERE id = {$id}");
+    } finally {
+        $omeka->sql('RENAME TABLE spec005_verdict_aside TO content_credentials_verdict');
+    }
+    $page = spec005Section($omeka->get(SPEC005_PAGE)->body);
+
+    expect($status)->toBe('error')
+        ->and($log)->toContain('The run ended early because of an error.')
+        ->and($log)->toContain('ERR (3): The run failed.')
+        ->and(spec005OwnLines($log))->toBe([])
+        ->and($log)->not->toContain('/var/www')
+        ->and($log)->not->toContain('SQLSTATE')
+        ->and($log)->not->toContain('Exception')
+        ->and($page)->toContain('Latest run: Failed')
+        ->and($page)->toContain('href="/admin/job/'.$id.'"')
+        ->and($page)->toContain('name="'.SPEC005_START.'"')
+        ->and($page)->not->toContain('name="'.SPEC005_END.'"');
+})->group('SPEC-005');
+
+it('AC15: a run with a check not stored is failed, says how many, and keeps what was stored', function (): void {
+    $omeka = spec005Omeka();
+    $signed = spec005Upload($omeka, 'fixture-signed.jpg');
+    $unsigned = spec005Upload($omeka, 'fixture-unsigned.jpg');
+    $omeka->sql("DELETE FROM content_credentials_verdict WHERE media_id = {$unsigned}");
+    // A check with a document cannot be stored; one without can.
+    $omeka->sql('RENAME TABLE content_credentials_evidence TO spec005_evidence_aside');
+    try {
+        $id = spec005Start($omeka);
+        $status = spec005Wait($omeka, $id);
+        $log = $omeka->sql("SELECT log FROM job WHERE id = {$id}");
+        $stored = $omeka->sql("SELECT state FROM content_credentials_verdict WHERE media_id = {$unsigned}");
+        $notStored = $omeka->sql("SELECT state FROM content_credentials_verdict WHERE media_id = {$signed}");
+    } finally {
+        $omeka->sql('RENAME TABLE spec005_evidence_aside TO content_credentials_evidence');
+    }
+    preg_match('#(\d+) checks? (?:was|were) not stored\.#', $log, $count);
+    $lines = preg_match_all('#The check of media \d+ was not stored\.#', $log);
+
+    expect($status)->toBe('error')
+        ->and($log)->toContain("The check of media {$signed} was not stored.")
+        ->and((int) ($count[1] ?? 0))->toBe($lines)
+        ->and($lines)->toBeGreaterThan(0)
+        ->and($log)->toContain('ERR (3): The run failed.')
+        ->and(spec005OwnLines($log))->toBe([])
+        ->and($log)->not->toContain('SQLSTATE')
+        ->and($stored)->toBe('none')
+        ->and($notStored)->not->toBe('');
+})->group('SPEC-005');
+
+it('AC15: a run stopped while checks are not stored stays stopped, without the count', function (): void {
+    $omeka = spec005Omeka();
+    spec005Clones($omeka, 3000);
+    $omeka->sql('RENAME TABLE content_credentials_evidence TO spec005_evidence_aside');
+    try {
+        $id = spec005Start($omeka);
+        $end = time() + 60;
+        while ($omeka->sql("SELECT status FROM job WHERE id = {$id}") !== 'in_progress' && time() < $end) {
+            usleep(50_000);
+        }
+        spec005Stop($omeka, $id);
+        $status = spec005Wait($omeka, $id);
+        $log = $omeka->sql("SELECT log FROM job WHERE id = {$id}");
+    } finally {
+        $omeka->sql('RENAME TABLE spec005_evidence_aside TO content_credentials_evidence');
+    }
+    spec005RemoveClones($omeka);
+
+    expect($status)->toBe('stopped')
+        ->and($log)->toContain('was not stored.')
+        ->and($log)->toContain('Stopped after')
+        ->and($log)->not->toMatch('#\d+ checks? (was|were) not stored\.#')
+        ->and($log)->not->toContain('The run failed.')
+        ->and(spec005OwnLines($log))->toBe([]);
+})->group('SPEC-005');
+
+it('AC15: an unreadable original still leaves the run completed', function (): void {
+    $omeka = spec005Omeka();
+    $gone = spec005Upload($omeka, 'fixture-signed.jpg');
+    $file = $omeka->sql("SELECT CONCAT(storage_id, '.', extension) FROM media WHERE id = {$gone}");
+    $omeka->php(['-r', 'unlink("'.SPEC005_ORIGINALS.'/'.$file.'");']);
+
+    $id = spec005Start($omeka);
+    $status = spec005Wait($omeka, $id);
+    $row = $omeka->sql("SELECT state FROM content_credentials_verdict WHERE media_id = {$gone}");
+    $log = $omeka->sql("SELECT log FROM job WHERE id = {$id}");
+    $omeka->api('DELETE', "/api/media/{$gone}");
+
+    expect($status)->toBe('completed')
+        ->and($row)->toBe('error')
+        ->and($log)->not->toContain('The run failed.');
+})->group('SPEC-005');

@@ -6,6 +6,7 @@ namespace ContentCredentials\Omeka;
 
 use ContentCredentials\Check\MediaCheck;
 use ContentCredentials\Check\Recheck;
+use ContentCredentials\Check\RunFailed;
 use ContentCredentials\Display\RecheckSection;
 use ContentCredentials\Trust\BuiltTrust;
 use Doctrine\DBAL\Connection;
@@ -20,10 +21,10 @@ use Throwable;
 /**
  * A run over existing media (SPEC-005), dispatched through Omeka's job
  * dispatcher and run by Omeka in its own PHP process. The trust settings
- * are built once, at the start (AC3). Nothing leaves perform(): Omeka would
- * write an exception's message, paths and trace into the job log, which
- * site administrators can read (step 18), so a failure of the run itself
- * ends it with one line of the module's own.
+ * are built once, at the start (AC3). Omeka would write an exception's
+ * message, paths and trace into the job log, which site administrators can
+ * read (step 18), so only RunFailed leaves perform(): Omeka then sets the
+ * job to `error` and logs that one line of the module's own (AC15).
  */
 final class RecheckJob extends AbstractJob
 {
@@ -39,14 +40,26 @@ final class RecheckJob extends AbstractJob
             }
         };
         try {
-            $this->run($log);
+            $notStored = $this->run($log);
         } catch (Throwable) {
             $log('The run ended early because of an error.');
+
+            throw new RunFailed;
+        }
+        if ($notStored > 0) {
+            $log(Recheck::notStoredLine($notStored));
+
+            throw new RunFailed;
         }
     }
 
-    /** @param \Closure(string): void $log */
-    private function run(\Closure $log): void
+    /**
+     * The checks not stored by a run that went through every media item. A
+     * stopped run counts none: it stays stopped (AC15).
+     *
+     * @param  \Closure(string): void  $log
+     */
+    private function run(\Closure $log): int
     {
         $services = $this->getServiceLocator();
         $connection = $services->get('Omeka\Connection');
@@ -88,7 +101,8 @@ final class RecheckJob extends AbstractJob
 
             return $rows;
         };
-        (new Recheck($check, new DbalVerdictStore($connection), $batch, $log, fn (): bool => $this->shouldStop() === true))
-            ->run(is_numeric($total) ? (int) $total : 0, PHP_VERSION);
+        $recheck = new Recheck($check, new DbalVerdictStore($connection), $batch, $log, fn (): bool => $this->shouldStop() === true);
+
+        return $recheck->run(is_numeric($total) ? (int) $total : 0, PHP_VERSION) ? $recheck->notStored() : 0;
     }
 }

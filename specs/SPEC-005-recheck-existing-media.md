@@ -207,6 +207,19 @@ writes, and nothing read from a file is shown.
   - In `in_progress` there is no button: the way there is Stop on the job page first
   - Global administrators only, as AC10
 
+- **AC15 — a run that fails is not `completed`** *(error path; added by amendment 3)*
+  - Given a run that itself fails, or that goes through every media item while at least one check
+    could not be stored
+  - When the run ends
+  - Then the job is `error`; the configure page shows "Failed", with the start buttons and a link to
+    the job page
+  - And the log holds only the module's own lines: "The run ended early because of an error." or "N
+    checks were not stored." ("1 check was not stored."), followed by "The run failed."; no path, no
+    exception message or class and no stack trace (as AC7). Verdicts that were stored stay
+  - An unreadable original leaves the run `completed` (AC6), as its verdict `error` was stored
+  - A stopped run stays `stopped` (AC5), even with checks not stored: their lines are in the log,
+    without the count
+
 ## References
 
 - Specification: the Omeka S developer documentation (`Jobs`, under
@@ -323,6 +336,16 @@ Each with my recommendation and the trade-off. Maurice decides.
   `stopped`, or from `starting` go on. It stays one run, and the outcome is then true. Telling for
   certain whether its process lives is not possible on every server.
 
+- **Amendment 3 (2026-11-06, approved by Maurice van Loon):** adds AC15, from finding 2 of the code
+  review: a run that stored nothing was `completed`, as `RecheckJob::perform()` catches everything
+  and `Recheck::run()`'s outcome was not read. Two choices:
+  - Failed at the first check not stored, not only when nothing was stored: 4 000 of 4 048 stored is
+    not "Completed".
+  - A stop stays `stopped`, as the administrator asked for it.
+  AC7's own lines now include those of AC15. Was: "The run ended early because of an error." under a
+  status `completed`. Known limit: such a run's log holds one line per media item, measured 314 KB
+  over 4 048 media, which says exactly which ones.
+
 ## Traceability
 
 Filled when status becomes `implemented`.
@@ -343,3 +366,4 @@ Filled when status becomes `implemented`.
 | AC12 | `tests/Integration/RecheckTest.php` :: AC12 | `Omeka\RecheckJob` |
 | AC13 | `tests/Unit/RecheckTest.php` :: AC13 | `Check\MediaCheck` via `Check\Recheck::run($total, $phpVersion)` |
 | AC14 | `tests/Integration/RecheckTest.php` :: AC14 (5 tests); `tests/Unit/RecheckTest.php` :: AC14 (2 tests) | `Omeka\RecheckRuns::end()`, `Display\RecheckSection::ENDABLE`, `Module::handleConfigForm()` |
+| AC15 | `tests/Integration/RecheckTest.php` :: AC15 (4 tests); `tests/Unit/RecheckTest.php` :: AC15 (3 tests) | `Check\RunFailed`, `Check\Recheck::notStored()`, `Check\Recheck::notStoredLine()`, `Omeka\RecheckJob::perform()` |

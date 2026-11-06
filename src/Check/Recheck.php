@@ -21,6 +21,8 @@ final class Recheck
     /** The states the end line counts, in its order. */
     public const STATES = ['Trusted', 'Valid', 'Invalid', Verdict::NONE, Verdict::ERROR];
 
+    private int $notStored = 0;
+
     /**
      * @param  Closure(int): list<array{int, ?string}>  $batch  media ids after an id, ascending, with their original's path
      * @param  Closure(string): mixed  $log
@@ -39,6 +41,7 @@ final class Recheck
     {
         $counts = new RecheckCounts($this->store);
         $recorder = new Recorder($this->check, $counts, function (mixed $e, int $mediaId): void {
+            $this->notStored++;
             ($this->log)(sprintf('The check of media %d was not stored.', $mediaId));
         });
         ($this->log)(sprintf('Checking %d media.', $total));
@@ -75,5 +78,17 @@ final class Recheck
         ));
 
         return true;
+    }
+
+    /** The checks of this run that could not be stored (AC15). */
+    public function notStored(): int
+    {
+        return $this->notStored;
+    }
+
+    /** The line that says how many (AC15). */
+    public static function notStoredLine(int $count): string
+    {
+        return $count === 1 ? '1 check was not stored.' : sprintf('%d checks were not stored.', $count);
     }
 }

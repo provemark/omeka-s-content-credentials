@@ -95,3 +95,5 @@ What follows is the record of how it was built.
   someone installing it, and its links work from the zip. (2026-11-06)
 - Added: a run whose process has gone can be marked as ended on the configure page, after Stop on its
   job page, so that it no longer blocks every new run (SPEC-005 amendment 2). (2026-11-06)
+- Fixed: a run that fails, or that could not store every check, now ends as failed instead of
+  completed, and its log says how many checks were lost (SPEC-005 amendment 3). (2026-11-06)

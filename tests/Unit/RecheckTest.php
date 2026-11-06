@@ -11,6 +11,7 @@ declare(strict_types=1);
 use ContentCredentials\Check\Evidence;
 use ContentCredentials\Check\MediaCheck;
 use ContentCredentials\Check\Recheck;
+use ContentCredentials\Check\RunFailed;
 use ContentCredentials\Check\Verdict;
 use ContentCredentials\Check\VerdictStore;
 use ContentCredentials\Display\RecheckSection;
@@ -131,4 +132,36 @@ it('AC14: the button belongs to a run that is starting or stopping', function (s
 it('AC14: in progress, the way to Stop stays', function (): void {
     expect(spec005SectionFor('in_progress'))->toContain('use Stop on its job page')
         ->and(spec005SectionFor('stopping'))->not->toContain('use Stop on its job page');
+})->group('SPEC-005');
+
+/** A run over three media with a store that fails for media 2, if $fails. */
+function spec005Counted(bool $fails, bool $stopAtOnce = false): Recheck
+{
+    $check = new MediaCheck(
+        static fn (): string => Verifier::VERSION,
+        static fn ($stream) => (new Verifier)->verify($stream, null),
+    );
+
+    return new Recheck($check, new Spec005Store(throwFor: $fails ? 2 : null), spec005Batches([1, 2, 3]), static fn (string $line): null => null, static fn (): bool => $stopAtOnce);
+}
+
+it('AC15: a run counts the checks it could not store', function (bool $fails, int $count): void {
+    $recheck = spec005Counted($fails);
+    $recheck->run(3, '8.3.0');
+
+    expect($recheck->notStored())->toBe($count);
+})->with(['one fails' => [true, 1], 'none fails' => [false, 0]])->group('SPEC-005');
+
+it('AC15: the count line reads well for one and for more', function (int $count, string $line): void {
+    expect(Recheck::notStoredLine($count))->toBe($line);
+})->with([[1, '1 check was not stored.'], [2, '2 checks were not stored.'], [4048, '4048 checks were not stored.']])->group('SPEC-005');
+
+it('AC15: what Omeka logs of a failed run is the module\'s own line, whatever caused it', function (): void {
+    $failed = new RunFailed;
+
+    expect((string) $failed)->toBe('The run failed.')
+        ->and((string) $failed)->not->toContain('/')
+        ->and((string) $failed)->not->toContain('#0')
+        ->and((string) $failed)->not->toContain('RunFailed')
+        ->and($failed)->toBeInstanceOf(RuntimeException::class);
 })->group('SPEC-005');
