@@ -285,7 +285,7 @@ Open for Maurice, after measuring:
 | M7.6 | The release check, not the release: the bundled lists compared with upstream, the version number, README and CHANGELOG, what omeka.org asks of an add-on read and written down; Maurice decides on a public repository and registration. Nothing goes public before that go | checked: [`notes/step-31-the-release-check.md`](../notes/step-31-the-release-check.md); the decisions are open |
 | M7.7 | Refresh the two C2PA lists to `64b3f9c` (SPEC-004 and SPEC-005 amended) | done: [`notes/step-32-refreshing-the-lists.md`](../notes/step-32-refreshing-the-lists.md) |
 | M7.8 | The zip's tests on PHP 8.4 and 8.5, as the README promises "8.3 or later" | done: [`notes/step-33-the-zip-on-newer-php.md`](../notes/step-33-the-zip-on-newer-php.md) |
-| M7.9 | README and CHANGELOG ready to publish; the version stays 0.1.0 | proposed |
+| M7.9 | README and CHANGELOG ready to publish; the version stays 0.1.0 | done: `README.md`, `CHANGELOG.md`; [`notes/step-34-readme-and-paths.md`](../notes/step-34-readme-and-paths.md) |
 | M7.10 | The probes' local paths made relative; the history is not rewritten | proposed |
 
 **M7.5 is done (2026-11-06):** `tools/build.sh` makes the zip, which holds `vendor-prefixed/` and no

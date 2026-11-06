@@ -926,3 +926,10 @@ README are where the disclosure lives.
   `notes/step-33-the-zip-on-newer-php.md`.
 - The assistant's own errors, recorded in the note: two log measurements that could not have seen a
   deprecation, the first with a control that never ran; a third with a working control replaced them.
+
+## 2026-11-06: M7.9, the README and the changelog
+
+- Model: Claude Opus 5.5, Claude Code CLI
+- Asked: "ok, akkoord met 1 tot en met 5" (point 4).
+- Produced: `README.md` rewritten for someone installing the module, the changelog's section for
+  0.1.0, `notes/step-34-readme-and-paths.md`.

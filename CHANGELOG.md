@@ -3,7 +3,14 @@
 This project follows the milestones in `docs/milestones.md`. Dates are the
 day the work was committed.
 
-## Unreleased
+## 0.1.0 (not yet released)
+
+The first version: every new JPEG, PNG and WebP media item is verified and its verdict stored and
+shown in the admin interface, with bundled C2PA trust lists of 2026-11-04 or custom trust settings, a
+re-check of existing media, a kept evidence document per check, and a label for a signed statement of
+generative AI. Requires Omeka S 4.2.1 or a later 4.x and PHP 8.3 or later.
+
+What follows is the record of how it was built.
 
 ### Added
 
@@ -84,3 +91,5 @@ day the work was committed.
   C2PA Root CA G1 to both. Verdicts already stored keep their own list date until they are checked
   again (SPEC-004 amendment 3). (2026-11-06)
 - M7: the release zip is tested on PHP 8.3, 8.4 and 8.5 (SPEC-008 amendment 4). (2026-11-06)
+- M7: the README and this changelog are ready to publish: the README says what the module does for
+  someone installing it, and its links work from the zip. (2026-11-06)
