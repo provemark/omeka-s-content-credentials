@@ -83,3 +83,4 @@ day the work was committed.
 - Changed: the bundled C2PA trust lists are those of 2026-11-04 (`64b3f9c`), which add the Samsung
   C2PA Root CA G1 to both. Verdicts already stored keep their own list date until they are checked
   again (SPEC-004 amendment 3). (2026-11-06)
+- M7: the release zip is tested on PHP 8.3, 8.4 and 8.5 (SPEC-008 amendment 4). (2026-11-06)

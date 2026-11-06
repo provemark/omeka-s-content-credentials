@@ -917,3 +917,12 @@ README are where the disclosure lives.
   SPEC-004 amendment 3, SPEC-005 amendment 1, the refresh recorded in ADR-0004,
   `notes/step-32-refreshing-the-lists.md`, milestones M7.7 to M7.10.
 - Not measured: a file signed under the new root.
+
+## 2026-11-06: M7.8, the zip on PHP 8.4 and 8.5
+
+- Model: Claude Opus 5.5, Claude Code CLI
+- Asked: "ok, akkoord met 1 tot en met 5" (point 3).
+- Produced: `--php` in `tools/env/release.sh`, the CI matrix, AC16 and SPEC-008 amendment 4,
+  `notes/step-33-the-zip-on-newer-php.md`.
+- The assistant's own errors, recorded in the note: two log measurements that could not have seen a
+  deprecation, the first with a control that never ran; a third with a working control replaced them.

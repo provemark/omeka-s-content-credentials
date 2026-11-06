@@ -32,8 +32,11 @@ services:
       - db:/var/lib/mysql
 
   omeka:
-    build: ../../docker/omeka
-    image: content-credentials-test/omeka:4.2.1-php8.3
+    build:
+      context: ../../docker/omeka
+      args:
+        BASE_IMAGE: ${CC_RELEASE_BASE_IMAGE:?set by tools/env/release.sh}
+    image: content-credentials-test/omeka:4.2.1-php${CC_RELEASE_PHP:?set by tools/env/release.sh}
     depends_on:
       db:
         condition: service_healthy

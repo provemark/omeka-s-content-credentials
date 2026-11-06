@@ -195,6 +195,13 @@ Criteria on the zip are in `tests/Release`, those on the module's source in `tes
   - Then both show the sentence of choice 2, from `config/module.ini`, escaped by Omeka S
     (`escapeHtml` in `show-details.phtml`)
 
+- **AC16 — every PHP the module promises** (added by amendment 4)
+  - Given the release environment with `tools/env/release.sh --php <version>`, for 8.3, 8.4 and 8.5
+  - When the release tests ask the Omeka container for its PHP version
+  - Then it is the version asked for, and all of `tests/Release` passes on it
+  - And CI runs `tests/Release` and `tests/Integration` on the zip on each of the three
+  - Error: `--php` with a version that has no pinned image stops the run, exit 2
+
 ## References
 
 - Specification: Omeka S 4.2.1 source: `Omeka\Module\Manager::uninstall()`,
@@ -262,8 +269,8 @@ $connection->executeStatement(Schema::drop());
 - **In the first moments after the uninstall** a run checks for its row only every 50 media.
   A reinstall within that time could take some rows from it. Step 29 measured none, with
   a reinstall by script at once.
-- **What the zip does not prove:** PHP 8.4 and 8.5 stay unmeasured on the zip unless CI's matrix
-  is widened, and the zip's first look in a browser is Maurice's.
+- **What the zip does not prove:** its first look in a browser is Maurice's. (PHP 8.4 and 8.5: see
+  amendment 4.)
 
 ## Amendments
 
@@ -279,6 +286,11 @@ $connection->executeStatement(Schema::drop());
   as they compare every row and start thousands of checks, which takes a clean installation. AC11
   leaves the whole of `api_key` out, the helper's table, whose last-used time moves with each call.
   Was: criteria on the module's source in `tests/Unit` or `tests/Integration`.
+
+- **Amendment 4 (2026-11-06, approved by Maurice van Loon):** adds AC16: the zip is tested on PHP
+  8.3, 8.4 and 8.5, as the README promises "8.3 or later". `tools/env/release.sh` takes `--php`, with
+  an image pinned by digest for each. Was: the zip on PHP 8.3 only, with 8.4 and 8.5 named as
+  unmeasured under Known limits. Record: `notes/step-33-the-zip-on-newer-php.md`.
 
 ## Open questions
 
@@ -306,3 +318,4 @@ Filled when status becomes `implemented`.
 | AC13 | tests/Integration/UninstallJobsTest.php :: AC13: from a deactivated module too; tests/Unit/VerifierLoaderTest.php :: AC13: from a deactivated module too: the class written out is the job / SPEC-008 | Module.php :: uninstall(); src/Omeka/Schema.php :: JOB_CLASS |
 | AC14 | tests/Release/UninstallTest.php :: AC14: uninstalling during a run / SPEC-008 | Module.php :: uninstall() |
 | AC15 | tests/Integration/UninstallJobsTest.php :: AC15: the warning / SPEC-008 | config/module.ini :: description |
+| AC16 | tests/Release/ZipInOmekaTest.php :: AC16: it runs on the PHP that was asked for; tests/Release/BuildTest.php :: AC16: CI runs the zip on every PHP the README promises / SPEC-008 | tools/env/release.sh; tools/env/compose.release.yaml; .github/workflows/ci.yml :: release |

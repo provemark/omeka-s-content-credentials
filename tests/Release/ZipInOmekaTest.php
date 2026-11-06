@@ -116,3 +116,13 @@ it('AC10: no verifier at all', function (): void {
         $omeka->rootShell("mv {$folder}.away {$folder}");
     }
 })->group('SPEC-008');
+
+it('AC16: it runs on the PHP that was asked for', function (): void {
+    // tools/env/release.sh --php says which; without it, the floor.
+    $asked = getenv('CC_RELEASE_PHP');
+    $asked = is_string($asked) && $asked !== '' ? $asked : '8.3';
+
+    $cli = releaseRun(['docker', 'compose', 'exec', '-T', 'omeka', 'php', '-r', 'echo PHP_MAJOR_VERSION, ".", PHP_MINOR_VERSION;']);
+
+    expect($cli)->toBe($asked);
+})->group('SPEC-008');

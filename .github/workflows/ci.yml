@@ -72,8 +72,12 @@ jobs:
   # SPEC-008: the zip, built on Linux, in a clean Omeka S: its own tests, then
   # the whole of tests/Integration on it (AC8).
   release:
-    name: the release zip (built on PHP 8.3, in Omeka S 4.2.1)
+    name: the release zip (built on PHP 8.3, in Omeka S 4.2.1 on PHP ${{ matrix.php }})
     runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: false
+      matrix:
+        php: ['8.3', '8.4', '8.5']
     steps:
       - uses: actions/checkout@v7
 
@@ -84,9 +88,9 @@ jobs:
 
       - run: composer install --no-interaction --prefer-dist --no-progress
 
-      - run: sh tools/env/release.sh
+      - run: sh tools/env/release.sh --php ${{ matrix.php }}
 
-      - run: sh tools/env/release.sh --integration
+      - run: sh tools/env/release.sh --integration --php ${{ matrix.php }}
 
   # ADR-0001: Omeka S 4.2 loads Module.php on PHP 8.1 and 8.2, and on a
   # refused install also src/Requirements.php, before the module can say it

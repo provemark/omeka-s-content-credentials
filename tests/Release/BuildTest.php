@@ -137,6 +137,16 @@ it('AC4: nothing but the prefix changed', function (): void {
     }
 })->group('SPEC-008');
 
+it('AC16: CI runs the zip on every PHP the README promises', function (): void {
+    $workflow = (string) file_get_contents(releaseRoot().'/.github/workflows/ci.yml');
+    $release = substr($workflow, (int) strpos($workflow, "\n  release:"));
+    $release = substr($release, 0, (int) strpos($release, "\n  parse-on-older-php:"));
+
+    expect($release)->toContain("php: ['8.3', '8.4', '8.5']")
+        ->and($release)->toContain('tools/env/release.sh --php ${{ matrix.php }}')
+        ->and($release)->toContain('tools/env/release.sh --integration --php ${{ matrix.php }}');
+})->group('SPEC-008');
+
 it('AC8: the integration tests hold on the zip', function (): void {
     // The run itself is CI's: tools/env/release.sh --integration. This keeps it there.
     $workflow = (string) file_get_contents(releaseRoot().'/.github/workflows/ci.yml');

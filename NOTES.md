@@ -170,6 +170,7 @@ and committer of every pushed commit.
 | M7.5 | [`notes/step-30-the-release-build-built.md`](notes/step-30-the-release-build-built.md): the build, the clean environment, the loader and the uninstall; SPEC-008 implemented with three amendments; 14 falsifications |
 | M7.6 | [`notes/step-31-the-release-check.md`](notes/step-31-the-release-check.md): upstream added one root to both lists (Samsung, `64b3f9c`, 2026-11-04), no fixture's verdict changes, and refreshing needs an amendment; what omeka.org asks is met but for a public repository, a release and a README that is ready; the name is still free; no secret by pattern in the history, four probes hold a local path; no `upgrade()` yet |
 | M7.7 | Maurice's decisions on step 31 (2026-11-06): refresh the lists, version 0.1.0, the zip on PHP 8.4 and 8.5, README and CHANGELOG ready, the probes' paths relative without rewriting history. A public repository, the registration and his own look at the zip are open. [`notes/step-32-refreshing-the-lists.md`](notes/step-32-refreshing-the-lists.md): the lists at `64b3f9c`, 2026-11-04 |
+| M7.8 | [`notes/step-33-the-zip-on-newer-php.md`](notes/step-33-the-zip-on-newer-php.md): SPEC-008 amendment 4, AC16; the zip passes on PHP 8.4 and 8.5; with deprecations on, 8.5 logs none from the module and a few from Omeka S itself, which are off by default |
 
 ## To measure before a spec rests on it
 
