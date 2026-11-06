@@ -291,6 +291,13 @@ Each with my recommendation and the trade-off. Maurice decides.
    *Status 2026-11-04:* answered, the recommendation approved by Maurice
    van Loon with the spec.
 
+## Amendments
+
+- **Amendment 1 (2026-11-06, approved by Maurice van Loon):** AC text names
+  the trust sources of the bundled lists, which follow SPEC-004 amendment 3:
+  `c2pa-2026-10-17` is now `c2pa-2026-11-04`, with and without `+digicert`.
+  The behaviour is unchanged. Record: `notes/step-32-refreshing-the-lists.md`.
+
 ## Traceability
 
 Filled when status becomes `implemented`.

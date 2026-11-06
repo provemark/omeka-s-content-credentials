@@ -119,7 +119,7 @@ it('AC2: by default, a Pixel 10 photo is Trusted', function (): void {
     [$row, $cli] = spec004Compare($omeka, $media, $fixture, VerifierCli::settingsFile(true));
     $cell = preg_match('#value="'.$media.'".*?<td class="column-content_credentials">(.*?)</td>#s', $omeka->get('/admin/media')->body, $m) === 1 ? strip_tags($m[1]) : null;
 
-    expect($row)->toBe(['Trusted', '[]', 'c2pa-2026-10-17+digicert'])
+    expect($row)->toBe(['Trusted', '[]', 'c2pa-2026-11-04+digicert'])
         ->and($cli)->toBe(['Trusted', '[]'])
         ->and($cell)->toBe('Verified: trusted signer');
 })->group('SPEC-004');
@@ -134,10 +134,10 @@ it('AC3: DigiCert decides an expired signer with a DigiCert timestamp', function
     expect(spec004Configure($omeka, ['content_credentials_digicert' => '0', 'content_credentials_custom_settings' => ''])->status)->toBe(302);
     $off = spec004Compare($omeka, spec004Upload($omeka, $fixture), $fixture, VerifierCli::settingsFile(false));
 
-    expect($on[0])->toBe(['Valid', '[]', 'c2pa-2026-10-17+digicert'])
+    expect($on[0])->toBe(['Valid', '[]', 'c2pa-2026-11-04+digicert'])
         ->and($on[1])->toBe(['Valid', '[]'])
         ->and($off[0][0])->toBe('Invalid')
-        ->and($off[0][2])->toBe('c2pa-2026-10-17')
+        ->and($off[0][2])->toBe('c2pa-2026-11-04')
         ->and([$off[0][0], $off[0][1]])->toBe($off[1])
         ->and(is_string($off[0][1]) ? $off[0][1] : '')->toContain('signingCredential.expired');
 })->group('SPEC-004');
@@ -200,7 +200,7 @@ it('AC7: the block names the trust source', function (): void {
     $media = spec004Upload($omeka, 'fixture-signed.jpg');
     $block = static fn (): string => (string) preg_replace('#.*(<div class="meta-group content-credentials">.*?<!-- /content-credentials -->).*#s', '$1', $omeka->get("/admin/media/{$media}")->body);
 
-    expect($block())->toMatch('#Checked [^<]+ UTC with c2pa-verifier [^<]+</div><div class="value">Trust: the C2PA trust list of 2026-10-17, with DigiCert timestamps</div>#');
+    expect($block())->toMatch('#Checked [^<]+ UTC with c2pa-verifier [^<]+</div><div class="value">Trust: the C2PA trust list of 2026-11-04, with DigiCert timestamps</div>#');
     $omeka->sql("UPDATE content_credentials_verdict SET trust = 'whatever' WHERE media_id = {$media}");
     expect($block())->toContain('Result unreadable')->and($block())->not->toContain('Intact');
     $omeka->sql("UPDATE content_credentials_verdict SET trust = NULL WHERE media_id = {$media}");
@@ -214,7 +214,7 @@ it('AC8: the configure page', function (): void {
     $page = $omeka->get(SPEC004_PAGE);
 
     expect($page->status)->toBe(200)
-        ->and($page->body)->toContain('C2PA trust list of 2026-10-17 (commit 47009ee), last compared with the published list on 2026-11-04')
+        ->and($page->body)->toContain('C2PA trust list of 2026-11-04 (commit 64b3f9c), last compared with the published list on 2026-11-06')
         ->and($page->body)->toMatch('#name="content_credentials_digicert" id="content-credentials-digicert" value="1" checked#')
         ->and($page->body)->not->toContain('<script>alert')
         ->and(spec004Textarea($page->body))->toBe('</textarea><script>alert(1)</script>')

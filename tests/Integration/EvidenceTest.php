@@ -316,7 +316,7 @@ it('AC7: the evidence page and the document page', function (): void {
         ->and($at($newer['id']))->toBeLessThan($at($older['id']))
         ->and($list->body)->toContain($older['checked_at'].' UTC')
         ->and($list->body)->toContain(Verifier::VERSION)
-        ->and($list->body)->toContain('Trust: the C2PA trust list of 2026-10-17, with DigiCert timestamps')
+        ->and($list->body)->toContain('Trust: the C2PA trust list of 2026-11-04, with DigiCert timestamps')
         ->and($list->body)->toContain($older['checked_sha256'])
         ->and($show->status)->toBe(200)
         ->and($show->body)->toMatch('#<pre[^>]*>\{&quot;active_manifest&quot;: &quot;&lt;script&gt;alert\(1\)&lt;/script&gt;\\\\u202e&quot;\}</pre>#')

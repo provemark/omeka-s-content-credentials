@@ -169,6 +169,7 @@ and committer of every pushed commit.
 | M7.4 | [`specs/SPEC-008-release-build.md`](specs/SPEC-008-release-build.md) (approved 2026-11-06): six choices, all as recommended: job rows deleted in `uninstall()`, the warning in the description, the loader looks for the folder, what ships is a list in the build, the zip's name holds the version, the zip tested in `composer check` and at every push |
 | M7.5 | [`notes/step-30-the-release-build-built.md`](notes/step-30-the-release-build-built.md): the build, the clean environment, the loader and the uninstall; SPEC-008 implemented with three amendments; 14 falsifications |
 | M7.6 | [`notes/step-31-the-release-check.md`](notes/step-31-the-release-check.md): upstream added one root to both lists (Samsung, `64b3f9c`, 2026-11-04), no fixture's verdict changes, and refreshing needs an amendment; what omeka.org asks is met but for a public repository, a release and a README that is ready; the name is still free; no secret by pattern in the history, four probes hold a local path; no `upgrade()` yet |
+| M7.7 | Maurice's decisions on step 31 (2026-11-06): refresh the lists, version 0.1.0, the zip on PHP 8.4 and 8.5, README and CHANGELOG ready, the probes' paths relative without rewriting history. A public repository, the registration and his own look at the zip are open. [`notes/step-32-refreshing-the-lists.md`](notes/step-32-refreshing-the-lists.md): the lists at `64b3f9c`, 2026-11-04 |
 
 ## To measure before a spec rests on it
 

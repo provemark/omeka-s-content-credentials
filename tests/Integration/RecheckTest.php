@@ -235,9 +235,9 @@ it('AC3: the trust settings of the moment the run starts', function (): void {
     spec005Run($omeka);
     $with = $omeka->sql("SELECT CONCAT_WS(' ', state, trust) FROM content_credentials_verdict WHERE media_id = {$media}");
 
-    expect($atUpload)->toBe('Valid c2pa-2026-10-17+digicert')
-        ->and($without)->toBe('Invalid c2pa-2026-10-17')
-        ->and($with)->toBe('Valid c2pa-2026-10-17+digicert');
+    expect($atUpload)->toBe('Valid c2pa-2026-11-04+digicert')
+        ->and($without)->toBe('Invalid c2pa-2026-11-04')
+        ->and($with)->toBe('Valid c2pa-2026-11-04+digicert');
 })->group('SPEC-005');
 
 it('AC4: running it again changes nothing but the time', function (): void {
@@ -398,7 +398,7 @@ it('AC11: starting a run does not save the trust settings', function (): void {
         ->and($status)->toBe('completed')
         ->and($before)->toBe('content_credentials_digicert=false')
         ->and($omeka->sql($settings))->toBe($before)
-        ->and($omeka->sql("SELECT CONCAT_WS(' ', state, trust) FROM content_credentials_verdict WHERE media_id = {$media}"))->toBe('Invalid c2pa-2026-10-17');
+        ->and($omeka->sql("SELECT CONCAT_WS(' ', state, trust) FROM content_credentials_verdict WHERE media_id = {$media}"))->toBe('Invalid c2pa-2026-11-04');
 })->group('SPEC-005');
 
 it('AC12: uploads during a run', function (): void {

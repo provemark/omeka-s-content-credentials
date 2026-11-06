@@ -304,6 +304,21 @@ recorded in the Amendments sections of SPEC-002 and SPEC-003.
     uploads are checked without a trust list."
   Record: `notes/step-22-settings-texts.md`.
 
+- **Amendment 3 (2026-11-06, approved by Maurice van Loon):** the two C2PA
+  lists are refreshed by ADR-0004's procedure, so the values in this spec
+  change. Upstream added one root to both lists and removed nothing.
+  - Commit, was `47009ee`, now `64b3f9c`. List date, was 2026-10-17, now
+    2026-11-04. Comparison date, was 2026-11-04, now 2026-11-06.
+  - AC1's hashes, was `b3949271…421af8ae` and `7182cb22…7cd2c675`, now
+    `148c1c16…4446bc37` and `eca8347e…115b1990`.
+  - Trust sources and page texts follow the date: `c2pa-2026-11-04`,
+    `c2pa-2026-11-04+digicert`. A row from an older list keeps its value
+    and shows its own date.
+  - Scope, was: "unchanged from Tracefern's `trust/`". The two lists are
+    now as published upstream, and no longer equal to that copy.
+  The criteria below the Scope keep the old values as written.
+  Record: `notes/step-32-refreshing-the-lists.md`.
+
 ## Open questions
 
 - **The table change.** Changing the `CREATE TABLE` before the first

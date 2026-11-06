@@ -8,13 +8,13 @@ page.
 
 | file | source | SHA-256 | what it anchors |
 |---|---|---|---|
-| `C2PA-TRUST-LIST.pem` | [`c2pa-org/conformance-public`](https://github.com/c2pa-org/conformance-public/tree/main/trust-list), `trust-list/`, commit `47009ee` (2026-10-17) | `b3949271a07b007e92ef1d18050b55388f5e0d2686a16fd864176c48421af8ae` | the certificate authorities the C2PA conformance programme accepts for signers (trust kind `manifest`); 32 certificates |
-| `C2PA-TSA-TRUST-LIST.pem` | the same directory and commit | `7182cb227c02701be0eebd67ab635fca7f85431c32796fb53b267c657cd2c675` | the timestamp authorities the programme accepts (trust kind `tsa`); 23 certificates |
+| `C2PA-TRUST-LIST.pem` | [`c2pa-org/conformance-public`](https://github.com/c2pa-org/conformance-public/tree/main/trust-list), `trust-list/`, commit `64b3f9c` (2026-10-17) | `148c1c167e98dc909a0d5793d2feee1022aa60fef5c83a0d6b08f67f4446bc37` | the certificate authorities the C2PA conformance programme accepts for signers (trust kind `manifest`); 32 certificates |
+| `C2PA-TSA-TRUST-LIST.pem` | the same directory and commit | `eca8347ee71e31d226e00c85b15aca356116fefe6c26ed8c0ee1f954115b1990` | the timestamp authorities the programme accepts (trust kind `tsa`); 23 certificates |
 | `DigiCertTrustedRootG4.crt.pem` | [DigiCert](https://cacerts.digicert.com/DigiCertTrustedRootG4.crt.pem) | `ce7d6b44f5d510391be98c8d76b18709400a30cd87659bfebe1c6f97ff5181ee` | timestamp authorities (trust kind `tsa`), used only when the DigiCert option is on (the default) |
 
-The list date is 2026-10-17, the date of commit `47009ee`, which last
+The list date is 2026-11-04, the date of commit `64b3f9c`, which last
 changed the two lists. The copy was last compared with the published lists
-on 2026-11-04 (identical at `d6dec63`, 2026-10-26, the newest commit
+on 2026-11-06 (identical at `a95f2c4`, 2026-11-04, the newest commit
 touching `trust-list/` that day). The module warns on its configure page
 183 days after that comparison.
 

@@ -130,3 +130,11 @@ expires on 2038-01-15. Its fingerprint is checked by the same unit test.
   about a copy that is still current whenever the C2PA leaves the lists
   unchanged for six months. Rejected in favour of the comparison date;
   both dates are shown.
+
+## Refreshes
+
+The decision above stands; its values are those of the first copy. The
+current ones are in `trust/README.md` and `BundledLists`.
+
+- 2026-11-06: `47009ee` to `64b3f9c`, one root added to both lists. Record:
+  `notes/step-32-refreshing-the-lists.md`.

@@ -21,10 +21,10 @@ use Provemark\C2paVerifier\Verifier\Verifier;
 
 const SPEC004_TRUST_DIR = __DIR__.'/../../trust';
 
-/** The hashes measured in notes/step-16-trust-lists.md, written out in full. */
+/** The hashes measured in notes/step-32-refreshing-the-lists.md, written out in full. */
 const SPEC004_HASHES = [
-    'C2PA-TRUST-LIST.pem' => 'b3949271a07b007e92ef1d18050b55388f5e0d2686a16fd864176c48421af8ae',
-    'C2PA-TSA-TRUST-LIST.pem' => '7182cb227c02701be0eebd67ab635fca7f85431c32796fb53b267c657cd2c675',
+    'C2PA-TRUST-LIST.pem' => '148c1c167e98dc909a0d5793d2feee1022aa60fef5c83a0d6b08f67f4446bc37',
+    'C2PA-TSA-TRUST-LIST.pem' => 'eca8347ee71e31d226e00c85b15aca356116fefe6c26ed8c0ee1f954115b1990',
     'DigiCertTrustedRootG4.crt.pem' => 'ce7d6b44f5d510391be98c8d76b18709400a30cd87659bfebe1c6f97ff5181ee',
 ];
 
@@ -105,12 +105,12 @@ it('AC2, AC3: the bundled settings, with and without DigiCert', function (bool $
         ->and($built->settings)->toBeInstanceOf(TrustSettings::class)
         ->and($built->problem)->toBeNull();
 })->with([
-    'DigiCert on' => [true, 'c2pa-2026-10-17+digicert', ['manifest', 'tsa', 'tsa']],
-    'DigiCert off' => [false, 'c2pa-2026-10-17', ['manifest', 'tsa']],
+    'DigiCert on' => [true, 'c2pa-2026-11-04+digicert', ['manifest', 'tsa', 'tsa']],
+    'DigiCert off' => [false, 'c2pa-2026-11-04', ['manifest', 'tsa']],
 ])->group('SPEC-004');
 
 it('AC2: no custom settings means the bundled lists', function (?string $custom): void {
-    expect(TrustChoice::build($custom, true, SPEC004_TRUST_DIR)->source)->toBe('c2pa-2026-10-17+digicert');
+    expect(TrustChoice::build($custom, true, SPEC004_TRUST_DIR)->source)->toBe('c2pa-2026-11-04+digicert');
 })->with(['absent' => [null], 'empty' => [''], 'whitespace' => ["  \n"]])->group('SPEC-004');
 
 it('AC4: custom settings replace the bundled lists, whatever DigiCert says', function (bool $digicert): void {
@@ -167,7 +167,7 @@ it('AC2: a check passes the built settings to the verifier and records their sou
         ->check(VerifierCli::fixture('google-20250919-pixel10-npld-picnic-table.jpg'), '8.3.0');
 
     expect($verdict->state)->toBe('Trusted')
-        ->and($verdict->trust)->toBe('c2pa-2026-10-17+digicert');
+        ->and($verdict->trust)->toBe('c2pa-2026-11-04+digicert');
 })->group('SPEC-004');
 
 it('AC6: an error before verification has no trust source', function (): void {
@@ -207,7 +207,7 @@ it('AC7: an unknown trust value makes the row unreadable', function (string $tru
 it('AC8: the page shows the list, the option, the text and the note', function (): void {
     $page = spec004Page(custom: '</textarea><script>alert(1)</script>');
 
-    expect($page)->toContain('C2PA trust list of 2026-10-17 (commit 47009ee), last compared with the published list on 2026-11-04')
+    expect($page)->toContain('C2PA trust list of 2026-11-04 (commit 64b3f9c), last compared with the published list on 2026-11-06')
         ->and($page)->toMatch('#<input type="checkbox" name="content_credentials_digicert" id="content-credentials-digicert" value="1" checked>#')
         ->and($page)->toContain('&lt;/textarea&gt;&lt;script&gt;alert(1)&lt;/script&gt;</textarea>')
         ->and($page)->not->toContain('<script>')
@@ -219,14 +219,14 @@ it('AC8: the page shows the list, the option, the text and the note', function (
 it('AC9: the copy is stale from 183 days after the comparison', function (string $now, bool $stale): void {
     expect(BundledLists::isStale(new DateTimeImmutable($now)))->toBe($stale);
 })->with([
-    'the comparison day' => ['2026-11-04T00:00:00Z', false],
-    'the day before 183 days' => ['2027-05-05T23:59:59Z', false],
-    '183 days' => ['2027-05-06T00:00:00Z', true],
+    'the comparison day' => ['2026-11-06T00:00:00Z', false],
+    'the day before 183 days' => ['2027-05-07T23:59:59Z', false],
+    '183 days' => ['2027-05-08T00:00:00Z', true],
     'later' => ['2030-01-01T00:00:00Z', true],
 ])->group('SPEC-004');
 
 it('AC9: the page shows the age warning only when stale', function (): void {
-    $warning = 'The bundled trust lists were last compared with the published lists on 2026-11-04, more than six months ago. A newer release of this module may have newer lists.';
+    $warning = 'The bundled trust lists were last compared with the published lists on 2026-11-06, more than six months ago. A newer release of this module may have newer lists.';
 
     expect(spec004Page(stale: true))->toContain($warning)
         ->and(spec004Page(stale: false))->not->toContain('more than six months ago');

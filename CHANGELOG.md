@@ -80,3 +80,6 @@ day the work was committed.
 - Changed: uninstalling also deletes the module's job rows, which ends a run that is going on, and
   the module's description says that uninstalling deletes its verdicts and evidence (SPEC-008).
   (2026-11-06)
+- Changed: the bundled C2PA trust lists are those of 2026-11-04 (`64b3f9c`), which add the Samsung
+  C2PA Root CA G1 to both. Verdicts already stored keep their own list date until they are checked
+  again (SPEC-004 amendment 3). (2026-11-06)

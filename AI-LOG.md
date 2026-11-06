@@ -908,3 +908,12 @@ README are where the disclosure lives.
   changed, and nothing published.
 - The assistant's own error, recorded in the note: a first comparison that used the bundled lists
   twice; its own check showed it. omeka.org's pages were read through a summarising fetch.
+
+## 2026-11-06: M7.7, the bundled lists refreshed
+
+- Model: Claude Opus 5.5, Claude Code CLI
+- Asked: "ok, akkoord met 1 tot en met 5".
+- Produced: the two lists at `64b3f9c`, `BundledLists`, `trust/README.md`, the tests' values,
+  SPEC-004 amendment 3, SPEC-005 amendment 1, the refresh recorded in ADR-0004,
+  `notes/step-32-refreshing-the-lists.md`, milestones M7.7 to M7.10.
+- Not measured: a file signed under the new root.
