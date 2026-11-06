@@ -892,3 +892,10 @@ README are where the disclosure lives.
 - The assistant's own errors, recorded in the note: a test that compared the helper's own API key,
   seven PHPStan errors in new tests, a command that hung, two falsifications that had to be redone.
 - Not done: the build on Linux is left to CI; the zip on PHP 8.4 and 8.5; no browser.
+
+## 2026-11-06: M7.5, a correction after the first push
+
+- Model: Claude Opus 5.5, Claude Code CLI
+- Asked: nothing new; the job `release` of CI failed on the commit of M7.5.
+- Produced: AC1's and AC2's setup without `git clone --shared`, recorded in step 30. The assistant's
+  error: a test setup that does not work on CI's shallow checkout.

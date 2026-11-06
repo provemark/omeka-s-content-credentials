@@ -4,25 +4,33 @@ declare(strict_types=1);
 
 /*
  * SPEC-008 AC1 to AC4 and AC8: what tools/build.sh makes. AC1 and AC2 build in a
- * clone, so the working tree is never touched; the clone holds what the working
- * tree holds now, so an uncommitted build.sh is tested too.
+ * repository of their own, so the working tree is never touched; it holds what
+ * the working tree holds now, so an uncommitted build.sh is tested too.
  */
 
 require_once __DIR__.'/Support.php';
 
 const RELEASE_STRAUSS = 'strauss-0.31.1.phar';
 
-/** A clone at a commit of the working tree as it is, with the pinned phar in place. */
+/**
+ * A repository of its own holding the working tree as it is, committed, with the
+ * pinned phar's folder in place. Not a clone: CI's checkout is shallow, and git
+ * then ignores --shared, which leaves out a commit made only for this test.
+ */
 function releaseClone(): string
 {
     $root = releaseRoot();
     $index = releaseWork('index').'/index';
     copy((string) realpath($root.'/'.trim(releaseRun(['git', 'rev-parse', '--git-path', 'index'], $root))), $index);
-    $tree = (string) shell_exec('cd '.escapeshellarg($root).' && GIT_INDEX_FILE='.escapeshellarg($index).' git add -A && GIT_INDEX_FILE='.escapeshellarg($index).' git write-tree');
-    $commit = trim(releaseRun(['git', '-c', 'user.name=spec008', '-c', 'user.email=spec008@example.com', 'commit-tree', trim($tree), '-m', 'SPEC-008 build test'], $root));
+    $tree = trim((string) shell_exec('cd '.escapeshellarg($root).' && GIT_INDEX_FILE='.escapeshellarg($index).' git add -A && GIT_INDEX_FILE='.escapeshellarg($index).' git write-tree'));
     $clone = releaseWork('clone');
-    releaseRun(['git', 'clone', '-q', '--shared', '--no-checkout', $root, $clone]);
-    releaseRun(['git', '-C', $clone, 'checkout', '-q', '--detach', $commit]);
+    $archive = $clone.'.tar';
+    releaseRun(['git', 'archive', '-o', $archive, $tree], $root);
+    releaseRun(['tar', '-xf', $archive, '-C', $clone]);
+    unlink($archive);
+    releaseRun(['git', 'init', '-q'], $clone);
+    releaseRun(['git', 'add', '-A'], $clone);
+    releaseRun(['git', '-c', 'user.name=spec008', '-c', 'user.email=spec008@example.com', 'commit', '-q', '-m', 'SPEC-008 build test'], $clone);
     mkdir($clone.'/build/.tools', 0777, true);
 
     return $clone;

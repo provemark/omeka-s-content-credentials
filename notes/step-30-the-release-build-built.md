@@ -92,9 +92,17 @@ verifier's `composer.json` still names its namespace; AC11 and AC14 are in `test
 - The first falsification script stopped at a signature it had guessed; the last of the
   development-layout changes did not apply at first and had to be done again.
 
+## The first push (measured, CI run 42191099086)
+
+The build on Linux worked, on PHP 8.3: the zip was made, and 18 of the 20 release tests passed.
+AC1 and AC2 failed in their own setup: `fatal: unable to read tree`. CI's checkout is shallow, git
+then ignores `--shared`, and the clone lacks the commit made for the test. Reproduced with a
+`--depth=1` clone. It is the assistant's error, in the test, not in the build; they now use a
+repository of their own, and AC1's falsification was run again on that setup. As that job
+stopped there, `--integration` had not yet run on Linux at that point.
+
 ## Not measured
 
-- A build on Linux until the first push: CI's job `release` is the measurement, not this note.
 - The zip on PHP 8.4 and 8.5, Apache only, MariaDB 11.4 only.
 - The race at the end of a run, and a reinstall within a run's next 50 media (SPEC-008, Known
   limits).
