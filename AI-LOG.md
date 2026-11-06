@@ -863,3 +863,11 @@ README are where the disclosure lives.
 - Produced: `tools/probes/UninstallProbe/`, `notes/step-29-uninstall.md`.
 - Not done: the `session` table and file contents were not compared; no browser; why a
   job's process ends when its row is deleted was not read.
+
+## 2026-11-06: M7.3, ADR-0006 proposed
+
+- Model: Claude Opus 5.5, Claude Code CLI
+- Asked: "ok, begin met M7.3".
+- Produced: `docs/adr/ADR-0006-prefixing-the-verifier.md`, status proposed, on the
+  measurements of steps 11 and 28. Nothing new measured; the choice of 0.31.1 over
+  0.30.0 and the `composer.lock` consequence are reasoned or read, and marked so.
