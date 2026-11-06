@@ -871,3 +871,12 @@ README are where the disclosure lives.
 - Produced: `docs/adr/ADR-0006-prefixing-the-verifier.md`, status proposed, on the
   measurements of steps 11 and 28. Nothing new measured; the choice of 0.31.1 over
   0.30.0 and the `composer.lock` consequence are reasoned or read, and marked so.
+
+## 2026-11-06: M7.3 accepted, M7.4, SPEC-008 drafted
+
+- Model: Claude Opus 5.5, Claude Code CLI
+- Asked: "ok, ADR-0006 aangenomen, begin met M7.4".
+- Produced: ADR-0006's status, a pointer in ADR-0002, `specs/SPEC-008-release-build.md` as a
+  draft with six choices and recommendations, and a proposed amendment to SPEC-002 AC13.
+- Read, not measured: why a job's process ends when its row is deleted, and a possible race at
+  the end of a run; both marked in the spec.

@@ -54,7 +54,8 @@ in M0.7, with that step.
 
 **Not now:** Strauss, to prefix the verifier in the release zip (as
 Tracefern's SPEC-009) belongs to the release build (M7) and gets its
-amendment to this ADR then.
+amendment to this ADR then. Done in a file of its own:
+[ADR-0006](ADR-0006-prefixing-the-verifier.md) (accepted 2026-11-06).
 
 ## Consequences
 
