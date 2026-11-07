@@ -73,7 +73,7 @@ shows the headline and the lines below it):
 
 | stored | headline | lines |
 |---|---|---|
-| `Trusted` | Verified: trusted signer | "Signed by {signer_common_name} ({signer_issuer})" when either is present; "Signed at {signed_at}" when present |
+| `Trusted` | Verified: trusted signer | "Signed by {signer_common_name} ({signer_issuer})", or with only one of them "Signed by" and that one, none when neither is present *(amendment 5)*; "Signed at {signed_at}" when present |
 | `Valid` | Intact: signer not trusted | the same lines |
 | `Invalid` | Does not verify | "Codes:" and each code of `codes`, in stored order; the signer lines when present |
 | `none` | No Content Credentials | with a `remote_manifest_url`: "Refers to Content Credentials elsewhere (not checked): {remote_manifest_url}" |
@@ -275,6 +275,20 @@ Deptrac gets a layer `Display` (no Omeka S, may use nothing but
   blank but are letters (U+3164, U+2800) and the separators U+2028 and U+2029
   are not Cf and stay; which characters are Cf follows the Unicode data of
   PHP's PCRE (10.49 when measured).
+- **Amendment 5 (2026-11-07, approved by Maurice van Loon):** from finding 8
+  of the code review. The signer line depends on what is present; a value
+  that is missing, or empty after trimming, counts as absent:
+
+  | common name | organisation | line |
+  |---|---|---|
+  | present | present | "Signed by {signer_common_name} ({signer_issuer})" |
+  | present | absent | "Signed by {signer_common_name}" |
+  | absent | present | "Signed by {signer_issuer}" |
+  | absent | absent | no line |
+
+  Was: "Signed by {signer_common_name} ({signer_issuer})" when either is
+  present, with an empty value in its place. What is stored does not change.
+  Tested under AC2.
 
 ## Traceability
 

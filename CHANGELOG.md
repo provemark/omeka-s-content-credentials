@@ -110,3 +110,6 @@ What follows is the record of how it was built.
 - Fixed: zero-width characters, the byte order mark, tag characters and every other Unicode control or
   format character in text from a file now show as U+FFFD, so they cannot hide in a signer's name
   (SPEC-003 amendment 4). (2026-11-07)
+- Fixed: the signer line names only what the certificate holds: "Signed by Name (Organisation)",
+  "Signed by Name" or "Signed by Organisation", and no empty brackets (SPEC-003 amendment 5).
+  (2026-11-07)

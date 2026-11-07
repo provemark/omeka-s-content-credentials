@@ -1017,3 +1017,13 @@ README are where the disclosure lives.
 - Produced: the pattern in `Text::visible()`, the tests, SPEC-003 amendment 4,
   `notes/step-42-invisible-characters.md`.
 - The defect is in the assistant's own earlier work: the comment promised more than the list did.
+
+## 2026-11-07: M7.14, finding 8, the signer line
+
+- Model: Claude Opus 5.5, Claude Code CLI
+- Asked: "ok, ga door met punt 8", "ok, amendment 5 goedgekeurd met \"Signed by Org\", schrijf de
+  tests", then "ok, bouw het".
+- Produced: `Presentation::present()` and the signer line, the tests, SPEC-003 amendment 5,
+  `notes/step-43-the-signer-line.md`. M7.14 is done.
+- The defect is in the assistant's own earlier work. Its first build trimmed in the wrong order, which
+  a test caught.

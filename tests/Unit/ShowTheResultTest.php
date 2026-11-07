@@ -48,6 +48,35 @@ it('AC1: one headline per state, and for no row', function (?array $row, string 
     'no row' => [null, 'Not checked'],
 ])->group('SPEC-003');
 
+it('AC2: the signer line names what is present (amendment 5)', function (mixed $name, mixed $organisation, ?string $line): void {
+    // Values that are not text, so not through spec003Row()'s types.
+    $lines = spec003Lines(Presentation::of(['signer_common_name' => $name, 'signer_issuer' => $organisation] + spec003Row([])));
+
+    expect($lines[0] ?? null)->toBe($line ?? 'Checked 2026-11-04 10:00:00 UTC with c2pa-verifier 0.10.0')
+        ->and(implode("\n", $lines))->not->toContain('()')
+        ->and(implode("\n", $lines))->not->toContain('Signed by  ');
+})->with([
+    'both' => ['C2PA Signer', 'Google LLC', 'Signed by C2PA Signer (Google LLC)'],
+    'a name only' => ['C2PA Signer', null, 'Signed by C2PA Signer'],
+    'an organisation only' => [null, 'Google LLC', 'Signed by Google LLC'],
+    'neither' => [null, null, null],
+    'an empty organisation' => ['C2PA Signer', '', 'Signed by C2PA Signer'],
+    'an empty name' => ['', 'Google LLC', 'Signed by Google LLC'],
+    'both empty' => ['', '', null],
+    'spaces only' => ['  ', "\t", null],
+    'a name of spaces' => [' ', 'Google LLC', 'Signed by Google LLC'],
+    'an organisation that is not text' => ['C2PA Signer', 42, 'Signed by C2PA Signer'],
+    'a name that is not text' => [['x'], 'Google LLC', 'Signed by Google LLC'],
+    'an invisible character is present' => ['C2PA Signer', "\u{200B}", "Signed by C2PA Signer (\u{FFFD})"],
+])->group('SPEC-003');
+
+it('AC2: the signer line on every signed state', function (string $state): void {
+    $lines = spec003Lines(Presentation::of(spec003Row(['state' => $state, 'codes' => $state === 'Invalid' ? '["x"]' : '[]', 'signer_common_name' => 'C2PA Signer'])));
+
+    expect($lines)->toContain('Signed by C2PA Signer')
+        ->and(implode("\n", $lines))->not->toContain('()');
+})->with(['Trusted', 'Valid', 'Invalid'])->group('SPEC-003');
+
 it('AC2: a signed row names its signer and the check', function (): void {
     $lines = spec003Lines(Presentation::of(spec003Row([
         'signer_common_name' => 'C2PA Signer', 'signer_issuer' => 'C2PA Test Signing Cert', 'signed_at' => '2026-01-02T03:04:05+00:00',

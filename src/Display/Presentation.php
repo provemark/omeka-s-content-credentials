@@ -97,10 +97,13 @@ final class Presentation
             $lines[] = ['Refers to Content Credentials elsewhere (not checked): %s', [$url]];
         }
         if (in_array($state, [self::TRUSTED, self::VALID, self::INVALID], true)) {
-            $name = self::text($row, 'signer_common_name');
-            $issuer = self::text($row, 'signer_issuer');
-            if ($name !== null || $issuer !== null) {
-                $lines[] = ['Signed by %1$s (%2$s)', [$name ?? '', $issuer ?? '']];
+            // SPEC-003 amendment 5: name what is present, never an empty place.
+            $name = self::present($row, 'signer_common_name');
+            $issuer = self::present($row, 'signer_issuer');
+            if ($name !== null && $issuer !== null) {
+                $lines[] = ['Signed by %1$s (%2$s)', [$name, $issuer]];
+            } elseif ($name !== null || $issuer !== null) {
+                $lines[] = ['Signed by %s', [$name ?? $issuer]];
             }
             $signedAt = self::text($row, 'signed_at');
             if ($signedAt !== null) {
@@ -191,6 +194,20 @@ final class Presentation
         }
 
         return $strings;
+    }
+
+    /**
+     * A value made visible, or null when it is missing or empty after
+     * trimming (amendment 5).
+     *
+     * @param  array<mixed>  $row
+     */
+    private static function present(array $row, string $column): ?string
+    {
+        $value = $row[$column] ?? null;
+
+        // Trimmed before Text::visible(), which would make a tab a visible U+FFFD.
+        return is_string($value) && trim($value) !== '' ? Text::visible($value) : null;
     }
 
     /**
