@@ -1059,3 +1059,9 @@ README are where the disclosure lives.
 - Produced: `SECURITY.md`, after the verifier's, the README's link to it, and
   `notes/step-47-security-policy.md`. The acknowledgement within a week is the verifier's promise,
   taken over; Maurice may change it.
+
+## 2026-11-07: the repository keeps its owner
+
+- Asked: "ok, het blijft provemark".
+- Recorded in `NOTES.md` (decision 6) by the assistant; the decision is Maurice's. Also added to
+  step 46: the CI log after the change.

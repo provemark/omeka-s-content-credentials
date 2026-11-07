@@ -42,6 +42,9 @@ Once public, anyone can open a pull request, and `ci.yml` runs on pull requests.
   (`gh api repos/<action>/commits/<tag>`), and the last run's log names the same SHAs for checkout
   and setup-php. So the workflow runs the same code as before; a moved tag no longer changes it.
 
+Measured after the change (CI run of `3fa6a5d`, green): the log shows `Contents: read` and
+`Metadata: read` only, and downloads each action at the pinned commit.
+
 ## Not measured
 
 - The organisation's default token setting itself: reading it needs `admin:org`, which is not

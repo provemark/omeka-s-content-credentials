@@ -126,6 +126,10 @@ verifier's history uses, and this repository's `user.email` set to it.
 Measured: the GitHub API lists that address, and only that one, as author
 and committer of every pushed commit.
 
+**Decided 2026-11-07 (Maurice):** the repository stays
+`provemark/omeka-s-content-credentials` when it goes public; it does not
+wait for a new name. Going public itself is still his go.
+
 ## Index of steps
 
 | step | note |
