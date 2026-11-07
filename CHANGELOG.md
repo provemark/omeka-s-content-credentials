@@ -115,3 +115,4 @@ What follows is the record of how it was built.
   (2026-11-07)
 - Changed: the release build stops with Strauss's own output when Strauss does not prefix the
   verifier, instead of failing later without a reason (SPEC-008 amendment 5). (2026-11-07)
+- Added: `SECURITY.md`, how to report a vulnerability and what counts as one. (2026-11-07)

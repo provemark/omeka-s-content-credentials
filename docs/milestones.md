@@ -293,6 +293,7 @@ Open for Maurice, after measuring:
 | M7.14 | The smaller findings 4 to 8 of the review | done: [`notes/step-39-a-refused-form.md`](../notes/step-39-a-refused-form.md), [`notes/step-40-a-refused-start.md`](../notes/step-40-a-refused-start.md), [`notes/step-41-a-damaged-list.md`](../notes/step-41-a-damaged-list.md), [`notes/step-42-invisible-characters.md`](../notes/step-42-invisible-characters.md), [`notes/step-43-the-signer-line.md`](../notes/step-43-the-signer-line.md) |
 | M7.15 | Clean-ups 1 to 3 of the review, before the release (Maurice, 2026-11-07): two unused constants, the build's silence when Strauss fails | done: [`notes/step-44-two-unused-constants.md`](../notes/step-44-two-unused-constants.md), [`notes/step-45-when-strauss-fails.md`](../notes/step-45-when-strauss-fails.md) |
 | M7.16 | The check before going public, and a read-only CI (Maurice, 2026-11-07) | done: [`notes/step-46-before-going-public.md`](../notes/step-46-before-going-public.md) |
+| M7.17 | A security policy, `SECURITY.md` | done: [`notes/step-47-security-policy.md`](../notes/step-47-security-policy.md) |
 
 **M7.5 is done (2026-11-06):** `tools/build.sh` makes the zip, which holds `vendor-prefixed/` and no
 `vendor/` (ADR-0006; M7's row above says "prefixed `vendor/`"), and which is tested in a clean

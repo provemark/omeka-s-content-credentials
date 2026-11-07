@@ -1051,3 +1051,11 @@ README are where the disclosure lives.
   `.github/workflows/ci.yml` a read-only token and actions pinned to commits.
 - Decided by Maurice: which points to do. Going public, and turning on private vulnerability
   reporting, are still his.
+
+## 2026-11-07: M7.17, a security policy
+
+- Model: Claude Opus 5.5, Claude Code CLI
+- Asked: "ok, doe punt 3 en 4" (point 4).
+- Produced: `SECURITY.md`, after the verifier's, the README's link to it, and
+  `notes/step-47-security-policy.md`. The acknowledgement within a week is the verifier's promise,
+  taken over; Maurice may change it.

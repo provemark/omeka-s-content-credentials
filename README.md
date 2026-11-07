@@ -88,6 +88,10 @@ the committed HEAD, with the verifier prefixed under `ContentCredentials\Vendor\
 module's copy cannot reach it ([ADR-0006](https://github.com/provemark/omeka-s-content-credentials/blob/main/docs/adr/ADR-0006-prefixing-the-verifier.md)). It needs
 PHP, Composer, `zip`, and the network once, to fetch a Strauss checked by its SHA-256.
 
+## Security
+
+How to report a vulnerability, and what counts as one: [`SECURITY.md`](https://github.com/provemark/omeka-s-content-credentials/blob/main/SECURITY.md).
+
 ## How this is built
 
 This module is built with Claude Code; [`AI-LOG.md`](https://github.com/provemark/omeka-s-content-credentials/blob/main/AI-LOG.md) records what the assistant produced
