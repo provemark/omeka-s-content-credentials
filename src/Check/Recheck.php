@@ -18,9 +18,6 @@ final class Recheck
 
     public const STOP_EVERY = 50;
 
-    /** The states the end line counts, in its order. */
-    public const STATES = ['Trusted', 'Valid', 'Invalid', Verdict::NONE, Verdict::ERROR];
-
     private int $notStored = 0;
 
     /**

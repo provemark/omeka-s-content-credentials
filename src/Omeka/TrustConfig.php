@@ -24,8 +24,6 @@ use UnexpectedValueException;
  */
 final class TrustConfig
 {
-    public const SETTINGS = [SettingsPage::DIGICERT, SettingsPage::CUSTOM];
-
     public function __construct(
         private readonly Settings $settings,
         private readonly string $moduleDirectory,

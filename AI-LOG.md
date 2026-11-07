@@ -1027,3 +1027,9 @@ README are where the disclosure lives.
   `notes/step-43-the-signer-line.md`. M7.14 is done.
 - The defect is in the assistant's own earlier work. Its first build trimmed in the wrong order, which
   a test caught.
+
+## 2026-11-07: M7.15, two unused constants
+
+- Model: Claude Opus 5.5, Claude Code CLI
+- Asked: "wat zijn die opschoningen?", then "ok, doe 1 tot en met 3 vóór de release".
+- Produced: the two constants removed, `notes/step-44-two-unused-constants.md`, row M7.15.

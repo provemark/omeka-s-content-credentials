@@ -182,6 +182,7 @@ and committer of every pushed commit.
 | M7.14 | [`notes/step-41-a-damaged-list.md`](notes/step-41-a-damaged-list.md): finding 6, SPEC-004 amendment 5, AC13: each bundled file in use is compared with its hash; an empty list had been accepted under its date; the 500 measured; the bind mount answers a quick second write late, which also touched the falsifications of steps 39 and 40 |
 | M7.14 | [`notes/step-42-invisible-characters.md`](notes/step-42-invisible-characters.md): finding 7, SPEC-003 amendment 4: every Cc and Cf character becomes U+FFFD; ZWJ and ZWNJ in names are a known limit; 10 falsifications, two tests added for the two that survived at first |
 | M7.14 | [`notes/step-43-the-signer-line.md`](notes/step-43-the-signer-line.md): finding 8, SPEC-003 amendment 5: "Signed by" names what is present; empty after trimming is absent; 10 falsifications; M7.14 done |
+| M7.15 | [`notes/step-44-two-unused-constants.md`](notes/step-44-two-unused-constants.md): `TrustConfig::SETTINGS` and `Recheck::STATES` removed, read nowhere |
 
 ## To measure before a spec rests on it
 
