@@ -202,6 +202,16 @@ Criteria on the zip are in `tests/Release`, those on the module's source in `tes
   - And CI runs `tests/Release` and `tests/Integration` on the zip on each of the three
   - Error: `--php` with a version that has no pinned image stops the run, exit 2
 
+- **AC17 — a Strauss run that fails or prefixes nothing stops the build with its output** *(added by amendment 5; error path)*
+  - Given a tree whose Strauss configuration names a package that is not installed,
+    so that Strauss prefixes nothing
+  - When `tools/build.sh` runs on it
+  - Then it exits non-zero, says that Strauss did not prefix the verifier, shows
+    Strauss's own output, and leaves no zip
+  - And when Strauss itself exits non-zero, the build stops there with the same
+    message and output
+  - And on a good tree Strauss's output is not shown, as before
+
 ## References
 
 - Specification: Omeka S 4.2.1 source: `Omeka\Module\Manager::uninstall()`,
@@ -292,6 +302,10 @@ $connection->executeStatement(Schema::drop());
   an image pinned by digest for each. Was: the zip on PHP 8.3 only, with 8.4 and 8.5 named as
   unmeasured under Known limits. Record: `notes/step-33-the-zip-on-newer-php.md`.
 
+- **Amendment 5 (2026-11-07, approved by Maurice van Loon):** adds AC17, from clean-up 3 of the code
+  review (step 35), moved before the release by Maurice. Was: Strauss's output went to /dev/null; a
+  run that prefixed nothing failed later with a `find` error.
+
 ## Open questions
 
 - All six choices above: blockers, for Maurice.
@@ -319,3 +333,4 @@ Filled when status becomes `implemented`.
 | AC14 | tests/Release/UninstallTest.php :: AC14: uninstalling during a run / SPEC-008 | Module.php :: uninstall() |
 | AC15 | tests/Integration/UninstallJobsTest.php :: AC15: the warning / SPEC-008 | config/module.ini :: description |
 | AC16 | tests/Release/ZipInOmekaTest.php :: AC16: it runs on the PHP that was asked for; tests/Release/BuildTest.php :: AC16: CI runs the zip on every PHP the README promises / SPEC-008 | tools/env/release.sh; tools/env/compose.release.yaml; .github/workflows/ci.yml :: release |
+| AC17 | tests/Release/BuildTest.php :: AC17: a Strauss run that prefixes nothing stops the build with its output; AC1 (no Strauss output on a good tree) | tools/build.sh |

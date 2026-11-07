@@ -113,3 +113,5 @@ What follows is the record of how it was built.
 - Fixed: the signer line names only what the certificate holds: "Signed by Name (Organisation)",
   "Signed by Name" or "Signed by Organisation", and no empty brackets (SPEC-003 amendment 5).
   (2026-11-07)
+- Changed: the release build stops with Strauss's own output when Strauss does not prefix the
+  verifier, instead of failing later without a reason (SPEC-008 amendment 5). (2026-11-07)

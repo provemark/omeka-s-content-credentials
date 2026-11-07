@@ -55,7 +55,29 @@ it('AC1: the zip comes from the committed HEAD', function (): void {
     expect(file_get_contents($unpacked.'/ContentCredentials/src/Requirements.php'))->toBe($committed)
         ->and($unpacked.'/ContentCredentials/untracked.txt')->not->toBeFile()
         ->and(releaseRun(['git', '-C', $clone, 'status', '--porcelain']))->toBe($status)
-        ->and(file_get_contents($clone.'/vendor/marker'))->toBe('stays');
+        ->and(file_get_contents($clone.'/vendor/marker'))->toBe('stays')
+        // AC17: on a good tree, Strauss's own output is not shown.
+        ->and($err)->not->toContain('[notice]');
+})->group('SPEC-008');
+
+it('AC17: a Strauss run that prefixes nothing stops the build with its output', function (): void {
+    $clone = releaseClone();
+    copy(releaseRoot().'/build/.tools/'.RELEASE_STRAUSS, $clone.'/build/.tools/'.RELEASE_STRAUSS);
+    $composer = json_decode((string) file_get_contents($clone.'/composer.json'), true, 512, JSON_THROW_ON_ERROR);
+    assert(is_array($composer) && is_array($composer['extra']) && is_array($composer['extra']['strauss']));
+    $composer['extra']['strauss']['packages'] = ['nobody/not-installed'];
+    file_put_contents($clone.'/composer.json', json_encode($composer, JSON_THROW_ON_ERROR | JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES)."\n");
+    releaseRun(['git', '-c', 'user.name=spec008', '-c', 'user.email=spec008@example.com', 'commit', '-q', '-am', 'Strauss prefixes nothing'], $clone);
+    $zip = $clone.'/build/ContentCredentials-'.releaseVersion().'.zip';
+
+    [$exit, $out, $err] = releaseExec(['sh', 'tools/build.sh'], $clone);
+
+    expect($exit)->not->toBe(0)
+        ->and($err)->toContain('Strauss did not prefix the verifier')
+        // Strauss's own last line, measured with 0.31.1.
+        ->and($err)->toContain('[notice] Done in')
+        ->and($err.$out)->not->toContain('find:')
+        ->and($zip)->not->toBeFile();
 })->group('SPEC-008');
 
 it('AC2: a phar that is not the pinned one stops the build', function (): void {

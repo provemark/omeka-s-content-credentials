@@ -45,9 +45,14 @@ version=$(php -r '$i = parse_ini_file($argv[1], true); echo $i["info"]["version"
 composer install --working-dir="$dir" --no-dev --optimize-autoloader --no-interaction --no-progress --quiet --no-scripts
 rm -rf "$dir/vendor/provemark/c2pa-verifier/src/Cli"
 composer dump-autoload --working-dir="$dir" --no-dev --optimize --no-interaction --quiet --no-scripts
-(cd "$dir" && php "$strauss" --no-interaction >/dev/null 2>&1)
-
+# Strauss's output is shown only when it fails or prefixes nothing (SPEC-008 AC17).
 verifier="$dir/vendor-prefixed/provemark/c2pa-verifier"
+if ! strauss_output=$(cd "$dir" && php "$strauss" --no-interaction 2>&1) || [ ! -d "$verifier" ]; then
+    echo "Error: Strauss did not prefix the verifier into $verifier. Its output:" >&2
+    printf '%s\n' "$strauss_output" >&2
+    rm -rf "$work"
+    exit 1
+fi
 find "$verifier" -mindepth 1 -maxdepth 1 ! -name src ! -name LICENSE ! -name composer.json -exec rm -rf {} +
 find "$dir/vendor-prefixed" -mindepth 1 -maxdepth 1 ! -name provemark -exec rm -rf {} +
 rm -rf "$dir/vendor" "$dir/composer.json" "$dir/composer.lock"

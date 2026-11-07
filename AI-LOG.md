@@ -1033,3 +1033,12 @@ README are where the disclosure lives.
 - Model: Claude Opus 5.5, Claude Code CLI
 - Asked: "wat zijn die opschoningen?", then "ok, doe 1 tot en met 3 vóór de release".
 - Produced: the two constants removed, `notes/step-44-two-unused-constants.md`, row M7.15.
+
+## 2026-11-07: M7.15, the build when Strauss fails
+
+- Model: Claude Opus 5.5, Claude Code CLI
+- Asked: "ok, AC17 goedgekeurd, schrijf de tests", then "ok, bouw het".
+- Produced: the check in `tools/build.sh`, the tests, SPEC-008 amendment 5,
+  `notes/step-45-when-strauss-fails.md`.
+- The assistant's first falsification table was wrong, through a test folder that could not be
+  removed between quick runs; recorded in the note.

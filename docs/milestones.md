@@ -291,7 +291,7 @@ Open for Maurice, after measuring:
 | M7.12 | A run that failed is not `completed` (review finding 2, SPEC-005) | done: [`notes/step-37-a-run-that-fails.md`](../notes/step-37-a-run-that-fails.md) |
 | M7.13 | The AI label reads instance labels (review finding 3, SPEC-007) | done: [`notes/step-38-instance-labels.md`](../notes/step-38-instance-labels.md) |
 | M7.14 | The smaller findings 4 to 8 of the review | done: [`notes/step-39-a-refused-form.md`](../notes/step-39-a-refused-form.md), [`notes/step-40-a-refused-start.md`](../notes/step-40-a-refused-start.md), [`notes/step-41-a-damaged-list.md`](../notes/step-41-a-damaged-list.md), [`notes/step-42-invisible-characters.md`](../notes/step-42-invisible-characters.md), [`notes/step-43-the-signer-line.md`](../notes/step-43-the-signer-line.md) |
-| M7.15 | Clean-ups 1 to 3 of the review, before the release (Maurice, 2026-11-07): two unused constants, the build's silence when Strauss fails | constants done: [`notes/step-44-two-unused-constants.md`](../notes/step-44-two-unused-constants.md); the build proposed |
+| M7.15 | Clean-ups 1 to 3 of the review, before the release (Maurice, 2026-11-07): two unused constants, the build's silence when Strauss fails | done: [`notes/step-44-two-unused-constants.md`](../notes/step-44-two-unused-constants.md), [`notes/step-45-when-strauss-fails.md`](../notes/step-45-when-strauss-fails.md) |
 
 **M7.5 is done (2026-11-06):** `tools/build.sh` makes the zip, which holds `vendor-prefixed/` and no
 `vendor/` (ADR-0006; M7's row above says "prefixed `vendor/`"), and which is tested in a clean
