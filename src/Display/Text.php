@@ -6,15 +6,15 @@ namespace ContentCredentials\Display;
 
 /**
  * Makes untrusted text from a file visible before it is escaped (SPEC-003
- * AC8): C0 and C1 control characters, DEL, and the Unicode direction
- * controls (U+200E, U+200F, U+202A–U+202E, U+2066–U+2069) each become
- * U+FFFD, so nothing can hide or reorder what an administrator reads.
- * Bytes that are not UTF-8 are replaced first. Escaping stays the view's
- * job.
+ * AC8, amendment 4): every character of the Unicode categories Cc (control)
+ * and Cf (format) becomes U+FFFD, so nothing can hide or reorder what an
+ * administrator reads. Cf holds the direction controls, the zero-width
+ * characters, the byte order mark and the tag characters. Bytes that are not
+ * UTF-8 are replaced first. Escaping stays the view's job.
  */
 final class Text
 {
-    private const INVISIBLE = '/[\x{0000}-\x{001F}\x{007F}-\x{009F}\x{200E}\x{200F}\x{202A}-\x{202E}\x{2066}-\x{2069}]/u';
+    private const INVISIBLE = '/[\p{Cc}\p{Cf}]/u';
 
     public static function visible(string $untrusted): string
     {

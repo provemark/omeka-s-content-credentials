@@ -1009,3 +1009,11 @@ README are where the disclosure lives.
 - Then: "ok, draai ze opnieuw met het wachten erin". Produced: the falsifications of steps 39 and 40
   run again with the wait, and the AC13 test corrected after CI failed on the release zip, where the
   test had damaged a file the installed module does not read; both recorded in step 41.
+
+## 2026-11-07: M7.14, finding 7, invisible characters
+
+- Model: Claude Opus 5.5, Claude Code CLI
+- Asked: "ok, ga door met punt 7", "ok, amendment 4 goedgekeurd, schrijf de tests", then "ok, bouw het".
+- Produced: the pattern in `Text::visible()`, the tests, SPEC-003 amendment 4,
+  `notes/step-42-invisible-characters.md`.
+- The defect is in the assistant's own earlier work: the comment promised more than the list did.

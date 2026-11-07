@@ -88,8 +88,8 @@ none of the four above. Every block that has them ends with "Checked
 "Content Credentials", as are the column header and the filter's label.
 
 Every value in `{}` from a row passes through one function before output:
-C0 and C1 control characters and the Unicode direction controls (U+200E,
-U+200F, U+202A–U+202E, U+2066–U+2069) are each replaced by U+FFFD, and the
+every character of the Unicode categories Cc (control) and Cf (format) is
+replaced by U+FFFD *(amendment 4)*, and the
 result is escaped with the view's `escapeHtml`. The module's own strings
 pass through `translate` and then `escapeHtml`. Nothing from a row is
 output unescaped, and no URL from a row becomes an `href`.
@@ -148,11 +148,14 @@ output unescaped, and no URL from a row becomes an `href`.
     `onerror=` as markup, and the text appears escaped
     (`&lt;script&gt;alert(1)&lt;/script&gt;`)
 
-- **AC8 — control and direction characters are made visible** *(error path)*
-  - Given a signer name holding `\x00`, `\x1B`, `\u{85}` and `\u{202E}`
+- **AC8 — control, direction and other invisible characters are made visible** *(error path; amendment 4)*
+  - Given a signer name holding `\x00`, `\x1B`, `\u{85}`, `\u{202E}`, `\u{061C}`,
+    `\u{200B}`, `\u{200D}`, `\u{2060}`, `\u{FEFF}`, `\u{00AD}` or `\u{E0041}`
   - When the block is rendered
   - Then each of those characters is replaced by U+FFFD and none of them
     remains in the output
+  - And visible text, including letters outside Latin (`Ελλάδα`, `日本`, `مصر`),
+    is unchanged
 
 - **AC9 — the filter**
   - Given media with rows in several states
@@ -262,6 +265,16 @@ Deptrac gets a layer `Display` (no Omeka S, may use nothing but
   its label. A row whose `ai_statement` is not NULL, `generated` or `edited`
   is unreadable. Was: the headline alone, one filter. The "AI label (M6)"
   line under Out of scope is met by SPEC-007. Tested under SPEC-007.
+- **Amendment 4 (2026-11-07, approved by Maurice van Loon):** from finding 7
+  of the code review (`notes/step-35-the-code-review.md`): U+061C, U+200B,
+  U+200D, U+2060 and U+FEFF passed `Text::visible()`. Every character of the
+  Unicode categories Cc and Cf is now replaced by U+FFFD. Was: C0 and C1
+  control characters, DEL and the direction controls U+200E, U+200F,
+  U+202A–U+202E, U+2066–U+2069; AC8 named four of them. Known limits: ZWJ and
+  ZWNJ in names of scripts that use them show as U+FFFD; characters that look
+  blank but are letters (U+3164, U+2800) and the separators U+2028 and U+2029
+  are not Cf and stay; which characters are Cf follows the Unicode data of
+  PHP's PCRE (10.49 when measured).
 
 ## Traceability
 
@@ -278,7 +291,7 @@ least one test; every source file maps back to this spec. All tests carry
 | AC5 | `tests/Unit/ShowTheResultTest.php` :: AC5; `tests/Integration/ShowTheResultTest.php` :: AC5 | `Display\Presentation::REASONS` |
 | AC6 | `tests/Unit/ShowTheResultTest.php` :: AC6; `tests/Integration/ShowTheResultTest.php` :: AC6 | `Display\Presentation::of()`; `Omeka\VerdictReader::row()`, `rowFor()` |
 | AC7 | `tests/Integration/ShowTheResultTest.php` :: AC7 | `Omeka\ViewText::escape()`, `line()`; `Omeka\VerdictHtml`; `Omeka\StateColumn::renderHeader()` |
-| AC8 | `tests/Unit/ShowTheResultTest.php` :: AC8 (three tests); `tests/Integration/ShowTheResultTest.php` :: AC8 | `Display\Text::visible()` |
+| AC8 | `tests/Unit/ShowTheResultTest.php` :: AC8 (five tests); `tests/Integration/ShowTheResultTest.php` :: AC8 | `Display\Text::visible()` |
 | AC9 | `tests/Unit/ShowTheResultTest.php` :: AC10; `tests/Integration/ShowTheResultTest.php` :: AC9 | `Omeka\AdminDisplay::advancedSearch()`, `searchFilters()`, `searchQuery()`; `view/content-credentials/advanced-search.phtml`; `Display\FilterValue` |
 | AC10 | `tests/Unit/ShowTheResultTest.php` :: AC10; `tests/Integration/ShowTheResultTest.php` :: AC10 | `Display\FilterValue::parse()`; `Omeka\AdminDisplay::searchFilters()`, `searchQuery()` |
 | AC11 | `tests/Integration/ShowTheResultTest.php` :: AC11 | `Omeka\AdminDisplay::searchQuery()` (`Status::isAdminRequest()`); listeners on `Omeka\Controller\Admin\Media` only |

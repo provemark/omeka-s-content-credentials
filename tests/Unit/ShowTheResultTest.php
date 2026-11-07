@@ -108,7 +108,33 @@ it('AC8: control and direction characters become U+FFFD', function (string $char
 })->with([
     'NUL' => ["\x00"], 'ESC' => ["\x1B"], 'DEL' => ["\x7F"], 'NEL (C1)' => ["\u{85}"],
     'LRM' => ["\u{200E}"], 'RLM' => ["\u{200F}"], 'RLO' => ["\u{202E}"], 'LRE' => ["\u{202A}"], 'PDI' => ["\u{2069}"],
+    // Amendment 4: every Cc and Cf character.
+    'ALM' => ["\u{061C}"], 'ZWSP' => ["\u{200B}"], 'ZWNJ' => ["\u{200C}"], 'ZWJ' => ["\u{200D}"], 'WJ' => ["\u{2060}"],
+    'invisible plus' => ["\u{2064}"], 'BOM' => ["\u{FEFF}"], 'soft hyphen' => ["\u{00AD}"], 'Arabic number sign' => ["\u{0600}"],
+    'interlinear annotation' => ["\u{FFF9}"], 'tag A' => ["\u{E0041}"], 'cancel tag' => ["\u{E007F}"], 'language tag' => ["\u{E0001}"],
 ])->group('SPEC-003');
+
+it('AC8: visible text is unchanged', function (string $text): void {
+    expect(Text::visible($text))->toBe($text);
+})->with([
+    'Latin' => ['Google LLC'],
+    'accents' => ['Société Générale, Zürich'],
+    'Greek' => ['Ελλάδα'],
+    'Japanese' => ['日本'],
+    'Arabic' => ['مصر'],
+    'combining mark' => ["e\u{0301}"],
+    'an emoji' => ["\u{1F642}"],
+    'a space and a no-break space' => ["a b\u{00A0}c"],
+    'the replacement character' => ["\u{FFFD}"],
+    'a private use character, not Cc or Cf' => ["\u{E000}"],
+    'blank-looking letters, a known limit' => ["\u{3164}\u{2800}"],
+])->group('SPEC-003');
+
+it('AC8: hidden characters in a signer name show in the line', function (): void {
+    $lines = spec003Lines(Presentation::of(spec003Row(['signer_common_name' => "Google\u{200B} LLC\u{E0041}", 'signer_issuer' => "i\u{FEFF}"])));
+
+    expect($lines[0] ?? null)->toBe("Signed by Google\u{FFFD} LLC\u{FFFD} (i\u{FFFD})");
+})->group('SPEC-003');
 
 it('AC8: the row\'s values reach the lines made visible', function (): void {
     $lines = spec003Lines(Presentation::of(spec003Row(['signer_common_name' => "a\x00b\u{202E}c", 'signer_issuer' => 'i'])));
@@ -117,7 +143,11 @@ it('AC8: the row\'s values reach the lines made visible', function (): void {
 })->group('SPEC-003');
 
 it('AC8: bytes that are not UTF-8 never pass through as they are', function (): void {
-    expect(mb_check_encoding(Text::visible("a\xFFb"), 'UTF-8'))->toBeTrue();
+    $visible = Text::visible("a\xFFb");
+
+    expect(mb_check_encoding($visible, 'UTF-8'))->toBeTrue()
+        // Replaced, not dropped with the rest of the text.
+        ->and(str_starts_with($visible, 'a') && str_ends_with($visible, 'b') && strlen($visible) > 2)->toBeTrue();
 })->group('SPEC-003');
 
 it('AC10: a filter value is a state, nothing, or unknown', function (mixed $value, string|false|null $meaning): void {

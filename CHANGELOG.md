@@ -107,3 +107,6 @@ What follows is the record of how it was built.
 - Fixed: a bundled trust list that is not the file this release ships, such as an empty or damaged
   one, is no longer used: checks run without a trust list, and the configure page says so instead of
   answering with an error (SPEC-004 amendment 5). (2026-11-07)
+- Fixed: zero-width characters, the byte order mark, tag characters and every other Unicode control or
+  format character in text from a file now show as U+FFFD, so they cannot hide in a signer's name
+  (SPEC-003 amendment 4). (2026-11-07)
