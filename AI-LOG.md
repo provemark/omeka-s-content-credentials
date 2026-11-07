@@ -1006,3 +1006,6 @@ README are where the disclosure lives.
 - The defect is in the assistant's own earlier work; the empty list was found while measuring the
   review's finding. The assistant's falsification runs of steps 39 and 40 did not wait for the bind
   mount, which this step found; recorded as open in the note.
+- Then: "ok, draai ze opnieuw met het wachten erin". Produced: the falsifications of steps 39 and 40
+  run again with the wait, and the AC13 test corrected after CI failed on the release zip, where the
+  test had damaged a file the installed module does not read; both recorded in step 41.

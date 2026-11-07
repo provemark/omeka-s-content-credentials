@@ -79,11 +79,32 @@ AC8 test of SPEC-005 does).
   gets to `json_encode()`. It stays as the class's promise that settings never throw (as decided with
   the amendment's proposal).
 
-## Open: earlier falsifications
+## Earlier falsifications, run again with the wait (measured)
 
 Steps 39 and 40 changed `Module.php` and `TrustConfig.php` and ran integration tests at once, without
-this wait. Their results match what each change should break, and the built code was run first in
-each, but a result could have come from the change before. Not run again in this step.
+this wait, so a result could have come from the change before. At Maurice's request both were run
+again with it, on the code as it stands after this step:
+
+- **Step 39**, the same eleven changes on the same 12 tests: every one fails at least one test, as
+  before. Two counts differ: the choice saved before the refusal 11 (was 9), the choice never saved 6
+  (was 3).
+- **Step 40**, all ten changes on the 11 faster tests plus the AC8 test (12): every one fails at least
+  one test, as before. The two changes that first ran on the slower 19 tests now ran on these.
+
+So no conclusion of steps 39 and 40 changes. The counts that differ show the lag did touch the first
+runs.
+
+## CI: the test damaged a list the zip did not read (measured)
+
+The first push of this step failed in CI, in the three jobs that run the integration tests on the
+release zip (PHP 8.3, 8.4 and 8.5): "The container does not see C2PA-TRUST-LIST.pem as written." There
+the module is unzipped in the container, not mounted from the working tree, so the test damaged a file
+the module does not read. The wait made it fail instead of passing on an untouched list.
+
+The test now writes where the installed module reads: in the container when the file there is
+writable (the zip), else in the working tree (mounted read-only). `sh tools/env/release.sh
+--integration --php 8.3`: 144 passed (1118 assertions); in the development environment the AC13 tests
+pass too.
 
 ## Not measured
 

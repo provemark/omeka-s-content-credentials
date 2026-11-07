@@ -120,6 +120,22 @@ function spec004SeenInContainer(OmekaInstallation $omeka, string $name, string $
 }
 
 /**
+ * Writes the C2PA list where the module in the container reads it: in the
+ * working tree when the module is mounted from it read-only, in the
+ * container when the release zip was unzipped there (SPEC-008 AC8).
+ */
+function spec004WriteList(OmekaInstallation $omeka, string $content): void
+{
+    $path = '/var/www/html/modules/ContentCredentials/trust/'.BundledLists::C2PA;
+    if (trim($omeka->rootShell("if [ -w {$path} ]; then echo writable; fi")) === 'writable') {
+        $omeka->rootShell('printf %s '.base64_encode($content)." | base64 -d > {$path}");
+    } else {
+        file_put_contents(dirname(__DIR__, 2).'/trust/'.BundledLists::C2PA, $content);
+    }
+    spec004SeenInContainer($omeka, BundledLists::C2PA, hash('sha256', $content));
+}
+
+/**
  * The row's state, codes and trust, next to the CLI's state and codes.
  *
  * @return array{0: array{mixed, mixed, mixed}, 1: array{mixed, string}}
@@ -265,19 +281,16 @@ it('AC6: settings that cannot be built: checked without them', function (): void
 
 it('AC13: a bundled list that is not the shipped file: checked without settings', function (string $damaged): void {
     $omeka = spec004Omeka();
-    // The module is mounted from the working tree: the list is damaged there, and put back.
     $list = dirname(__DIR__, 2).'/trust/C2PA-TRUST-LIST.pem';
     $shipped = (string) file_get_contents($list);
     expect(hash('sha256', $shipped))->toBe(BundledLists::FILES[BundledLists::C2PA]);
     try {
-        file_put_contents($list, $damaged);
-        spec004SeenInContainer($omeka, BundledLists::C2PA, hash('sha256', $damaged));
+        spec004WriteList($omeka, $damaged);
         $response = $omeka->uploadThroughAdminForm(VerifierCli::fixture('fixture-signed.jpg'), 'fixture-signed.jpg', 'image/jpeg');
         $media = $omeka->mediaIdsOf(OmekaInstallation::itemIdFrom($response))[0] ?? 0;
         $page = $omeka->get(SPEC004_PAGE);
     } finally {
-        file_put_contents($list, $shipped);
-        spec004SeenInContainer($omeka, BundledLists::C2PA, BundledLists::FILES[BundledLists::C2PA]);
+        spec004WriteList($omeka, $shipped);
     }
     [$row, $cli] = spec004Compare($omeka, $media, 'fixture-signed.jpg', null);
 
@@ -299,12 +312,10 @@ it('AC13: refused custom text is not saved custom settings', function (): void {
     $list = dirname(__DIR__, 2).'/trust/C2PA-TRUST-LIST.pem';
     $shipped = (string) file_get_contents($list);
     try {
-        file_put_contents($list, '');
-        spec004SeenInContainer($omeka, BundledLists::C2PA, hash('sha256', ''));
+        spec004WriteList($omeka, '');
         $response = spec004Configure($omeka, ['content_credentials_digicert' => '1', 'content_credentials_custom_settings' => 'not json']);
     } finally {
-        file_put_contents($list, $shipped);
-        spec004SeenInContainer($omeka, BundledLists::C2PA, BundledLists::FILES[BundledLists::C2PA]);
+        spec004WriteList($omeka, $shipped);
     }
 
     expect($response->status)->toBe(200)
