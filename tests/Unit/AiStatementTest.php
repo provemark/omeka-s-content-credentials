@@ -386,3 +386,72 @@ it('AC14: the module reads only the public report', function (): void {
         expect((string) file_get_contents($path))->not->toMatch('/(?<!\$this)->\s*store\b/', $path);
     }
 })->group('SPEC-007');
+
+/**
+ * A copy of a report with every assertion's label replaced.
+ *
+ * @param  array<mixed>  $report
+ * @return array<mixed>
+ */
+function spec007Labelled(array $report, mixed $label): array
+{
+    $manifests = $report['manifests'];
+    assert(is_array($manifests));
+    foreach ($manifests as $name => $manifest) {
+        assert(is_array($manifest) && is_array($manifest['assertions']));
+        foreach (array_keys($manifest['assertions']) as $index) {
+            $assertion = $manifest['assertions'][$index];
+            assert(is_array($assertion));
+            $assertion['label'] = $label;
+            $manifest['assertions'][$index] = $assertion;
+        }
+        $manifests[$name] = $manifest;
+    }
+    $report['manifests'] = $manifests;
+
+    return $report;
+}
+
+it('AC15: an instance label reads as its base label', function (array $report, string $answer, string $label): void {
+    expect(AiStatement::read($report))->toBe($answer)
+        ->and(AiStatement::read(spec007Labelled($report, $label)))->toBe($answer);
+})->with([
+    'trained, active' => [spec007Report(['a' => ['types' => [SPEC007_TRAINED]]]), 'generated'],
+    'composite, active' => [spec007Report(['a' => ['types' => [SPEC007_COMPOSITE]]]), 'edited'],
+    'trained, down a parent chain' => [spec007Report([
+        'a' => ['edges' => [spec007Edge('b')]],
+        'b' => ['types' => [SPEC007_TRAINED]],
+    ]), 'generated'],
+    'trained, behind a component' => [spec007Report([
+        'a' => ['edges' => [spec007Edge('b', 'componentOf')]],
+        'b' => ['types' => [SPEC007_TRAINED]],
+    ]), 'edited'],
+])->with(['c2pa.actions__1', 'c2pa.actions.v2__1', 'c2pa.actions.v2__12'])->group('SPEC-007');
+
+it('AC15: an instance next to the base label is read too', function (): void {
+    $actions = [['action' => 'c2pa.edited', 'digitalSourceType' => SPEC007_TRAINED]];
+    $report = ['active_manifest' => 'a', 'manifests' => ['a' => ['assertions' => [
+        ['label' => 'c2pa.actions.v2', 'data' => ['actions' => [['action' => 'c2pa.created']]]],
+        ['label' => 'c2pa.actions.v2__1', 'data' => ['actions' => $actions]],
+    ]]]];
+
+    expect(AiStatement::read($report))->toBe('generated');
+})->group('SPEC-007');
+
+it('AC15: a label that only looks like an instance is not read', function (mixed $label): void {
+    $report = spec007Report(['a' => ['types' => [SPEC007_TRAINED, SPEC007_COMPOSITE]]]);
+
+    expect(AiStatement::read(spec007Labelled($report, $label)))->toBeNull();
+})->with([
+    'no number' => ['c2pa.actions__'],
+    'more after the number' => ['c2pa.actions__1a'],
+    'two instances' => ['c2pa.actions.v2__1__2'],
+    'a newline after' => ["c2pa.actions__1\n"],
+    'another version' => ['c2pa.actions.v3__1'],
+    'another case' => ['C2PA.ACTIONS__1'],
+    'another assertion' => ['c2pa.other__1'],
+    'an integer' => [1],
+    'null' => [null],
+    'an array' => [['c2pa.actions__1']],
+    'true' => [true],
+])->group('SPEC-007');

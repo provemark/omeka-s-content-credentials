@@ -968,3 +968,12 @@ README are where the disclosure lives.
   `tools/probes/ReleaseCheck/review-failed-run.php`.
 - The defect is in the assistant's own earlier work. The inconclusive measurement of a killed
   connection during the review was the assistant's too: it waited too briefly.
+
+## 2026-11-07: M7.13, instance labels in the AI label
+
+- Model: Claude Opus 5.5, Claude Code CLI
+- Asked: AC15 approved by Maurice, then "ga maar verder".
+- Produced: `AiStatement::isActions()`, the tests, SPEC-007 amendment 3,
+  `notes/step-38-instance-labels.md`, `tools/probes/ReleaseCheck/review-ai-instance-labels.php`.
+- The defect is in the assistant's own earlier work. The first run of the falsification script gave no
+  results, as it passed an option Pest does not know; it was corrected and run again.

@@ -97,3 +97,6 @@ What follows is the record of how it was built.
   job page, so that it no longer blocks every new run (SPEC-005 amendment 2). (2026-11-06)
 - Fixed: a run that fails, or that could not store every check, now ends as failed instead of
   completed, and its log says how many checks were lost (SPEC-005 amendment 3). (2026-11-06)
+- Fixed: the AI label also reads an actions assertion labelled with an instance number, such as
+  `c2pa.actions.v2__1`, as the verifier does. A stored verdict changes when it is checked again
+  (SPEC-007 amendment 3). (2026-11-07)

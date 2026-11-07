@@ -31,6 +31,8 @@ final class AiStatement
 
     private const ACTIONS_LABELS = ['c2pa.actions', 'c2pa.actions.v2'];
 
+    private const INSTANCE = '/__\d+\z/';
+
     private const PARENT = 'parentOf';
 
     private const TOLERATED = 'signingCredential.untrusted';
@@ -97,7 +99,7 @@ final class AiStatement
     {
         $types = [];
         foreach (self::listAt($manifest, 'assertions') as $assertion) {
-            if (! is_array($assertion) || ! in_array($assertion['label'] ?? null, self::ACTIONS_LABELS, true)) {
+            if (! is_array($assertion) || ! self::isActions($assertion['label'] ?? null)) {
                 continue;
             }
             $data = $assertion['data'] ?? null;
@@ -109,6 +111,12 @@ final class AiStatement
         }
 
         return $types;
+    }
+
+    /** Compared exactly, after a final `__n`: a second of the same label in one manifest. */
+    private static function isActions(mixed $label): bool
+    {
+        return is_string($label) && in_array(preg_replace(self::INSTANCE, '', $label), self::ACTIONS_LABELS, true);
     }
 
     /**

@@ -289,7 +289,7 @@ Open for Maurice, after measuring:
 | M7.10 | The probes' local paths made relative; the history is not rewritten | done: [`notes/step-34-readme-and-paths.md`](../notes/step-34-readme-and-paths.md) |
 | M7.11 | A run whose process has gone can be ended from the configure page (review finding 1, SPEC-005) | done: [`notes/step-36-ending-a-run-that-has-gone.md`](../notes/step-36-ending-a-run-that-has-gone.md) |
 | M7.12 | A run that failed is not `completed` (review finding 2, SPEC-005) | done: [`notes/step-37-a-run-that-fails.md`](../notes/step-37-a-run-that-fails.md) |
-| M7.13 | The AI label reads instance labels (review finding 3, SPEC-007) | proposed |
+| M7.13 | The AI label reads instance labels (review finding 3, SPEC-007) | done: [`notes/step-38-instance-labels.md`](../notes/step-38-instance-labels.md) |
 | M7.14 | The smaller findings 4 to 8 of the review | proposed |
 
 **M7.5 is done (2026-11-06):** `tools/build.sh` makes the zip, which holds `vendor-prefixed/` and no

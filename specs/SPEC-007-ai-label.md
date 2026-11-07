@@ -259,6 +259,17 @@ they say otherwise.
   - Then none of it reads the verifier's `->store` (`@internal`); the statement
     comes from `toArray()`
 
+- **AC15 — an instance label reads as its base label** *(added by amendment 3)*
+  - Given a report whose actions assertion is labelled `c2pa.actions__1` or
+    `c2pa.actions.v2__1`, with *trained* or *composite*, in the active manifest or
+    behind an ingredient that is followed
+  - When `AiStatement` reads it
+  - Then it answers as the same report without `__1` does
+  - And given labels `c2pa.actions__`, `c2pa.actions__1a`, `c2pa.actions.v2__1__2`,
+    `c2pa.actions__1` followed by a newline, `c2pa.actions.v3__1`, `C2PA.ACTIONS__1`,
+    or a label that is not a string, it answers null, with no exception and no
+    warning
+
 ## References
 
 - **Specification:**
@@ -396,6 +407,14 @@ criteria above keep their original words; these amendments say how they now read
    `/s/{slug}/media/{id}` of a labelled media item instead, which must not show the
    label, and for the REST API as written.
 
+Approved by Maurice van Loon on 2026-11-07:
+
+3. **AC15, instance labels.** From finding 3 of the code review
+   (`notes/step-35-the-code-review.md`). The rule compares an assertion's label
+   after removing a final `__n`, as the verifier does, and then exactly. Was: the
+   exact label only. Known limit: tested on constructed reports, as AC2 to AC6 are;
+   no real file with such a label was found in 802 files.
+
 ## Traceability
 
 Every acceptance criterion maps to at least one test; every source file maps
@@ -418,3 +437,4 @@ back to this spec. All tests carry `->group('SPEC-007')`. The record is
 | AC12 | tests/Integration/AiLabelTest.php :: AC12: a filter value that is not a label matches nothing; tests/Unit/AiStatementTest.php :: AC12: what a filter value means | src/Display/AiFilterValue.php :: parse() |
 | AC13 | tests/Integration/AiLabelTest.php :: AC13: only the admin side | src/Omeka/AdminDisplay.php :: searchQuery() (`isAdminRequest()`) |
 | AC14 | tests/Unit/AiStatementTest.php :: AC14: the module reads only the public report | all of src/; src/Check/AiStatement.php reads `toArray()` only |
+| AC15 | tests/Unit/AiStatementTest.php :: AC15: an instance label reads as its base label; AC15: an instance next to the base label is read too; AC15: a label that only looks like an instance is not read | src/Check/AiStatement.php :: typesIn(), isActions() |
