@@ -1042,3 +1042,12 @@ README are where the disclosure lives.
   `notes/step-45-when-strauss-fails.md`.
 - The assistant's first falsification table was wrong, through a test folder that could not be
   removed between quick runs; recorded in the note.
+
+## 2026-11-07: M7.16, the check before going public, and a read-only CI
+
+- Model: Claude Opus 5.5, Claude Code CLI
+- Asked: "ok, begin met de controle vóór openbaarmaking", then "ok, doe punt 3 en 4".
+- Produced: the check (read only) in `notes/step-46-before-going-public.md`, and in
+  `.github/workflows/ci.yml` a read-only token and actions pinned to commits.
+- Decided by Maurice: which points to do. Going public, and turning on private vulnerability
+  reporting, are still his.
