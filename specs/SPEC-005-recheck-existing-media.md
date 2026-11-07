@@ -220,6 +220,16 @@ writes, and nothing read from a file is shown.
   - A stopped run stays `stopped` (AC5), even with checks not stored: their lines are in the log,
     without the count
 
+- **AC16 — a refused start or end does not say the module was configured** *(added by amendment 4; error path)*
+  - Given a run in progress, a kind of run that does not exist or is not a string,
+    or a value for ending a run that AC14 refuses
+  - When the configure page is submitted with it
+  - Then the answer is the configure page itself (200), with the module's reason
+    and Omeka's "There was a problem during configuration", and without "The
+    module was successfully configured"; no job is dispatched, and no job,
+    verdict, evidence or setting changes
+  - And the form shows the stored settings
+
 ## References
 
 - Specification: the Omeka S developer documentation (`Jobs`, under
@@ -346,6 +356,14 @@ Each with my recommendation and the trade-off. Maurice decides.
   status `completed`. Known limit: such a run's log holds one line per media item, measured 314 KB
   over 4 048 media, which says exactly which ones.
 
+- **Amendment 4 (2026-11-07, approved by Maurice van Loon):** adds AC16, from finding 5 of the code
+  review (`notes/step-35-the-code-review.md`), and the same defect in AC14's path. Was: a refused
+  start or end returned true, so Omeka redirected and reported success. The tests of AC8, AC9 and AC14
+  that expect 302 now expect 200. A start whose job fails at once (AC8) is answered the same way, with
+  "The run could not start; see its job page.", though a job was dispatched (extended with Maurice's
+  approval the same day, after `composer check` found it). A start or end that succeeds still says "The module was successfully
+  configured", which is Omeka's own message.
+
 ## Traceability
 
 Filled when status becomes `implemented`.
@@ -367,3 +385,4 @@ Filled when status becomes `implemented`.
 | AC13 | `tests/Unit/RecheckTest.php` :: AC13 | `Check\MediaCheck` via `Check\Recheck::run($total, $phpVersion)` |
 | AC14 | `tests/Integration/RecheckTest.php` :: AC14 (5 tests); `tests/Unit/RecheckTest.php` :: AC14 (2 tests) | `Omeka\RecheckRuns::end()`, `Display\RecheckSection::ENDABLE`, `Module::handleConfigForm()` |
 | AC15 | `tests/Integration/RecheckTest.php` :: AC15 (4 tests); `tests/Unit/RecheckTest.php` :: AC15 (3 tests) | `Check\RunFailed`, `Check\Recheck::notStored()`, `Check\Recheck::notStoredLine()`, `Omeka\RecheckJob::perform()` |
+| AC16 | `tests/Integration/RecheckTest.php` :: AC16 (4 tests); AC8; AC9; AC14 | `Module::handleConfigForm()` |

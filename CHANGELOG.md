@@ -102,3 +102,5 @@ What follows is the record of how it was built.
   (SPEC-007 amendment 3). (2026-11-07)
 - Fixed: a refused settings form keeps the DigiCert choice that was submitted with it, so correcting
   the text and saving no longer loses that choice (SPEC-004 amendment 4). (2026-11-07)
+- Fixed: a refused start or end of a run stays on the configure page and no longer also says that the
+  module was successfully configured (SPEC-005 amendment 4). (2026-11-07)

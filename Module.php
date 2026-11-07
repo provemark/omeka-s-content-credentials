@@ -131,11 +131,13 @@ final class Module extends AbstractModule
             $problem = RecheckRuns::create($this->getServiceLocator())->end($fields[RecheckSection::END_FIELD]);
             if ($problem === null) {
                 (new Messenger)->addSuccess('The run was marked as ended.');
-            } else {
-                (new Messenger)->addError($problem);
-            }
 
-            return true;
+                return true;
+            }
+            (new Messenger)->addError($problem);
+
+            // True would make Omeka report success on a refusal (SPEC-005 AC16).
+            return false;
         }
         // A start button: start a run, and save nothing (SPEC-005 AC11).
         $start = $fields['content_credentials_recheck'] ?? null;
@@ -143,11 +145,12 @@ final class Module extends AbstractModule
             $problem = RecheckRuns::create($this->getServiceLocator())->start(is_string($start) ? $start : '');
             if ($problem === null) {
                 (new Messenger)->addSuccess("Checking existing media has started. Its status is on this module's configure page.");
-            } else {
-                (new Messenger)->addError($problem);
-            }
 
-            return true;
+                return true;
+            }
+            (new Messenger)->addError($problem);
+
+            return false;
         }
         $refusal = TrustConfig::create($this->getServiceLocator(), __DIR__)->save($fields);
         if ($refusal === null) {

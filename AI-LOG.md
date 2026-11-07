@@ -985,3 +985,13 @@ README are where the disclosure lives.
 - Produced: `TrustConfig::submittedDigicert()`, the changes to `form()` and `Module`, the tests, SPEC-004
   amendment 4, `notes/step-39-a-refused-form.md`.
 - The defect is in the assistant's own earlier work.
+
+## 2026-11-07: M7.14, finding 5, a refused start or end
+
+- Model: Claude Opus 5.5, Claude Code CLI
+- Asked: "ok, ga door met punt 5", "ok, AC16 goedgekeurd met ja op beide, schrijf de tests", then "ok,
+  bouw het".
+- Produced: the return values in `Module::handleConfigForm()`, the tests, SPEC-005 amendment 4,
+  `notes/step-40-a-refused-start.md`.
+- The defect is in the assistant's own earlier work, and the review, also the assistant's, missed the
+  same defect in the refused end.

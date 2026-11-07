@@ -178,6 +178,7 @@ and committer of every pushed commit.
 | M7.12 | [`notes/step-37-a-run-that-fails.md`](notes/step-37-a-run-that-fails.md): SPEC-005 amendment 3, AC15: a run that fails, or with a check not stored, is `error` with only the module's own lines; a stop stays `stopped`; 10 falsifications; a killed connection measured: the run goes on and says what it lost |
 | M7.13 | [`notes/step-38-instance-labels.md`](notes/step-38-instance-labels.md): SPEC-007 amendment 3, AC15: a final `__n` is removed before the exact compare, as the verifier does; 13 falsifications, of which two change no answer; no real file of 802 has such a label |
 | M7.14 | [`notes/step-39-a-refused-form.md`](notes/step-39-a-refused-form.md): finding 4, SPEC-004 amendment 4, AC12: a refused form gives back the DigiCert choice as well as the text; 11 falsifications |
+| M7.14 | [`notes/step-40-a-refused-start.md`](notes/step-40-a-refused-start.md): finding 5, SPEC-005 amendment 4, AC16: a refused start or end answers with the configure page and no success message; the same defect in AC14's path; 10 falsifications |
 
 ## To measure before a spec rests on it
 

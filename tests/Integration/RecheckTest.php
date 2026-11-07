@@ -323,8 +323,12 @@ it('AC8: a run that cannot start is shown as failed', function (): void {
     $omeka->rootShell("cp {$config} /tmp/spec005-local.config.php && sed -i \"s#'phpcli_path' => null#'phpcli_path' => '/nonexistent/php'#\" {$config}");
     // Apache's opcache sees a changed file only after revalidate_freq (2 s).
     sleep(3);
+    $latest = spec005Latest($omeka);
     try {
-        $id = spec005Start($omeka);
+        // A job is dispatched, and fails at once: answered as a refusal (AC16, amendment 4).
+        $response = spec005Configure($omeka, [SPEC005_START => 'all']);
+        $messages = OmekaInstallation::messages($response->body);
+        $id = spec005Latest($omeka);
         $status = spec005Wait($omeka, $id, 10);
         $page = spec005Section($omeka->get(SPEC005_PAGE)->body);
     } finally {
@@ -334,7 +338,12 @@ it('AC8: a run that cannot start is shown as failed', function (): void {
     $rows = spec005Rows($omeka);
     $upload = spec005Upload($omeka, 'fixture-signed.jpg');
 
-    expect($status)->toBe('error')
+    expect($id)->toBeGreaterThan($latest)
+        ->and($response->status)->toBe(200)
+        ->and($messages)->toContain('The run could not start; see its job page.')
+        ->and($messages)->toContain('There was a problem during configuration')
+        ->and($messages)->not->toContain('The module was successfully configured')
+        ->and($status)->toBe('error')
         ->and($page)->toContain('Latest run: Failed')
         ->and($page)->toContain('href="/admin/job/'.$id.'"')
         ->and($page)->toContain('name="'.SPEC005_START.'"')
@@ -350,7 +359,7 @@ it('AC9: one run at a time', function (): void {
 
     $page = spec005Section($omeka->get(SPEC005_PAGE)->body);
     $second = spec005Configure($omeka, [SPEC005_START => 'all']);
-    $messages = OmekaInstallation::messages($omeka->get('/admin/module')->body);
+    $messages = OmekaInstallation::messages($second->body);
     $latest = spec005Latest($omeka);
     spec005Stop($omeka, $id);
     spec005Wait($omeka, $id);
@@ -358,7 +367,7 @@ it('AC9: one run at a time', function (): void {
 
     expect($page)->toMatch('#Latest run: (Starting|In progress)#')
         ->and($page)->not->toContain('name="'.SPEC005_START.'"')
-        ->and($second->status)->toBe(302)
+        ->and($second->status)->toBe(200)
         ->and($latest)->toBe($id)
         ->and($messages)->toContain('A run is already in progress; no new run was started.');
 })->group('SPEC-005');
@@ -507,12 +516,12 @@ it('AC14: a run in any other status stays as it is, and the page says so', funct
     $before = spec005Untouched($omeka);
 
     $response = spec005Configure($omeka, [SPEC005_END => (string) $id]);
-    $messages = OmekaInstallation::messages($omeka->get('/admin/module')->body);
+    $messages = OmekaInstallation::messages($response->body);
     $row = $omeka->sql("SELECT status FROM job WHERE id = {$id}");
     $sameEnd = $omeka->sql("SELECT IFNULL(ended, '-'), IFNULL(log, '-') FROM job WHERE id = {$id}");
     $omeka->sql("UPDATE job SET status = 'stopped', ended = NOW() WHERE id = {$id}");
 
-    expect($response->status)->toBe(302)
+    expect($response->status)->toBe(200)
         ->and($messages)->toContain('No run was marked as ended.')
         ->and($row)->toBe($status)
         ->and($sameEnd)->toBe($ended)
@@ -527,8 +536,7 @@ it('AC14: a job of another class, or a value that is no job, is refused', functi
     try {
         $messages = [];
         foreach ([(string) $other, 'not-a-number', '0', '999999999', ''] as $value) {
-            spec005Configure($omeka, [SPEC005_END => $value]);
-            $messages[] = OmekaInstallation::messages($omeka->get('/admin/module')->body);
+            $messages[] = OmekaInstallation::messages(spec005Configure($omeka, [SPEC005_END => $value])->body);
         }
         $row = $omeka->sql("SELECT status, ended IS NULL FROM job WHERE id = {$other}");
     } finally {
@@ -671,3 +679,79 @@ it('AC15: an unreadable original still leaves the run completed', function (): v
         ->and($row)->toBe('error')
         ->and($log)->not->toContain('The run failed.');
 })->group('SPEC-005');
+
+/** How many jobs there are, the newest, and how many of them are going on. */
+function spec005Jobs(OmekaInstallation $omeka): string
+{
+    return $omeka->sql("SELECT COUNT(*), IFNULL(MAX(id), 0), SUM(status = 'in_progress'), SUM(ended IS NULL) FROM job");
+}
+
+/**
+ * What every refusal of AC16 looks like, and what it must leave alone.
+ *
+ * @param  array<string, string>  $fields
+ */
+function spec005RefusedWith(OmekaInstallation $omeka, array $fields, string $reason): void
+{
+    $jobs = spec005Jobs($omeka);
+    $before = spec005Untouched($omeka);
+
+    $response = spec005Configure($omeka, $fields);
+    $messages = OmekaInstallation::messages($response->body);
+
+    expect($response->status)->toBe(200)
+        ->and($messages)->toContain($reason)
+        ->and($messages)->toContain('There was a problem during configuration')
+        ->and($messages)->not->toContain('The module was successfully configured')
+        // The configure page itself, not another page that kept the messages.
+        ->and($response->body)->toContain('name="content_credentials_custom_settings"')
+        ->and(spec005Jobs($omeka))->toBe($jobs)
+        ->and(spec005Untouched($omeka))->toBe($before)
+        // No success waits for the next page either.
+        ->and(OmekaInstallation::messages($omeka->get('/admin/module')->body))->not->toContain('The module was successfully configured');
+}
+
+it('AC16: a start refused while a run is in progress', function (): void {
+    $omeka = spec005Omeka();
+    $id = spec005RunIn($omeka, 'in_progress');
+
+    try {
+        spec005RefusedWith($omeka, [SPEC005_START => 'all'], 'A run is already in progress; no new run was started.');
+    } finally {
+        $omeka->sql("UPDATE job SET status = 'stopped', ended = NOW() WHERE id = {$id}");
+    }
+})->group('SPEC-005');
+
+it('AC16: a kind of run that does not exist or is not a string', function (string $name, string $value): void {
+    spec005RefusedWith(spec005Omeka(), [$name => $value], 'No run was started: unknown kind of run.');
+})->with([
+    'another word' => [SPEC005_START, 'nothing'],
+    'empty' => [SPEC005_START, ''],
+    'an array' => [SPEC005_START.'[]', 'all'],
+])->group('SPEC-005');
+
+it('AC16: an end that AC14 refuses', function (string $name, string $value): void {
+    spec005RefusedWith(spec005Omeka(), [$name => $value], 'No run was marked as ended.');
+})->with([
+    'not a number' => [SPEC005_END, 'not-a-number'],
+    'no such job' => [SPEC005_END, '999999999'],
+    'empty' => [SPEC005_END, ''],
+    'an array' => [SPEC005_END.'[]', '1'],
+])->group('SPEC-005');
+
+it('AC16: a refusal shows the stored settings, not those submitted', function (string $name, string $value): void {
+    $omeka = spec005Omeka();
+    $omeka->sql("INSERT INTO setting (id, value) VALUES ('content_credentials_digicert', 'false')");
+
+    $response = spec005Configure($omeka, [$name => $value, 'content_credentials_digicert' => '1', 'content_credentials_custom_settings' => 'submitted text']);
+    preg_match('#<input type="checkbox" name="content_credentials_digicert"[^>]*>#', $response->body, $box);
+
+    expect($response->status)->toBe(200)
+        ->and($box[0] ?? '')->toContain('type="checkbox"')
+        ->and($box[0] ?? '')->not->toContain(' checked')
+        ->and($response->body)->not->toContain('submitted text')
+        ->and($omeka->sql("SELECT value FROM setting WHERE id = 'content_credentials_digicert'"))->toBe('false');
+})->with([
+    'a start' => [SPEC005_START, 'nothing'],
+    'an end' => [SPEC005_END, 'not-a-number'],
+])->group('SPEC-005');
