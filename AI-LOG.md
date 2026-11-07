@@ -977,3 +977,11 @@ README are where the disclosure lives.
   `notes/step-38-instance-labels.md`, `tools/probes/ReleaseCheck/review-ai-instance-labels.php`.
 - The defect is in the assistant's own earlier work. The first run of the falsification script gave no
   results, as it passed an option Pest does not know; it was corrected and run again.
+
+## 2026-11-07: M7.14, finding 4, the DigiCert choice on a refused form
+
+- Model: Claude Opus 5.5, Claude Code CLI
+- Asked: "ok, begin met punt 4", "ok, AC12 goedgekeurd, schrijf de tests", then "ok, bouw het".
+- Produced: `TrustConfig::submittedDigicert()`, the changes to `form()` and `Module`, the tests, SPEC-004
+  amendment 4, `notes/step-39-a-refused-form.md`.
+- The defect is in the assistant's own earlier work.

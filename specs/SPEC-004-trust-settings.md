@@ -222,6 +222,15 @@ never logged.
     `/admin/module/configure?id=ContentCredentials` in the module's row,
     and the site administrator sees the module but no such link
 
+- **AC12 — a refused form gives back the DigiCert choice too** *(added by amendment 4; error path)*
+  - Given a saved DigiCert choice, either way
+  - When the configure page is submitted with custom settings that are refused,
+    and the opposite DigiCert choice
+  - Then the stored choice is unchanged; and the checkbox shows the submitted
+    choice, so that saving the page as shown saves that choice
+  - And given a submitted value other than `1` (`0`, missing, an array), the
+    checkbox is unchecked, as `save()` reads it, with no exception and no warning
+
 ## References
 
 - Specification: C2PA Technical Specification 2.4, §14.4 (trust lists:
@@ -319,6 +328,11 @@ recorded in the Amendments sections of SPEC-002 and SPEC-003.
   The criteria below the Scope keep the old values as written.
   Record: `notes/step-32-refreshing-the-lists.md`.
 
+- **Amendment 4 (2026-11-07, approved by Maurice van Loon):** adds AC12, from
+  finding 4 of the code review (`notes/step-35-the-code-review.md`). Was: AC5 gave
+  back only the text, and the checkbox showed the stored choice. The warning about
+  saved custom settings that cannot be used still describes what is saved.
+
 ## Open questions
 
 - **The table change.** Changing the `CREATE TABLE` before the first
@@ -368,3 +382,4 @@ least one test; every source file maps back to this spec. All tests carry
 | AC9 | `tests/Unit/TrustSettingsTest.php` :: AC9 (two tests); `tests/Integration/TrustSettingsTest.php` :: AC9 | `Trust\BundledLists::isStale()`, `STALE_AFTER_DAYS`; `Display\SettingsPage::html()` (`$stale`) |
 | AC10 | `tests/Integration/TrustSettingsTest.php` :: AC10 | `Module::uninstall()` |
 | AC11 | `tests/Integration/TrustSettingsTest.php` :: AC11 | `config/module.ini` (`configurable`) |
+| AC12 | `tests/Integration/TrustSettingsTest.php` :: AC12 (two tests) | `Omeka\TrustConfig::submittedDigicert()`, `form()`, `save()`; `Module::handleConfigForm()`, `getConfigForm()`, `$refusedDigicert` |

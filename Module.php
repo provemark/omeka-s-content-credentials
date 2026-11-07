@@ -57,6 +57,9 @@ final class Module extends AbstractModule
     /** Custom settings submitted and refused in this request (SPEC-004 AC5). */
     private ?string $refused = null;
 
+    /** The DigiCert choice submitted with them (SPEC-004 AC12). */
+    private ?bool $refusedDigicert = null;
+
     /**
      * @return array<mixed>
      */
@@ -114,7 +117,7 @@ final class Module extends AbstractModule
 
     public function getConfigForm(PhpRenderer $renderer): string
     {
-        return TrustConfig::create($this->getServiceLocator(), __DIR__)->form($renderer, $this->refused)
+        return TrustConfig::create($this->getServiceLocator(), __DIR__)->form($renderer, $this->refused, $this->refusedDigicert)
             .RecheckRuns::create($this->getServiceLocator())->html($renderer);
     }
 
@@ -152,6 +155,7 @@ final class Module extends AbstractModule
         }
         $custom = $fields['content_credentials_custom_settings'] ?? '';
         $this->refused = is_string($custom) ? $custom : '';
+        $this->refusedDigicert = TrustConfig::submittedDigicert($fields);
         // Plain text: Omeka's messages() escapes it (step 15).
         (new Messenger)->addError('These trust settings were not saved: '.$refusal);
 

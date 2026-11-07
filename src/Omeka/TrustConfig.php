@@ -62,10 +62,11 @@ final class TrustConfig
     }
 
     /**
-     * The configure page; $refused is text the administrator just
-     * submitted and that was not saved (AC5), shown instead of the stored.
+     * The configure page; $refused and $refusedDigicert are what the
+     * administrator just submitted and was not saved (AC5, AC12), shown
+     * instead of the stored.
      */
-    public function form(PhpRenderer $view, ?string $refused): string
+    public function form(PhpRenderer $view, ?string $refused, ?bool $refusedDigicert): string
     {
         $text = new ViewText($view);
         $custom = $this->custom();
@@ -73,11 +74,21 @@ final class TrustConfig
         return SettingsPage::html(
             static fn (string $source): string => $text->translate($source),
             static fn (string $value): string => $text->escape($value),
-            $this->digicert(),
+            $refusedDigicert ?? $this->digicert(),
             $refused ?? $custom,
             BundledLists::isStale(new DateTimeImmutable('now', new DateTimeZone('UTC'))),
             $this->built()->problem,
         );
+    }
+
+    /**
+     * The checkbox's value in a submitted form: on only as the page sends it.
+     *
+     * @param  array<mixed>  $post
+     */
+    public static function submittedDigicert(array $post): bool
+    {
+        return ($post[SettingsPage::DIGICERT] ?? null) === '1';
     }
 
     /**
@@ -95,7 +106,7 @@ final class TrustConfig
         if ($refusal !== null) {
             return $refusal;
         }
-        $this->settings->set(SettingsPage::DIGICERT, ($post[SettingsPage::DIGICERT] ?? null) === '1');
+        $this->settings->set(SettingsPage::DIGICERT, self::submittedDigicert($post));
         $this->settings->set(SettingsPage::CUSTOM, trim($custom) === '' ? null : $custom);
 
         return null;

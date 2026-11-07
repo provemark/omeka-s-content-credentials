@@ -94,6 +94,14 @@ function spec004Textarea(string $html): ?string
         : html_entity_decode(substr($html, $start + 1, $end - $start - 1), ENT_QUOTES | ENT_HTML5, 'UTF-8');
 }
 
+/** Whether the DigiCert checkbox on a page is checked. */
+function spec004DigicertChecked(string $html): bool
+{
+    expect(preg_match('#<input type="checkbox" name="content_credentials_digicert"[^>]*>#', $html, $box))->toBe(1);
+
+    return str_contains($box[0] ?? '', ' checked');
+}
+
 /**
  * The row's state, codes and trust, next to the CLI's state and codes.
  *
@@ -177,6 +185,49 @@ it('AC5: invalid custom settings are refused and given back', function (string $
     'not JSON' => ['not json <b>', 'JSON'],
     'allowed_list at the top' => ['{"trust":{"allowed_list":"<i>x</i>"}}', 'allowed_list'],
     'over 1 MiB' => [str_repeat(' ', 1048577), 'larger than 1 MiB'],
+])->group('SPEC-004');
+
+it('AC12: a refused form gives back the DigiCert choice', function (bool $saved, string $submitted, bool $shown): void {
+    $omeka = spec004Omeka();
+    spec004Store($omeka, 'content_credentials_digicert', $saved);
+    $stored = spec004Setting($omeka, 'content_credentials_digicert');
+
+    $response = spec004Configure($omeka, ['content_credentials_digicert' => $submitted, 'content_credentials_custom_settings' => 'not json']);
+
+    expect($response->status)->toBe(200)
+        ->and(spec004DigicertChecked($response->body))->toBe($shown)
+        ->and(spec004Setting($omeka, 'content_credentials_digicert'))->toBe($stored)
+        ->and(spec004Textarea($response->body))->toBe('not json')
+        // Only the refused request gives it back; a new page shows what is stored.
+        ->and(spec004DigicertChecked($omeka->get(SPEC004_PAGE)->body))->toBe($saved);
+
+    // The page saved as shown, with the text corrected, saves the submitted choice.
+    expect(spec004Configure($omeka, ['content_credentials_digicert' => $shown ? '1' : '0', 'content_credentials_custom_settings' => ''])->status)->toBe(302)
+        ->and(spec004Setting($omeka, 'content_credentials_digicert'))->toBe($shown ? 'true' : 'false')
+        ->and(spec004DigicertChecked($omeka->get(SPEC004_PAGE)->body))->toBe($shown);
+})->with([
+    'on, turned off' => [true, '0', false],
+    'off, turned on' => [false, '1', true],
+])->group('SPEC-004');
+
+it('AC12: a submitted value other than 1 is unchecked', function (string $name, string $value): void {
+    $omeka = spec004Omeka();
+    spec004Store($omeka, 'content_credentials_digicert', true);
+
+    $response = spec004Configure($omeka, [$name => $value, 'content_credentials_custom_settings' => 'not json']);
+
+    expect($response->status)->toBe(200)
+        ->and(spec004DigicertChecked($response->body))->toBeFalse()
+        ->and(spec004Setting($omeka, 'content_credentials_digicert'))->toBe('true')
+        ->and($response->body)->not->toContain('Warning:')
+        ->and($response->body)->not->toContain('Array to string');
+})->with([
+    'missing' => ['another_field', '1'],
+    'an array' => ['content_credentials_digicert[]', '1'],
+    'zero' => ['content_credentials_digicert', '0'],
+    'on' => ['content_credentials_digicert', 'on'],
+    'one with a space' => ['content_credentials_digicert', '1 '],
+    'empty' => ['content_credentials_digicert', ''],
 ])->group('SPEC-004');
 
 it('AC6: settings that cannot be built: checked without them', function (): void {

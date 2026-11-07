@@ -100,3 +100,5 @@ What follows is the record of how it was built.
 - Fixed: the AI label also reads an actions assertion labelled with an instance number, such as
   `c2pa.actions.v2__1`, as the verifier does. A stored verdict changes when it is checked again
   (SPEC-007 amendment 3). (2026-11-07)
+- Fixed: a refused settings form keeps the DigiCert choice that was submitted with it, so correcting
+  the text and saving no longer loses that choice (SPEC-004 amendment 4). (2026-11-07)
