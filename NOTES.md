@@ -128,7 +128,15 @@ and committer of every pushed commit.
 
 **Decided 2026-11-07 (Maurice):** the repository stays
 `provemark/omeka-s-content-credentials` when it goes public; it does not
-wait for a new name. Going public itself is still his go.
+wait for a new name.
+
+**Public since 2026-11-07,** at Maurice's go ("doe punt 3 en 2"), after the
+check of step 46 and his consent that his name and quoted instructions become
+public. With it: private vulnerability reporting on, Projects off, topics
+`omeka-s`, `omeka-s-module`, `c2pa`, `content-credentials`. Measured: `gh api`
+shows `public` and reporting `true`; every external link in `README.md`,
+`SECURITY.md` and `trust/README.md` answers 200 without logging in.
+Registration on omeka.org is still his go.
 
 ## Index of steps
 

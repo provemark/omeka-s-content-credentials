@@ -1065,3 +1065,9 @@ README are where the disclosure lives.
 - Asked: "ok, het blijft provemark".
 - Recorded in `NOTES.md` (decision 6) by the assistant; the decision is Maurice's. Also added to
   step 46: the CI log after the change.
+
+## 2026-11-07: the repository goes public
+
+- Asked: "ok, akkoord met punt 1, doe punt 3 en 2" (Maurice's name and quotes public; topics and
+  Projects off; public with private vulnerability reporting).
+- Done by the assistant with `gh`, at that go; recorded in `NOTES.md`, decision 6.

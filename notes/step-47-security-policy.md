@@ -11,7 +11,7 @@ there; this module only shows that verdict.
 It names GitHub's private vulnerability reporting. That is **off** on this repository and on the
 three sister repositories (measured: `gh api repos/provemark/<repo>/private-vulnerability-reporting`
 gives `false` for each). Turning it on is a repository setting, left to Maurice with going public;
-until then the policy also points to the contact on the repository's profile, as the verifier's
+(Turned on on 2026-11-07, when the repository went public: see `NOTES.md`, decision 6.) Until then the policy also pointed to the contact on the repository's profile, as the verifier's
 does.
 
 `SECURITY.md` is not in the release zip: the zip's files are fixed by SPEC-008, and GitHub shows the
