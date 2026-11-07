@@ -995,3 +995,14 @@ README are where the disclosure lives.
   `notes/step-40-a-refused-start.md`.
 - The defect is in the assistant's own earlier work, and the review, also the assistant's, missed the
   same defect in the refused end.
+
+## 2026-11-07: M7.14, finding 6, a bundled list that is not the shipped file
+
+- Model: Claude Opus 5.5, Claude Code CLI
+- Asked: "ok, ga door met punt 6", "ok, AC13 goedgekeurd met ja op beide, schrijf de tests", then "ok,
+  bouw het".
+- Produced: the hash check in `TrustChoice`, the warning choice in `SettingsPage` and `TrustConfig`,
+  the tests, SPEC-004 amendment 5, `notes/step-41-a-damaged-list.md`.
+- The defect is in the assistant's own earlier work; the empty list was found while measuring the
+  review's finding. The assistant's falsification runs of steps 39 and 40 did not wait for the bind
+  mount, which this step found; recorded as open in the note.

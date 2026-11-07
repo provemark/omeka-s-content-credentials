@@ -45,7 +45,7 @@ function spec004Lines(Presentation $presentation): array
 }
 
 /** The configure page's markup with plain-PHP translate and escape. */
-function spec004Page(bool $digicert = true, string $custom = '', bool $stale = false, ?string $problem = null): string
+function spec004Page(bool $digicert = true, string $custom = '', bool $stale = false, ?string $problem = null, bool $customSaved = false): string
 {
     return SettingsPage::html(
         static fn (string $s): string => $s,
@@ -54,7 +54,41 @@ function spec004Page(bool $digicert = true, string $custom = '', bool $stale = f
         $custom,
         $stale,
         $problem,
+        customSaved: $customSaved,
     );
+}
+
+/**
+ * A copy of the bundled files in a new directory, with $file's content
+ * replaced by what $damage makes of it.
+ *
+ * @param  Closure(string): string  $damage
+ */
+function spec004Damaged(string $file, Closure $damage): string
+{
+    $directory = sys_get_temp_dir().'/spec004-'.bin2hex(random_bytes(6));
+    mkdir($directory);
+    foreach (array_keys(BundledLists::FILES) as $name) {
+        $content = (string) file_get_contents(SPEC004_TRUST_DIR.'/'.$name);
+        file_put_contents($directory.'/'.$name, $name === $file ? $damage($content) : $content);
+    }
+
+    return $directory;
+}
+
+function spec004Remove(string $directory): void
+{
+    array_map('unlink', glob($directory.'/*') ?: []);
+    rmdir($directory);
+}
+
+/** The content with one base64 character inside its first certificate changed. */
+function spec004OneByte(string $pem): string
+{
+    $at = (int) strpos($pem, '-----BEGIN CERTIFICATE-----') + 60;
+    $pem[$at] = $pem[$at] === 'A' ? 'B' : 'A';
+
+    return $pem;
 }
 
 it('AC1: the bundled files are exactly what the record says', function (): void {
@@ -177,7 +211,7 @@ it('AC6: an error before verification has no trust source', function (): void {
 })->group('SPEC-004');
 
 it('AC6: the page warns when the saved custom settings cannot be used', function (): void {
-    $page = spec004Page(custom: 'not json', problem: 'Syntax <error>');
+    $page = spec004Page(custom: 'not json', problem: 'Syntax <error>', customSaved: true);
 
     expect($page)->toContain('The saved custom trust settings cannot be used; new uploads and runs are checked without a trust list.')
         ->and($page)->toContain('Syntax &lt;error&gt;')
@@ -230,4 +264,73 @@ it('AC9: the page shows the age warning only when stale', function (): void {
 
     expect(spec004Page(stale: true))->toContain($warning)
         ->and(spec004Page(stale: false))->not->toContain('more than six months ago');
+})->group('SPEC-004');
+
+it('AC13: a bundled file that is not the shipped one means no settings, and names the file', function (string $file, Closure $damage): void {
+    $directory = spec004Damaged($file, $damage);
+    $warnings = [];
+    set_error_handler(static function (int $level, string $message) use (&$warnings): bool {
+        $warnings[] = $message;
+
+        return true;
+    });
+    try {
+        $built = TrustChoice::build(null, true, $directory);
+    } finally {
+        restore_error_handler();
+        spec004Remove($directory);
+    }
+
+    expect($built->settings)->toBeNull()
+        ->and($built->source)->toBe('none')
+        ->and($built->sha256)->toBeNull()
+        ->and((string) $built->problem)->toContain($file)
+        ->and($warnings)->toBe([]);
+})->with(array_keys(SPEC004_HASHES))->with([
+    'empty' => [static fn (string $pem): string => ''],
+    'invalid UTF-8' => [static fn (string $pem): string => "\xFF".$pem],
+    'other text' => [static fn (string $pem): string => "not a certificate\n"],
+    'one byte changed' => [static fn (string $pem): string => spec004OneByte($pem)],
+])->group('SPEC-004');
+
+it('AC13: an untouched copy builds as the bundled lists', function (): void {
+    $directory = spec004Damaged('', static fn (string $pem): string => $pem);
+    try {
+        $built = TrustChoice::build(null, true, $directory);
+    } finally {
+        spec004Remove($directory);
+    }
+
+    expect($built->settings)->not->toBeNull()
+        ->and($built->source)->toBe('c2pa-2026-11-04+digicert')
+        ->and($built->problem)->toBeNull();
+})->group('SPEC-004');
+
+it('AC13: only the files in use are compared', function (): void {
+    $digicert = spec004Damaged(BundledLists::DIGICERT, static fn (string $pem): string => '');
+    $c2pa = spec004Damaged(BundledLists::C2PA, static fn (string $pem): string => '');
+    try {
+        $withoutDigicert = TrustChoice::build(null, false, $digicert);
+        $custom = TrustChoice::build((string) file_get_contents(VerifierCli::settingsFile(anchors: [[VerifierCli::fixture('c2pa-rs-test-trust-anchors.pem'), 'manifest']])), true, $c2pa);
+    } finally {
+        spec004Remove($digicert);
+        spec004Remove($c2pa);
+    }
+
+    expect($withoutDigicert->source)->toBe('c2pa-2026-11-04')
+        ->and($withoutDigicert->problem)->toBeNull()
+        ->and($custom->source)->toBe(TrustChoice::CUSTOM)
+        ->and($custom->problem)->toBeNull();
+})->group('SPEC-004');
+
+it('AC13: the page names the bundled lists when no custom settings are saved', function (): void {
+    $page = spec004Page(problem: 'the bundled trust list C2PA-TRUST-LIST.pem is <not> the shipped file');
+
+    expect($page)->toContain('The bundled trust lists cannot be used; new uploads and runs are checked without a trust list.')
+        ->and($page)->not->toContain('custom trust settings cannot be used')
+        ->and($page)->toContain('C2PA-TRUST-LIST.pem is &lt;not&gt; the shipped file')
+        // Text given back after a refusal is not what is saved.
+        ->and(spec004Page(custom: 'refused text', problem: 'x'))->not->toContain('custom trust settings cannot be used')
+        ->and(spec004Page(problem: 'x', customSaved: true))->toContain('The saved custom trust settings cannot be used')
+        ->and(spec004Page(problem: 'x', customSaved: true))->not->toContain('The bundled trust lists cannot be used');
 })->group('SPEC-004');

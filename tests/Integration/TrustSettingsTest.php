@@ -13,6 +13,7 @@ declare(strict_types=1);
 use ContentCredentials\Tests\Integration\Support\HttpResponse;
 use ContentCredentials\Tests\Integration\Support\OmekaInstallation;
 use ContentCredentials\Tests\Support\VerifierCli;
+use ContentCredentials\Trust\BundledLists;
 
 const SPEC004_PAGE = '/admin/module/configure?id=ContentCredentials';
 const SPEC004_CSRF = 'module_ContentCredentials_configure_csrf';
@@ -100,6 +101,22 @@ function spec004DigicertChecked(string $html): bool
     expect(preg_match('#<input type="checkbox" name="content_credentials_digicert"[^>]*>#', $html, $box))->toBe(1);
 
     return str_contains($box[0] ?? '', ' checked');
+}
+
+/**
+ * Waits until the container sees a bundled list with this SHA-256: the
+ * bind mount was measured to show a second write within a second late.
+ */
+function spec004SeenInContainer(OmekaInstallation $omeka, string $name, string $sha256): void
+{
+    $path = '/var/www/html/modules/ContentCredentials/trust/'.$name;
+    for ($i = 0; $i < 100; $i++) {
+        if (str_starts_with($omeka->rootShell("sha256sum {$path}"), $sha256)) {
+            return;
+        }
+        usleep(100_000);
+    }
+    throw new RuntimeException("The container does not see {$name} as written.");
 }
 
 /**
@@ -244,6 +261,56 @@ it('AC6: settings that cannot be built: checked without them', function (): void
         ->and($cli)->toBe(['Valid', '[]'])
         ->and($page)->toContain('The saved custom trust settings cannot be used; new uploads and runs are checked without a trust list.')
         ->and($page)->not->toContain('not json <b>');
+})->group('SPEC-004');
+
+it('AC13: a bundled list that is not the shipped file: checked without settings', function (string $damaged): void {
+    $omeka = spec004Omeka();
+    // The module is mounted from the working tree: the list is damaged there, and put back.
+    $list = dirname(__DIR__, 2).'/trust/C2PA-TRUST-LIST.pem';
+    $shipped = (string) file_get_contents($list);
+    expect(hash('sha256', $shipped))->toBe(BundledLists::FILES[BundledLists::C2PA]);
+    try {
+        file_put_contents($list, $damaged);
+        spec004SeenInContainer($omeka, BundledLists::C2PA, hash('sha256', $damaged));
+        $response = $omeka->uploadThroughAdminForm(VerifierCli::fixture('fixture-signed.jpg'), 'fixture-signed.jpg', 'image/jpeg');
+        $media = $omeka->mediaIdsOf(OmekaInstallation::itemIdFrom($response))[0] ?? 0;
+        $page = $omeka->get(SPEC004_PAGE);
+    } finally {
+        file_put_contents($list, $shipped);
+        spec004SeenInContainer($omeka, BundledLists::C2PA, BundledLists::FILES[BundledLists::C2PA]);
+    }
+    [$row, $cli] = spec004Compare($omeka, $media, 'fixture-signed.jpg', null);
+
+    expect(hash_file('sha256', $list))->toBe(BundledLists::FILES[BundledLists::C2PA])
+        ->and($response->status)->toBe(302)
+        ->and($row)->toBe(['Valid', '[]', 'none'])
+        ->and($cli)->toBe(['Valid', '[]'])
+        ->and($page->status)->toBe(200)
+        ->and($page->body)->toContain('The bundled trust lists cannot be used; new uploads and runs are checked without a trust list.')
+        ->and($page->body)->toContain('C2PA-TRUST-LIST.pem')
+        ->and($page->body)->not->toContain('custom trust settings cannot be used');
+})->with([
+    'empty' => [''],
+    'invalid UTF-8' => ["\xFFbad"],
+])->group('SPEC-004');
+
+it('AC13: refused custom text is not saved custom settings', function (): void {
+    $omeka = spec004Omeka();
+    $list = dirname(__DIR__, 2).'/trust/C2PA-TRUST-LIST.pem';
+    $shipped = (string) file_get_contents($list);
+    try {
+        file_put_contents($list, '');
+        spec004SeenInContainer($omeka, BundledLists::C2PA, hash('sha256', ''));
+        $response = spec004Configure($omeka, ['content_credentials_digicert' => '1', 'content_credentials_custom_settings' => 'not json']);
+    } finally {
+        file_put_contents($list, $shipped);
+        spec004SeenInContainer($omeka, BundledLists::C2PA, BundledLists::FILES[BundledLists::C2PA]);
+    }
+
+    expect($response->status)->toBe(200)
+        ->and(spec004Textarea($response->body))->toBe('not json')
+        ->and($response->body)->toContain('The bundled trust lists cannot be used; new uploads and runs are checked without a trust list.')
+        ->and($response->body)->not->toContain('custom trust settings cannot be used');
 })->group('SPEC-004');
 
 it('AC7: the block names the trust source', function (): void {

@@ -231,6 +231,16 @@ never logged.
   - And given a submitted value other than `1` (`0`, missing, an array), the
     checkbox is unchecked, as `save()` reads it, with no exception and no warning
 
+- **AC13 — a bundled list that is not the shipped file** *(added by amendment 5; error path)*
+  - Given no custom settings, and a bundled file that is empty, holds invalid UTF-8,
+    holds other text, or differs by one byte from the hash in `BundledLists::FILES`
+  - When the settings are built
+  - Then they are none, with `trust` `none` and a reason naming the file, with no
+    exception and no warning
+  - And the configure page answers 200 with the warning "The bundled trust lists
+    cannot be used; new uploads and runs are checked without a trust list." and the
+    reason, escaped; an upload proceeds and is verified without settings
+
 ## References
 
 - Specification: C2PA Technical Specification 2.4, §14.4 (trust lists:
@@ -333,6 +343,11 @@ recorded in the Amendments sections of SPEC-002 and SPEC-003.
   back only the text, and the checkbox showed the stored choice. The warning about
   saved custom settings that cannot be used still describes what is saved.
 
+- **Amendment 5 (2026-11-07, approved by Maurice van Loon):** adds AC13, from finding 6 of the code
+  review (`notes/step-35-the-code-review.md`), and what its measurement added: an empty list was
+  accepted and named as the list of its date. Was: only an unreadable file was refused. AC6's warning
+  now names custom settings only when custom settings are saved.
+
 ## Open questions
 
 - **The table change.** Changing the `CREATE TABLE` before the first
@@ -383,3 +398,4 @@ least one test; every source file maps back to this spec. All tests carry
 | AC10 | `tests/Integration/TrustSettingsTest.php` :: AC10 | `Module::uninstall()` |
 | AC11 | `tests/Integration/TrustSettingsTest.php` :: AC11 | `config/module.ini` (`configurable`) |
 | AC12 | `tests/Integration/TrustSettingsTest.php` :: AC12 (two tests) | `Omeka\TrustConfig::submittedDigicert()`, `form()`, `save()`; `Module::handleConfigForm()`, `getConfigForm()`, `$refusedDigicert` |
+| AC13 | `tests/Unit/TrustSettingsTest.php` :: AC13 (four tests); `tests/Integration/TrustSettingsTest.php` :: AC13 (two tests) | `Trust\TrustChoice::bundledJson()`, `build()`; `Display\SettingsPage::html()` (`customSaved`); `Omeka\TrustConfig::form()` |

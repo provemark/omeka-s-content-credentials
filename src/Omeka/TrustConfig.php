@@ -78,6 +78,7 @@ final class TrustConfig
             $refused ?? $custom,
             BundledLists::isStale(new DateTimeImmutable('now', new DateTimeZone('UTC'))),
             $this->built()->problem,
+            trim($custom) !== '',
         );
     }
 

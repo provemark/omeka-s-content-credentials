@@ -29,6 +29,9 @@ final class TrustChoice
             $json = $isCustom ? $custom : self::bundledJson($digicert, $trustDirectory);
         } catch (RuntimeException $e) {
             return BuiltTrust::without($e->getMessage());
+        } catch (Throwable) {
+            // Not reached while every file matches its hash; kept as the class's promise.
+            return BuiltTrust::without('the bundled trust lists could not be built');
         }
         try {
             return new BuiltTrust(TrustSettings::fromJson($json), $isCustom ? self::CUSTOM : BundledLists::source($digicert), null, hash('sha256', $json));
@@ -43,7 +46,10 @@ final class TrustChoice
      * The settings JSON of the bundled lists, built as the verifier's
      * docs/trust-settings.md builds it.
      *
-     * @throws RuntimeException when a bundled file cannot be read
+     * Only the files in use are read, and each must be the file this
+     * release ships, by its hash in BundledLists (AC13).
+     *
+     * @throws RuntimeException when a bundled file cannot be read or is not the shipped file
      */
     public static function bundledJson(bool $digicert, string $trustDirectory): string
     {
@@ -57,6 +63,9 @@ final class TrustChoice
             $pem = is_file($path) && is_readable($path) ? @file_get_contents($path) : false;
             if ($pem === false) {
                 throw new RuntimeException('a bundled trust list could not be read ('.$name.')');
+            }
+            if (! hash_equals(BundledLists::FILES[$name], hash('sha256', $pem))) {
+                throw new RuntimeException('a bundled trust list is not the file this release ships ('.$name.')');
             }
             $anchors[] = ['trust_anchors' => $pem, 'trust_kind' => $kind];
         }

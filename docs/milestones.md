@@ -290,7 +290,7 @@ Open for Maurice, after measuring:
 | M7.11 | A run whose process has gone can be ended from the configure page (review finding 1, SPEC-005) | done: [`notes/step-36-ending-a-run-that-has-gone.md`](../notes/step-36-ending-a-run-that-has-gone.md) |
 | M7.12 | A run that failed is not `completed` (review finding 2, SPEC-005) | done: [`notes/step-37-a-run-that-fails.md`](../notes/step-37-a-run-that-fails.md) |
 | M7.13 | The AI label reads instance labels (review finding 3, SPEC-007) | done: [`notes/step-38-instance-labels.md`](../notes/step-38-instance-labels.md) |
-| M7.14 | The smaller findings 4 to 8 of the review | finding 4 done: [`notes/step-39-a-refused-form.md`](../notes/step-39-a-refused-form.md); finding 5 done: [`notes/step-40-a-refused-start.md`](../notes/step-40-a-refused-start.md); 6 to 8 proposed |
+| M7.14 | The smaller findings 4 to 8 of the review | finding 4 done: [`notes/step-39-a-refused-form.md`](../notes/step-39-a-refused-form.md); finding 5 done: [`notes/step-40-a-refused-start.md`](../notes/step-40-a-refused-start.md); finding 6 done: [`notes/step-41-a-damaged-list.md`](../notes/step-41-a-damaged-list.md); 7 and 8 proposed |
 
 **M7.5 is done (2026-11-06):** `tools/build.sh` makes the zip, which holds `vendor-prefixed/` and no
 `vendor/` (ADR-0006; M7's row above says "prefixed `vendor/`"), and which is tested in a clean

@@ -23,9 +23,10 @@ final class SettingsPage
     /**
      * @param  Closure(string): string  $translate
      * @param  Closure(string): string  $escape
-     * @param  string|null  $problem  why the saved custom settings cannot be used, if they cannot
+     * @param  string|null  $problem  why the saved settings cannot be used, if they cannot
+     * @param  bool  $customSaved  whether custom settings are saved, not only given back (AC13)
      */
-    public static function html(Closure $translate, Closure $escape, bool $digicert, string $custom, bool $stale, ?string $problem): string
+    public static function html(Closure $translate, Closure $escape, bool $digicert, string $custom, bool $stale, ?string $problem, bool $customSaved): string
     {
         $t = static fn (string $source): string => $escape($translate($source));
         $html = '<div class="content-credentials-settings">';
@@ -42,7 +43,9 @@ final class SettingsPage
             )).'</p>';
         }
         if ($problem !== null) {
-            $html .= '<p class="content-credentials-warning">'.$t('The saved custom trust settings cannot be used; new uploads and runs are checked without a trust list.')
+            $html .= '<p class="content-credentials-warning">'.($customSaved
+                ? $t('The saved custom trust settings cannot be used; new uploads and runs are checked without a trust list.')
+                : $t('The bundled trust lists cannot be used; new uploads and runs are checked without a trust list.'))
                 .' '.$t('Reason:').' '.$escape($problem).'</p>';
         }
         $html .= '<div class="field"><div class="field-meta"><label for="content-credentials-digicert">'.$t('DigiCert timestamps').'</label></div>'

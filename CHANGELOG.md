@@ -104,3 +104,6 @@ What follows is the record of how it was built.
   the text and saving no longer loses that choice (SPEC-004 amendment 4). (2026-11-07)
 - Fixed: a refused start or end of a run stays on the configure page and no longer also says that the
   module was successfully configured (SPEC-005 amendment 4). (2026-11-07)
+- Fixed: a bundled trust list that is not the file this release ships, such as an empty or damaged
+  one, is no longer used: checks run without a trust list, and the configure page says so instead of
+  answering with an error (SPEC-004 amendment 5). (2026-11-07)

@@ -179,6 +179,7 @@ and committer of every pushed commit.
 | M7.13 | [`notes/step-38-instance-labels.md`](notes/step-38-instance-labels.md): SPEC-007 amendment 3, AC15: a final `__n` is removed before the exact compare, as the verifier does; 13 falsifications, of which two change no answer; no real file of 802 has such a label |
 | M7.14 | [`notes/step-39-a-refused-form.md`](notes/step-39-a-refused-form.md): finding 4, SPEC-004 amendment 4, AC12: a refused form gives back the DigiCert choice as well as the text; 11 falsifications |
 | M7.14 | [`notes/step-40-a-refused-start.md`](notes/step-40-a-refused-start.md): finding 5, SPEC-005 amendment 4, AC16: a refused start or end answers with the configure page and no success message; the same defect in AC14's path; 10 falsifications |
+| M7.14 | [`notes/step-41-a-damaged-list.md`](notes/step-41-a-damaged-list.md): finding 6, SPEC-004 amendment 5, AC13: each bundled file in use is compared with its hash; an empty list had been accepted under its date; the 500 measured; the bind mount answers a quick second write late, which also touched the falsifications of steps 39 and 40 |
 
 ## To measure before a spec rests on it
 
