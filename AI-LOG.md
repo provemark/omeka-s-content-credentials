@@ -1204,3 +1204,13 @@ README are where the disclosure lives.
 - Then: `tools/build.sh` is not executable and builds from the commit, so the version was committed
   before the zip was built; the first after-upgrade hash included the new upload and was redone for
   the same two rows.
+
+## 2026-11-08: M8.1 and M8.2, how Omeka translates, and SPEC-009 draft
+
+- Model: Claude Opus 5.5, Claude Code CLI
+- Asked: "ok, werk de vertaalspec uit, Nederlands eerst".
+- Produced: the measurement in a clean Omeka S 4.2.1 with a hand-made `nl_NL.mo`, recorded in
+  `notes/step-63-how-omeka-translates.md`; `specs/SPEC-009-translation.md` as `draft` with six open
+  questions and SPEC-008 amendment 7; the M8 rows in `docs/milestones.md`. No code changed.
+- Then: the first test translation had a wrong placeholder by design; it took the media page down
+  (500), which became AC7.

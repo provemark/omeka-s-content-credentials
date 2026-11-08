@@ -325,3 +325,14 @@ what is left of M7 is Maurice's: a public repository, the release and the regist
 
 **M7 is done (2026-11-08):** the repository is public (2026-11-07) and 0.1.0 is released
 ([step 49](../notes/step-49-release-0-1-0.md)). The registration on omeka.org is Maurice's decision.
+
+## M8 steps: translation, Dutch first
+
+Proposed 2026-11-08, at Maurice's request ("ok, werk de vertaalspec uit, Nederlands eerst"). Step 57
+found internationalization the one documented Omeka requirement the module does not meet.
+
+| Step | What | Status |
+|---|---|---|
+| M8.1 | Measure how Omeka S 4.2.1 loads a module's translation, which locale wins, and what a bad translation does | done: [`notes/step-63-how-omeka-translates.md`](../notes/step-63-how-omeka-translates.md) |
+| M8.2 | The M8 spec (`draft`), with the open choices and recommendations, and SPEC-008 amendment 7 | done: [`specs/SPEC-009-translation.md`](../specs/SPEC-009-translation.md) `draft` |
+| M8.3 | After approval: ADR-0007 for the compiler (if chosen), then the tests red, then the implementation; Maurice reads `nl_NL.po` before it is committed | open |
