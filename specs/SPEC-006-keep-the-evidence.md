@@ -356,6 +356,13 @@ Each with my recommendation and the trade-off. Maurice decides.
   when the draft was written. They now hold the six ASCII characters the
   criterion describes. The meaning is unchanged.
 
+- **Amendment 1 (2026-11-08, approved by Maurice van Loon):** AC10, from finding L1 of the security
+  review (`notes/step-58-security-review.md`). The evidence controller is allowed for Omeka's six
+  roles only (`researcher`, `author`, `reviewer`, `editor`, `site_admin`, `global_admin`). AC10 now
+  also reads: given a role that another module adds (as the Guest module adds `guest`), Omeka's ACL
+  does not allow it the evidence controller, while each of the six roles is allowed it as before.
+  Was: `allow(null, …)`, every role. Record: `notes/step-59-evidence-for-omeka-roles.md`.
+
 ## Traceability
 
 Every acceptance criterion maps to at least one test; every source file
@@ -374,6 +381,6 @@ SPEC-001's AC1 (`SPEC-001`). The record is
 | AC7 | tests/Integration/EvidenceTest.php :: AC7: the evidence page and the document page | src/Omeka/EvidenceController.php :: browseAction(), showAction(); src/Omeka/EvidenceHtml.php; src/Omeka/EvidenceReader.php; view/content-credentials/evidence/; config/module.config.php |
 | AC8 | tests/Integration/EvidenceTest.php :: AC8: the download is the stored document | src/Omeka/EvidenceController.php :: downloadAction() |
 | AC9 | tests/Integration/EvidenceTest.php :: AC9: an evidence table that cannot be written: no new verdict, the upload proceeds; AC9: a verdict that cannot be written takes its evidence back; tests/Unit/EvidenceTest.php :: AC9 (2 cases) | src/Omeka/DbalVerdictStore.php :: write() (the transaction); src/Check/Recorder.php :: record() |
-| AC10 | tests/Integration/EvidenceTest.php :: AC10: access follows the media item | Module.php :: onBootstrap(); src/Omeka/EvidenceController.php :: readMedia(); src/Omeka/EvidenceControllerFactory.php |
+| AC10 | tests/Integration/EvidenceTest.php :: AC10: access follows the media item; AC10: a role another module adds is not allowed the evidence controller | Module.php :: onBootstrap(); src/Omeka/EvidenceController.php :: readMedia(); src/Omeka/EvidenceControllerFactory.php |
 | AC11 | tests/Integration/EvidenceTest.php :: AC11: an unknown or malformed address is 404, with nothing inside | config/module.config.php (the route constraints); src/Omeka/EvidenceController.php :: visibleRow() |
 | AC12 | tests/Integration/EvidenceTest.php :: AC12: deleting a media item, and uninstalling; tests/Integration/InstallAndUninstallTest.php :: AC1 (SPEC-001 amendment 3) | src/Omeka/Schema.php :: create(), drop() |

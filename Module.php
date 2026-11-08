@@ -76,10 +76,19 @@ final class Module extends AbstractModule
     public function onBootstrap(MvcEvent $event): void
     {
         parent::onBootstrap($event);
-        // The limit is the controller's read of the media item (SPEC-006 AC10).
+        // Omeka's own six roles only, not a role another module adds (SPEC-006
+        // amendment 1); within them, the limit is the controller's read of the
+        // media item (SPEC-006 AC10).
         $acl = $this->getServiceLocator()->get('Omeka\Acl');
         if ($acl instanceof Acl) {
-            $acl->allow(null, 'ContentCredentials\Omeka\EvidenceController');
+            $acl->allow([
+                Acl::ROLE_RESEARCHER,
+                Acl::ROLE_AUTHOR,
+                Acl::ROLE_REVIEWER,
+                Acl::ROLE_EDITOR,
+                Acl::ROLE_SITE_ADMIN,
+                Acl::ROLE_GLOBAL_ADMIN,
+            ], 'ContentCredentials\Omeka\EvidenceController');
         }
     }
 

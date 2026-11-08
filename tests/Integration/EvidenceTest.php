@@ -452,3 +452,24 @@ it('AC12: deleting a media item, and uninstalling', function (): void {
         ->and($table)->toBe('')
         ->and($after)->toBe($before);
 })->group('SPEC-006');
+
+it('AC10: a role another module adds is not allowed the evidence controller', function (): void {
+    // Amendment 1: the Guest module adds a role "guest", which Omeka keeps out of its admin
+    // pages. Omeka's ACL is asked after bootstrap, with such a role added, as that module would.
+    $omeka = spec006Omeka();
+    $probe = 'chdir("/var/www/html"); require "vendor/autoload.php"; require "bootstrap.php";'
+        .' $app = Omeka\Mvc\Application::init(require "application/config/application.config.php");'
+        .' $acl = $app->getServiceManager()->get("Omeka\Acl"); $acl->addRole("guest");'
+        .' $c = "ContentCredentials\Omeka\EvidenceController"; $out = [];'
+        .' foreach (["guest", "researcher", "author", "reviewer", "editor", "site_admin", "global_admin"] as $r) {'
+        .' foreach (["browse", "show", "download"] as $p) { $out[$r][$p] = $acl->isAllowed($r, $c, $p); } }'
+        .' echo json_encode($out);';
+    $allowed = json_decode(trim($omeka->php(['-r', $probe])), true);
+
+    $all = ['browse' => true, 'show' => true, 'download' => true];
+    expect($allowed)->toBe([
+        'guest' => ['browse' => false, 'show' => false, 'download' => false],
+        'researcher' => $all, 'author' => $all, 'reviewer' => $all,
+        'editor' => $all, 'site_admin' => $all, 'global_admin' => $all,
+    ]);
+})->group('SPEC-006');

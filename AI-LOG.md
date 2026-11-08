@@ -1169,3 +1169,12 @@ README are where the disclosure lives.
   whose findings are in `notes/step-58-security-review.md` with the assistant's own check of L1;
   `composer audit`. No code changed.
 - Then: three references in the first checklist pointed at the wrong steps; corrected before commit.
+
+## 2026-11-08: M7.29, evidence for Omeka's roles only
+
+- Model: Claude Opus 5.5, Claude Code CLI
+- Asked: "ok, begin met 1 tot en met 3".
+- Produced: the ACL measurement, SPEC-006 amendment 1, the red test, the change in
+  `Module::onBootstrap()` and `notes/step-59-evidence-for-omeka-roles.md`.
+- Then: the first probe answered `false` for every role because the fresh environment had no module
+  installed; installed, it showed the finding.
