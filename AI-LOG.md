@@ -1158,3 +1158,14 @@ README are where the disclosure lives.
   its text, the download checks and `notes/step-56-release-0-1-1.md`; the environments taken down.
 - Then: the first check for the Upgrade button looked for the wrong string and said "no"; the page
   was looked at again after setting the stored version back, and showed it.
+
+## 2026-11-08: M7.27 and M7.28, requirements and security review
+
+- Model: Claude Opus 5.5, Claude Code CLI
+- Asked: "Ik wil helemaal zeker weten of het veilig is en voldoet aan alle eisen van omeka s.",
+  then "ok, begin met stap 1 en 2".
+- Produced: the reading of Omeka's developer documentation and the checklist in
+  `notes/step-57-omeka-requirements.md`; a separate review agent, kept away from the notes and specs,
+  whose findings are in `notes/step-58-security-review.md` with the assistant's own check of L1;
+  `composer audit`. No code changed.
+- Then: three references in the first checklist pointed at the wrong steps; corrected before commit.

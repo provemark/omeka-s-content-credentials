@@ -207,6 +207,8 @@ Registration on omeka.org is still his go.
 | M7.24 | [`notes/step-54-the-label-in-the-column.md`](notes/step-54-the-label-in-the-column.md): Omeka's tablesaw wraps a cell in a flex span, so the label stood beside the verdict; the cell is now one element (SPEC-007 amendment 4) |
 | M7.25 | [`notes/step-55-the-readme-outside-github.md`](notes/step-55-the-readme-outside-github.md): omeka.org publishes the README as the module's page; links made absolute, an introduction for collection managers and two screenshots added; `module_link` and `author_link` shown by Omeka, `support_link` unused by Omeka 4.2.1 |
 | M7.26 | [`notes/step-56-release-0-1-1.md`](notes/step-56-release-0-1-1.md): tag `v0.1.1` on `a57383e`, zip `51515d3e…`; the upgrade from the published 0.1.0 keeps verdicts and evidence byte-identical |
+| M7.27 | [`notes/step-57-omeka-requirements.md`](notes/step-57-omeka-requirements.md): every documented requirement met except internationalization (no `language/`, no `translator`, one `@translate`) |
+| M7.28 | [`notes/step-58-security-review.md`](notes/step-58-security-review.md): no high or medium findings; L1 the evidence controller allowed for every role (confirmed by reading), L2 a fatal in the upload request, L3 evidence that cannot be stored; `composer audit --no-dev` clean |
 
 ## To measure before a spec rests on it
 
