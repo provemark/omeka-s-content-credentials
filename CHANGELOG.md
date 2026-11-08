@@ -3,6 +3,15 @@
 This project follows the milestones in `docs/milestones.md`. Dates are the
 day the work was committed.
 
+## Unreleased
+
+Nothing in the module changes; these are changes to the build and CI.
+
+- Changed: GitHub's release downloads are retried over HTTP/1.1 (M7.20) and kept in a CI cache, and
+  the test image is built from the zip `tools/fetch-omeka.sh` checked (M7.21). (2026-11-08)
+- Changed: a download that stalls, or a connection that does not complete, ends after a minute and
+  is retried, instead of hanging (M7.22). (2026-11-08)
+
 ## 0.1.0 (2026-11-08)
 
 The first version: every new JPEG, PNG and WebP media item is verified and its verdict stored and

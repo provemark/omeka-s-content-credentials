@@ -1107,3 +1107,16 @@ README are where the disclosure lives.
   kept (no Strauss); split into two caches, recorded in the note.
 - Then: asked "ok, doe punt 1 en 2": the tag run's green fourth attempt recorded in the note, and
   the trial and test environments taken down.
+
+## 2026-11-08: M7.22, stalled downloads end
+
+- Model: Claude Opus 5.5, Claude Code CLI
+- Asked: "wat adviseer je nu voor de module?", then "ok, werk stap 52 uit". The assistant had
+  proposed the curl limit and Dependabot as one step 52; it split them into steps 52 and 53, one
+  concept each, and said so.
+- Produced: the measurements against stalling local servers and an unroutable address, the curl
+  limits in `tools/fetch-omeka.sh` and `tools/build.sh`, `notes/step-52-stalled-downloads.md`, and an
+  `Unreleased` section in `CHANGELOG.md` that also covers steps 50 and 51, whose entries the
+  assistant had left out.
+- Then: the first local measurement failed with curl exit 2 because zsh did not split `$F` into
+  words (the same mistake as in step 50); rerun with `${=F}`.

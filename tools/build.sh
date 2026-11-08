@@ -32,7 +32,9 @@ mkdir -p "$dir" "$out/.tools"
 if [ ! -f "$strauss" ]; then
     # --retry: a 5xx of GitHub's release downloads is retried for about five minutes; a 404 is not.
     # --http1.1: over HTTP/2, curl 8.7.1 reported GitHub's 504 as error 56 and did not retry it.
-    curl -sSfL --http1.1 --retry 10 --retry-delay 30 -o "$strauss.part" "https://github.com/BrianHenryIE/strauss/releases/download/$strauss_version/strauss.phar"
+    # --connect-timeout, --speed-limit/--speed-time: a connection or a transfer that stalls ends as
+    # error 28 and is retried, instead of hanging (step 52); a slow but moving download goes on.
+    curl -sSfL --http1.1 --retry 10 --retry-delay 30 --connect-timeout 30 --speed-limit 1000 --speed-time 60 -o "$strauss.part" "https://github.com/BrianHenryIE/strauss/releases/download/$strauss_version/strauss.phar"
     mv "$strauss.part" "$strauss"
 fi
 actual=$(php -r 'echo hash_file("sha256", $argv[1]);' "$strauss")
