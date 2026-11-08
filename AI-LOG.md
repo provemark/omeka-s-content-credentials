@@ -1185,3 +1185,12 @@ README are where the disclosure lives.
 - Asked: "ok, begin met 1 tot en met 3".
 - Produced: the audit, the targeted update of three Symfony packages and
   `notes/step-60-dev-tool-advisories.md`.
+
+## 2026-11-08: M7.31, time, memory and evidence size
+
+- Model: Claude Opus 5.5, Claude Code CLI
+- Asked: "ok, begin met 1 tot en met 3".
+- Produced: the measurements and `notes/step-61-time-memory-and-evidence-size.md`.
+- Then: the first script read the state from a field that does not exist and printed `NULL`;
+  corrected. A Pixel photo `Invalid` without trust settings looked wrong and was traced to its
+  expired signer before the numbers were used.

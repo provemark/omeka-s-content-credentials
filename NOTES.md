@@ -211,6 +211,7 @@ Registration on omeka.org is still his go.
 | M7.28 | [`notes/step-58-security-review.md`](notes/step-58-security-review.md): no high or medium findings; L1 the evidence controller allowed for every role (confirmed by reading), L2 a fatal in the upload request, L3 evidence that cannot be stored; `composer audit --no-dev` clean |
 | M7.29 | [`notes/step-59-evidence-for-omeka-roles.md`](notes/step-59-evidence-for-omeka-roles.md): the evidence controller allowed for Omeka's six roles, not for a role another module adds (measured with an added `guest` role) |
 | M7.30 | [`notes/step-60-dev-tool-advisories.md`](notes/step-60-dev-tool-advisories.md): three Symfony packages of Deptrac to 7.4.23; `composer audit` clean, the zip was never affected |
+| M7.31 | [`notes/step-61-time-memory-and-evidence-size.md`](notes/step-61-time-memory-and-evidence-size.md): 530 MB verified in 2.55 s at 8 MiB peak (streamed); evidence 2–34 KB against a 16 MiB packet limit; no change, both recorded as limits |
 
 ## To measure before a spec rests on it
 
