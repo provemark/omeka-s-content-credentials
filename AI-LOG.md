@@ -1266,3 +1266,11 @@ README are where the disclosure lives.
 - Then: the first `composer check` failed because the test database still held 0.1.2; and the
   version commit was pushed by the same command before the check was read. The environment was
   reset, the check run again green, and the tag waited for it and for CI.
+
+## 2026-11-08: M8.7, the maintenance rhythm
+
+- Model: Claude Opus 5.5, Claude Code CLI
+- Asked: "ok, werk het onderhoudsritme uit".
+- Produced: `docs/maintenance.md`: a monthly and a quarterly rhythm, the quarterly check (trust lists,
+  verifier, Omeka S, development tools, PHP), security reports, and the release routine with the
+  lesson of step 65.
