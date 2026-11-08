@@ -3,7 +3,10 @@
 This project follows the milestones in `docs/milestones.md`. Dates are the
 day the work was committed.
 
-## Unreleased
+## 0.1.2 (2026-11-08)
+
+The evidence pages are open to Omeka's own roles only. The stored verdicts and evidence are
+unchanged; an installation of 0.1.1 is upgraded on Omeka's modules page.
 
 - Fixed: the evidence pages are allowed for Omeka's own six roles only, not for a role another module
   adds, such as the Guest module's `guest` (SPEC-006 amendment 1). (2026-11-08)
