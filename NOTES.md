@@ -206,6 +206,7 @@ Registration on omeka.org is still his go.
 | M7.23 | [`notes/step-53-dependabot-for-actions.md`](notes/step-53-dependabot-for-actions.md): `.github/dependabot.yml` for `github-actions` only, monthly; Composer left out (the bundled verifier is a release decision); security alerts are a repository setting, Maurice's |
 | M7.24 | [`notes/step-54-the-label-in-the-column.md`](notes/step-54-the-label-in-the-column.md): Omeka's tablesaw wraps a cell in a flex span, so the label stood beside the verdict; the cell is now one element (SPEC-007 amendment 4) |
 | M7.25 | [`notes/step-55-the-readme-outside-github.md`](notes/step-55-the-readme-outside-github.md): omeka.org publishes the README as the module's page; links made absolute, an introduction for collection managers and two screenshots added; `module_link` and `author_link` shown by Omeka, `support_link` unused by Omeka 4.2.1 |
+| M7.26 | [`notes/step-56-release-0-1-1.md`](notes/step-56-release-0-1-1.md): tag `v0.1.1` on `a57383e`, zip `51515d3e…`; the upgrade from the published 0.1.0 keeps verdicts and evidence byte-identical |
 
 ## To measure before a spec rests on it
 

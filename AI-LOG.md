@@ -1149,3 +1149,12 @@ README are where the disclosure lives.
   and `notes/step-55-the-readme-outside-github.md`.
 - Then: AC19's first version expected the link as written, not as Omeka escapes it; the test now
   decodes it. AC18's second test was never red (it tests the test's helper); recorded in the note.
+
+## 2026-11-08: M7.26, release 0.1.1
+
+- Model: Claude Opus 5.5, Claude Code CLI
+- Asked: "ok, go voor release 0.1.1 en ruim de testomgeving op".
+- Produced: the version commit, the measurement of the upgrade from 0.1.0, the tag, the release with
+  its text, the download checks and `notes/step-56-release-0-1-1.md`; the environments taken down.
+- Then: the first check for the Upgrade button looked for the wrong string and said "no"; the page
+  was looked at again after setting the stored version back, and showed it.
