@@ -210,6 +210,7 @@ Registration on omeka.org is still his go.
 | M7.27 | [`notes/step-57-omeka-requirements.md`](notes/step-57-omeka-requirements.md): every documented requirement met except internationalization (no `language/`, no `translator`, one `@translate`) |
 | M7.28 | [`notes/step-58-security-review.md`](notes/step-58-security-review.md): no high or medium findings; L1 the evidence controller allowed for every role (confirmed by reading), L2 a fatal in the upload request, L3 evidence that cannot be stored; `composer audit --no-dev` clean |
 | M7.29 | [`notes/step-59-evidence-for-omeka-roles.md`](notes/step-59-evidence-for-omeka-roles.md): the evidence controller allowed for Omeka's six roles, not for a role another module adds (measured with an added `guest` role) |
+| M7.30 | [`notes/step-60-dev-tool-advisories.md`](notes/step-60-dev-tool-advisories.md): three Symfony packages of Deptrac to 7.4.23; `composer audit` clean, the zip was never affected |
 
 ## To measure before a spec rests on it
 

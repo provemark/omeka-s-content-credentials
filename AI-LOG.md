@@ -1178,3 +1178,10 @@ README are where the disclosure lives.
   `Module::onBootstrap()` and `notes/step-59-evidence-for-omeka-roles.md`.
 - Then: the first probe answered `false` for every role because the fresh environment had no module
   installed; installed, it showed the finding.
+
+## 2026-11-08: M7.30, the development tools' advisories
+
+- Model: Claude Opus 5.5, Claude Code CLI
+- Asked: "ok, begin met 1 tot en met 3".
+- Produced: the audit, the targeted update of three Symfony packages and
+  `notes/step-60-dev-tool-advisories.md`.

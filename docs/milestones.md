@@ -306,6 +306,7 @@ Open for Maurice, after measuring:
 | M7.27 | The module against Omeka S's documented requirements | done: [`notes/step-57-omeka-requirements.md`](../notes/step-57-omeka-requirements.md) |
 | M7.28 | An independent security review | done: [`notes/step-58-security-review.md`](../notes/step-58-security-review.md) |
 | M7.29 | The evidence pages for Omeka's six roles only (review finding L1, SPEC-006 amendment 1) | done: [`notes/step-59-evidence-for-omeka-roles.md`](../notes/step-59-evidence-for-omeka-roles.md) |
+| M7.30 | Update the development tools with advisories (`composer audit` clean) | done: [`notes/step-60-dev-tool-advisories.md`](../notes/step-60-dev-tool-advisories.md) |
 
 **M7.5 is done (2026-11-06):** `tools/build.sh` makes the zip, which holds `vendor-prefixed/` and no
 `vendor/` (ADR-0006; M7's row above says "prefixed `vendor/`"), and which is tested in a clean
