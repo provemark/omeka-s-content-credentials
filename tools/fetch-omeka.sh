@@ -1,8 +1,10 @@
 #!/bin/sh
-# Unpacks the pinned Omeka S release into build/omeka-s/ for static analysis
-# (ADR-0002, M0.7). The version and SHA-256 are read from
-# docker/omeka/Dockerfile, so the integration image and PHPStan see the same
-# release. Does nothing when the unpacked copy is already that version.
+# Downloads the pinned Omeka S release zip into build/.tools/ once, checks its
+# SHA-256, and unpacks it into build/omeka-s/ for static analysis (ADR-0002,
+# M0.7). The Docker images are built from a copy of the same zip in
+# docker/omeka/, so the integration image and PHPStan see the same release.
+# The version and SHA-256 are read from docker/omeka/Dockerfile. Unpacks
+# nothing when the unpacked copy is already that version.
 set -eu
 root=$(cd "$(dirname "$0")/.." && pwd)
 dockerfile="$root/docker/omeka/Dockerfile"
@@ -17,9 +19,6 @@ fi
 out="$root/build"
 target="$out/omeka-s"
 stamp="$target/.omeka-version"
-if [ -f "$stamp" ] && [ "$(cat "$stamp")" = "$version $sha256" ]; then
-    exit 0
-fi
 
 zip="$out/.tools/omeka-s-$version.zip"
 mkdir -p "$out/.tools"
@@ -33,6 +32,17 @@ actual=$(php -r 'echo hash_file("sha256", $argv[1]);' "$zip")
 if [ "$actual" != "$sha256" ]; then
     echo "Error: $zip has SHA-256 $actual, expected $sha256. Delete it to download it again." >&2
     exit 1
+fi
+
+# The copy the Docker images are built from (docker/omeka/Dockerfile).
+context="$root/docker/omeka"
+if ! cmp -s "$zip" "$context/omeka-s-$version.zip"; then
+    rm -f "$context"/omeka-s-*.zip
+    cp "$zip" "$context/omeka-s-$version.zip"
+fi
+
+if [ -f "$stamp" ] && [ "$(cat "$stamp")" = "$version $sha256" ]; then
+    exit 0
 fi
 
 unpack="$out/.tools/unpack"

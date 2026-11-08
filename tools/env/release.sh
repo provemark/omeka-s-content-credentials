@@ -50,6 +50,7 @@ modules=/var/www/html/modules
 
 docker compose down --volumes --remove-orphans >/dev/null 2>&1 || true
 trap 'docker compose down --volumes --remove-orphans >/dev/null 2>&1 || true' EXIT
+sh tools/fetch-omeka.sh >/dev/null
 docker compose build --quiet
 docker compose up --detach --wait >/dev/null
 for service in omeka omeka-php82; do

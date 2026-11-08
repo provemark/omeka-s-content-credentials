@@ -201,6 +201,7 @@ Registration on omeka.org is still his go.
 | M7.18 | [`notes/step-48-the-trial.md`](notes/step-48-the-trial.md): Maurice's trial in a clean Omeka S: `none`, `Trusted` and the AI label as expected; "het werkt" |
 | M7.19 | [`notes/step-49-release-0-1-0.md`](notes/step-49-release-0-1-0.md): 0.1.0 released, zip SHA-256 `9ebec7dc…`; the build is not byte-reproducible; the anonymous download was 504 for about two minutes |
 | M7.20 | [`notes/step-50-retrying-downloads.md`](notes/step-50-retrying-downloads.md): `--http1.1 --retry 10 --retry-delay 30` on the three release downloads; over HTTP/2 curl reported GitHub's 504 as error 56 and did not retry |
+| M7.21 | [`notes/step-51-caching-downloads.md`](notes/step-51-caching-downloads.md): `actions/cache` for the Omeka S zip and the Strauss phar; the image copies the zip `tools/fetch-omeka.sh` checked; compose's `additional_contexts` tried and dropped (classic builder) |
 
 ## To measure before a spec rests on it
 

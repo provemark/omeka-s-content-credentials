@@ -25,6 +25,18 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
+      # The Omeka S release zip and the Strauss phar, downloaded from GitHub
+      # releases once and kept between runs, so that a GitHub download outage
+      # does not turn a run red (notes/step-51-caching-downloads.md). The
+      # scripts check each file's SHA-256 and download only what is missing.
+      - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: |
+            build/.tools/omeka-s-*.zip
+            build/.tools/strauss-*.phar
+          key: downloads-${{ hashFiles('docker/omeka/Dockerfile', 'tools/build.sh') }}
+          restore-keys: downloads-
+
       - uses: shivammathur/setup-php@eb7c497e18156a6bbabfef1d3a82760b9eda3962 # 2.40.0
         with:
           php-version: ${{ matrix.php }}
@@ -59,6 +71,18 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
+      # The Omeka S release zip and the Strauss phar, downloaded from GitHub
+      # releases once and kept between runs, so that a GitHub download outage
+      # does not turn a run red (notes/step-51-caching-downloads.md). The
+      # scripts check each file's SHA-256 and download only what is missing.
+      - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: |
+            build/.tools/omeka-s-*.zip
+            build/.tools/strauss-*.phar
+          key: downloads-${{ hashFiles('docker/omeka/Dockerfile', 'tools/build.sh') }}
+          restore-keys: downloads-
+
       - uses: shivammathur/setup-php@eb7c497e18156a6bbabfef1d3a82760b9eda3962 # 2.40.0
         with:
           php-version: '8.3'
@@ -84,6 +108,18 @@ jobs:
         php: ['8.3', '8.4', '8.5']
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      # The Omeka S release zip and the Strauss phar, downloaded from GitHub
+      # releases once and kept between runs, so that a GitHub download outage
+      # does not turn a run red (notes/step-51-caching-downloads.md). The
+      # scripts check each file's SHA-256 and download only what is missing.
+      - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: |
+            build/.tools/omeka-s-*.zip
+            build/.tools/strauss-*.phar
+          key: downloads-${{ hashFiles('docker/omeka/Dockerfile', 'tools/build.sh') }}
+          restore-keys: downloads-
 
       - uses: shivammathur/setup-php@eb7c497e18156a6bbabfef1d3a82760b9eda3962 # 2.40.0
         with:

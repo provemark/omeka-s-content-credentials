@@ -1096,3 +1096,10 @@ README are where the disclosure lives.
   `notes/step-50-retrying-downloads.md`. The assistant first reran CI too early, and first
   measured `--retry` only against a local HTTP/1.1 server, which hid that it does nothing over
   HTTP/2 here; both recorded in the note.
+
+## 2026-11-08: M7.21, CI keeps its downloads
+
+- Model: Claude Opus 5.5, Claude Code CLI
+- Asked: "ok, werk stap 51 uit".
+- Produced: the fetch-and-copy in `tools/fetch-omeka.sh`, the Dockerfile's `COPY`, the fetch in
+  `up.sh` and `release.sh`, the CI cache, the measurements and `notes/step-51-caching-downloads.md`.

@@ -17,6 +17,8 @@ CLAUDE.md
 
 # Build output
 /build/
+# The Omeka S release zip tools/fetch-omeka.sh copies into the image build context.
+/docker/omeka/omeka-s-*.zip
 *.zip
 
 # Editors and OS

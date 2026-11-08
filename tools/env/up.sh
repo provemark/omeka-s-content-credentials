@@ -5,6 +5,7 @@
 set -eu
 cd "$(dirname "$0")/../.."
 
+sh tools/fetch-omeka.sh >/dev/null
 docker compose build --quiet
 docker compose up --detach --wait
 

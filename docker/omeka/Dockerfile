@@ -1,6 +1,7 @@
 # The integration environment's Omeka S (M0.3, notes/step-03-test-environment.md).
 #
-# Built from the release zip of the pinned tag, checked against its SHA-256,
+# Built from the release zip of the pinned tag (fetched by tools/fetch-omeka.sh),
+# checked against its SHA-256,
 # on the official PHP image pinned by digest. PHP 8.3 is the floor the
 # verifier sets (^8.3) and the default; Omeka S 4.2.1 itself runs from 8.1.
 # compose.yaml builds it a second time on PHP 8.2, where the module must
@@ -20,11 +21,11 @@ RUN apt-get update \
     && docker-php-ext-install pdo_mysql \
     && a2enmod rewrite
 
-# --retry: a 5xx of GitHub's release downloads is retried for about five minutes; a 404 is not.
-# --http1.1: over HTTP/2, curl 8.7.1 reported GitHub's 504 as error 56 and did not retry it.
-RUN curl -sSfL --http1.1 --retry 10 --retry-delay 30 -o /tmp/omeka-s.zip \
-        "https://github.com/omeka/omeka-s/releases/download/v${OMEKA_VERSION}/omeka-s-${OMEKA_VERSION}.zip" \
-    && echo "${OMEKA_SHA256}  /tmp/omeka-s.zip" | sha256sum -c - \
+# The release zip is not downloaded here: tools/fetch-omeka.sh downloads it once
+# into build/.tools/ (CI caches that folder) and puts a copy next to this file,
+# ignored by git. Its SHA-256 is checked again here.
+COPY omeka-s-${OMEKA_VERSION}.zip /tmp/omeka-s.zip
+RUN echo "${OMEKA_SHA256}  /tmp/omeka-s.zip" | sha256sum -c - \
     && unzip -q /tmp/omeka-s.zip -d /tmp \
     && rm -rf /var/www/html \
     && mv /tmp/omeka-s /var/www/html \
