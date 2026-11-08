@@ -3,7 +3,11 @@
 This project follows the milestones in `docs/milestones.md`. Dates are the
 day the work was committed.
 
-## Unreleased
+## 0.1.3 (2026-11-08)
+
+The module's text is translatable; it ships in English only. An English user sees no change, and the
+stored verdicts and evidence are unchanged; an installation of 0.1.2 is upgraded on Omeka's modules
+page.
 
 - Added: the module's text is translatable. `language/template.pot` lists every string, and a
   `language/<locale>.mo` an administrator adds is used for that locale; the module ships no
