@@ -199,6 +199,7 @@ Registration on omeka.org is still his go.
 | M7.16 | [`notes/step-46-before-going-public.md`](notes/step-46-before-going-public.md): the check before going public (history, secrets, paths, fixtures; nothing blocking); CI token read-only and actions pinned to commits |
 | M7.17 | [`notes/step-47-security-policy.md`](notes/step-47-security-policy.md): `SECURITY.md`; private vulnerability reporting is off until Maurice turns it on |
 | M7.18 | [`notes/step-48-the-trial.md`](notes/step-48-the-trial.md): Maurice's trial in a clean Omeka S: `none`, `Trusted` and the AI label as expected; "het werkt" |
+| M7.19 | [`notes/step-49-release-0-1-0.md`](notes/step-49-release-0-1-0.md): 0.1.0 released, zip SHA-256 `9ebec7dc…`; the build is not byte-reproducible; the anonymous download was 504 for about two minutes |
 
 ## To measure before a spec rests on it
 

@@ -295,6 +295,7 @@ Open for Maurice, after measuring:
 | M7.16 | The check before going public, and a read-only CI (Maurice, 2026-11-07) | done: [`notes/step-46-before-going-public.md`](../notes/step-46-before-going-public.md) |
 | M7.17 | A security policy, `SECURITY.md` | done: [`notes/step-47-security-policy.md`](../notes/step-47-security-policy.md) |
 | M7.18 | Maurice's trial of the zip, before the release | done: [`notes/step-48-the-trial.md`](../notes/step-48-the-trial.md) |
+| M7.19 | Release 0.1.0: tag `v0.1.0` and the GitHub release with the zip | done: [`notes/step-49-release-0-1-0.md`](../notes/step-49-release-0-1-0.md) |
 
 **M7.5 is done (2026-11-06):** `tools/build.sh` makes the zip, which holds `vendor-prefixed/` and no
 `vendor/` (ADR-0006; M7's row above says "prefixed `vendor/`"), and which is tested in a clean
@@ -308,3 +309,6 @@ repository, the registration. M7 is done when the zip is released, or when he de
 **M7.7 to M7.10 are done (2026-11-06).** Maurice has looked at the zip in a browser. The review of
 [step 35](../notes/step-35-the-code-review.md) added M7.11 to M7.14, which come before a release. After them,
 what is left of M7 is Maurice's: a public repository, the release and the registration on omeka.org.
+
+**M7 is done (2026-11-08):** the repository is public (2026-11-07) and 0.1.0 is released
+([step 49](../notes/step-49-release-0-1-0.md)). The registration on omeka.org is Maurice's decision.

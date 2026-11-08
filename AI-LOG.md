@@ -1080,3 +1080,10 @@ README are where the disclosure lives.
   `notes/step-48-the-trial.md`; the CHANGELOG's date for 0.1.0. The trial itself was Maurice's.
 - The assistant ran `composer check` twice at once that morning, which failed both; recorded in the
   note.
+
+## 2026-11-08: M7.19, release 0.1.0
+
+- Model: Claude Opus 5.5, Claude Code CLI
+- Asked: "ok, go voor de tag en de release".
+- Done by the assistant with `git` and `gh`, after green CI: the tag, the release and its text, the
+  download check, `notes/step-49-release-0-1-0.md`.
