@@ -203,6 +203,7 @@ Registration on omeka.org is still his go.
 | M7.20 | [`notes/step-50-retrying-downloads.md`](notes/step-50-retrying-downloads.md): `--http1.1 --retry 10 --retry-delay 30` on the three release downloads; over HTTP/2 curl reported GitHub's 504 as error 56 and did not retry |
 | M7.21 | [`notes/step-51-caching-downloads.md`](notes/step-51-caching-downloads.md): `actions/cache` for the Omeka S zip and the Strauss phar; the image copies the zip `tools/fetch-omeka.sh` checked; compose's `additional_contexts` tried and dropped (classic builder) |
 | M7.22 | [`notes/step-52-stalled-downloads.md`](notes/step-52-stalled-downloads.md): `--connect-timeout 30 --speed-limit 1000 --speed-time 60` on the two release downloads; a stalled transfer and an incomplete connection end as error 28, which `--retry` retries; `-m` not chosen |
+| M7.23 | [`notes/step-53-dependabot-for-actions.md`](notes/step-53-dependabot-for-actions.md): `.github/dependabot.yml` for `github-actions` only, monthly; Composer left out (the bundled verifier is a release decision); security alerts are a repository setting, Maurice's |
 
 ## To measure before a spec rests on it
 

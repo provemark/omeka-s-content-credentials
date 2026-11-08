@@ -1120,3 +1120,10 @@ README are where the disclosure lives.
   assistant had left out.
 - Then: the first local measurement failed with curl exit 2 because zsh did not split `$F` into
   words (the same mistake as in step 50); rerun with `${=F}`.
+
+## 2026-11-08: M7.23, Dependabot for the Actions
+
+- Model: Claude Opus 5.5, Claude Code CLI
+- Asked: "ok, werk stap 52 uit" (the second half of the proposal, split off as its own step).
+- Produced: `.github/dependabot.yml` (GitHub Actions only, monthly) and
+  `notes/step-53-dependabot-for-actions.md`. No repository setting was changed.

@@ -11,6 +11,7 @@ Nothing in the module changes; these are changes to the build and CI.
   the test image is built from the zip `tools/fetch-omeka.sh` checked (M7.21). (2026-11-08)
 - Changed: a download that stalls, or a connection that does not complete, ends after a minute and
   is retried, instead of hanging (M7.22). (2026-11-08)
+- Added: Dependabot proposes updates of the pinned GitHub Actions, monthly (M7.23). (2026-11-08)
 
 ## 0.1.0 (2026-11-08)
 

@@ -1,0 +1,14 @@
+# Dependabot version updates for the GitHub Actions in .github/workflows/ only
+# (notes/step-53-dependabot-for-actions.md). The actions are pinned to a commit
+# SHA, which never moves by itself; Dependabot proposes the new SHA and version
+# comment as a pull request, which runs CI like any other.
+#
+# Composer is left out on purpose: the verifier is bundled with Strauss into the
+# release zip, so an update of it is a release decision, made by hand.
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: monthly
+    open-pull-requests-limit: 5
