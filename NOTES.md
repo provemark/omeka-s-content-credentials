@@ -198,6 +198,7 @@ Registration on omeka.org is still his go.
 | M7.15 | [`notes/step-45-when-strauss-fails.md`](notes/step-45-when-strauss-fails.md): SPEC-008 amendment 5, AC17: the build stops with Strauss's output when it prefixes nothing; Strauss exiting non-zero is read, not measured; `build/tests/clone` sometimes cannot be removed between quick runs |
 | M7.16 | [`notes/step-46-before-going-public.md`](notes/step-46-before-going-public.md): the check before going public (history, secrets, paths, fixtures; nothing blocking); CI token read-only and actions pinned to commits |
 | M7.17 | [`notes/step-47-security-policy.md`](notes/step-47-security-policy.md): `SECURITY.md`; private vulnerability reporting is off until Maurice turns it on |
+| M7.18 | [`notes/step-48-the-trial.md`](notes/step-48-the-trial.md): Maurice's trial in a clean Omeka S: `none`, `Trusted` and the AI label as expected; "het werkt" |
 
 ## To measure before a spec rests on it
 

@@ -1071,3 +1071,12 @@ README are where the disclosure lives.
 - Asked: "ok, akkoord met punt 1, doe punt 3 en 2" (Maurice's name and quotes public; topics and
   Projects off; public with private vulnerability reporting).
 - Done by the assistant with `gh`, at that go; recorded in `NOTES.md`, decision 6.
+
+## 2026-11-08: M7.18, the trial, and the release date
+
+- Model: Claude Opus 5.5, Claude Code CLI
+- Asked: "kan je een schone installatie doen", then "ok, begin met stapnotitie 48 en de release".
+- Produced: the trial environment (not in the repository), the database reading and
+  `notes/step-48-the-trial.md`; the CHANGELOG's date for 0.1.0. The trial itself was Maurice's.
+- The assistant ran `composer check` twice at once that morning, which failed both; recorded in the
+  note.

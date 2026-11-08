@@ -3,7 +3,7 @@
 This project follows the milestones in `docs/milestones.md`. Dates are the
 day the work was committed.
 
-## 0.1.0 (not yet released)
+## 0.1.0 (2026-11-08)
 
 The first version: every new JPEG, PNG and WebP media item is verified and its verdict stored and
 shown in the admin interface, with bundled C2PA trust lists of 2026-11-04 or custom trust settings, a
