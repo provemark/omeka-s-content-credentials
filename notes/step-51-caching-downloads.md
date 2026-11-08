@@ -16,9 +16,9 @@ minutes. Maurice: "ok, werk stap 51 uit".
   context and checks the SHA-256 again. `tools/env/up.sh` and `tools/env/release.sh` run
   `tools/fetch-omeka.sh` before `docker compose build`.
 - **CI keeps the downloads.** The three jobs that download (static checks, integration, release zip)
-  restore and save `build/.tools/omeka-s-*.zip` and `build/.tools/strauss-*.phar` with
-  `actions/cache`, keyed on `docker/omeka/Dockerfile` and `tools/build.sh`, where the versions and
-  hashes are pinned. A changed key falls back to the previous files; the scripts download only a file
+  restore and save `build/.tools/omeka-s-*.zip` with `actions/cache`, keyed on
+  `docker/omeka/Dockerfile`; the release jobs also `build/.tools/strauss-*.phar`, in a cache of its
+  own keyed on `tools/build.sh`. Those files pin the versions and hashes. A changed key falls back to the previous files; the scripts download only a file
   that is missing (a new version has a new name) and check every hash, so a cached file can never
   replace a pinned one.
 
@@ -42,6 +42,13 @@ requirement; the copy in the build context works with both builders.
   images were rebuilt from the copy.
 - `git grep github.com/omeka -- docker compose.yaml tools/env`: no match; the images contact GitHub
   for nothing. (They still pull the PHP and MariaDB images from Docker Hub and run `apt-get`.)
+
+## One cache first, two after (measured)
+
+The first commit (`f703c07`) used one key for both files in all three jobs. A key is saved once, by
+the first job to finish: `gh cache list` showed one `downloads-…` entry of 17,056,755 bytes, saved at
+10:26:12 by a static-checks job, which has no Strauss. The release jobs would have downloaded Strauss
+on every run. Split into two caches the same day.
 
 ## Not yet measured
 

@@ -1103,3 +1103,5 @@ README are where the disclosure lives.
 - Asked: "ok, werk stap 51 uit".
 - Produced: the fetch-and-copy in `tools/fetch-omeka.sh`, the Dockerfile's `COPY`, the fetch in
   `up.sh` and `release.sh`, the CI cache, the measurements and `notes/step-51-caching-downloads.md`.
+- Then: the assistant's first cache used one key for both files, so only the first job's files were
+  kept (no Strauss); split into two caches, recorded in the note.

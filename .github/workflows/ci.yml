@@ -25,17 +25,15 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
-      # The Omeka S release zip and the Strauss phar, downloaded from GitHub
-      # releases once and kept between runs, so that a GitHub download outage
-      # does not turn a run red (notes/step-51-caching-downloads.md). The
-      # scripts check each file's SHA-256 and download only what is missing.
+      # The Omeka S release zip, downloaded from GitHub releases once and kept
+      # between runs, so that a GitHub download outage does not turn a run red
+      # (notes/step-51-caching-downloads.md). tools/fetch-omeka.sh checks its
+      # SHA-256 and downloads it only when it is missing.
       - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
-          path: |
-            build/.tools/omeka-s-*.zip
-            build/.tools/strauss-*.phar
-          key: downloads-${{ hashFiles('docker/omeka/Dockerfile', 'tools/build.sh') }}
-          restore-keys: downloads-
+          path: build/.tools/omeka-s-*.zip
+          key: omeka-s-${{ hashFiles('docker/omeka/Dockerfile') }}
+          restore-keys: omeka-s-
 
       - uses: shivammathur/setup-php@eb7c497e18156a6bbabfef1d3a82760b9eda3962 # 2.40.0
         with:
@@ -71,17 +69,15 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
-      # The Omeka S release zip and the Strauss phar, downloaded from GitHub
-      # releases once and kept between runs, so that a GitHub download outage
-      # does not turn a run red (notes/step-51-caching-downloads.md). The
-      # scripts check each file's SHA-256 and download only what is missing.
+      # The Omeka S release zip, downloaded from GitHub releases once and kept
+      # between runs, so that a GitHub download outage does not turn a run red
+      # (notes/step-51-caching-downloads.md). tools/fetch-omeka.sh checks its
+      # SHA-256 and downloads it only when it is missing.
       - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
-          path: |
-            build/.tools/omeka-s-*.zip
-            build/.tools/strauss-*.phar
-          key: downloads-${{ hashFiles('docker/omeka/Dockerfile', 'tools/build.sh') }}
-          restore-keys: downloads-
+          path: build/.tools/omeka-s-*.zip
+          key: omeka-s-${{ hashFiles('docker/omeka/Dockerfile') }}
+          restore-keys: omeka-s-
 
       - uses: shivammathur/setup-php@eb7c497e18156a6bbabfef1d3a82760b9eda3962 # 2.40.0
         with:
@@ -109,17 +105,24 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
-      # The Omeka S release zip and the Strauss phar, downloaded from GitHub
-      # releases once and kept between runs, so that a GitHub download outage
-      # does not turn a run red (notes/step-51-caching-downloads.md). The
-      # scripts check each file's SHA-256 and download only what is missing.
+      # The Omeka S release zip, downloaded from GitHub releases once and kept
+      # between runs, so that a GitHub download outage does not turn a run red
+      # (notes/step-51-caching-downloads.md). tools/fetch-omeka.sh checks its
+      # SHA-256 and downloads it only when it is missing.
       - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
-          path: |
-            build/.tools/omeka-s-*.zip
-            build/.tools/strauss-*.phar
-          key: downloads-${{ hashFiles('docker/omeka/Dockerfile', 'tools/build.sh') }}
-          restore-keys: downloads-
+          path: build/.tools/omeka-s-*.zip
+          key: omeka-s-${{ hashFiles('docker/omeka/Dockerfile') }}
+          restore-keys: omeka-s-
+
+      # The Strauss phar, likewise; tools/build.sh checks its SHA-256. A cache
+      # of its own: a key is saved once, by the first job to finish, and the
+      # other jobs have no Strauss.
+      - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: build/.tools/strauss-*.phar
+          key: strauss-${{ hashFiles('tools/build.sh') }}
+          restore-keys: strauss-
 
       - uses: shivammathur/setup-php@eb7c497e18156a6bbabfef1d3a82760b9eda3962 # 2.40.0
         with:
