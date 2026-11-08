@@ -5,6 +5,9 @@ day the work was committed.
 
 ## Unreleased
 
+- Added: an introduction for collection managers and two screenshots in the README; every link in it
+  works outside GitHub, and Omeka's modules page links to the repository and the author
+  (SPEC-008 amendment 6). (2026-11-08)
 - Fixed: in the media browse the AI label stands under the verdict, instead of beside it and broken
   inside the word (SPEC-007 amendment 4). (2026-11-08)
 - Changed: GitHub's release downloads are retried over HTTP/1.1 (M7.20) and kept in a CI cache, and

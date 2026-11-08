@@ -301,6 +301,7 @@ Open for Maurice, after measuring:
 | M7.22 | End stalled downloads: a connect timeout and a low-speed limit on curl | done: [`notes/step-52-stalled-downloads.md`](../notes/step-52-stalled-downloads.md) |
 | M7.23 | Dependabot version updates for the pinned GitHub Actions, monthly | done: [`notes/step-53-dependabot-for-actions.md`](../notes/step-53-dependabot-for-actions.md) |
 | M7.24 | The AI label under the verdict in the media browse (SPEC-007 amendment 4) | done: [`notes/step-54-the-label-in-the-column.md`](../notes/step-54-the-label-in-the-column.md) |
+| M7.25 | A README that reads the same on omeka.org, with screenshots; links in `module.ini` (SPEC-008 amendment 6) | done: [`notes/step-55-the-readme-outside-github.md`](../notes/step-55-the-readme-outside-github.md) |
 
 **M7.5 is done (2026-11-06):** `tools/build.sh` makes the zip, which holds `vendor-prefixed/` and no
 `vendor/` (ADR-0006; M7's row above says "prefixed `vendor/`"), and which is tested in a clean

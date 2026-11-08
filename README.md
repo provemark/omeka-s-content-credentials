@@ -1,5 +1,12 @@
 # Content Credentials (C2PA) for Omeka S
 
+Content Credentials, the C2PA standard, are a signed record inside a media file: who made or edited
+it, with which device or software, and whether generative AI was used. Some cameras, editing
+programs and AI image generators add them. For an archive, library or museum the questions are
+whether a file that comes in still carries a record that holds, who signed it, and whether that can
+still be shown years later. This module answers them for every JPEG, PNG and WebP image uploaded to
+Omeka S.
+
 An Omeka S module that verifies the Content Credentials (C2PA) of every uploaded image, stores the
 verdict with the media and shows it in the admin interface. It only checks: it never signs, never
 blocks an upload and opens no network connection. Verification is done in pure PHP by
@@ -11,7 +18,7 @@ has expired.
 
 ## Status
 
-Version 0.1.0 is the module's first version. It is tested in a clean Omeka S 4.2.1, but has not yet
+This is an early version (0.1.x). It is tested in a clean Omeka S 4.2.1, but has not yet
 been used in production. The plan is in [`docs/milestones.md`](https://github.com/provemark/omeka-s-content-credentials/blob/main/docs/milestones.md) and the
 decisions are in [`NOTES.md`](https://github.com/provemark/omeka-s-content-credentials/blob/main/NOTES.md).
 
@@ -37,6 +44,13 @@ browse has a column "Content Credentials" and a filter by verdict. Administrator
 their own browse columns do not get the column until they add it. The public site and the API's
 media representation show nothing of this.
 
+![The media browse in Omeka S with the column "Content Credentials": No Content Credentials; Intact: signer not trusted; Intact: signer not trusted with AI-generated (signed) under it; Verified: trusted signer](https://raw.githubusercontent.com/provemark/omeka-s-content-credentials/main/docs/images/media-browse.png)
+
+![The Content Credentials block on a media page: Verified: trusted signer, signed by Pixel Camera (Google LLC), the signing time, when and with which verifier it was checked, the trust list used, and a link to the evidence kept](https://raw.githubusercontent.com/provemark/omeka-s-content-credentials/main/docs/images/media-verdict.png)
+
+*Four test files in a clean Omeka S 4.2.1. The trusted one is a photo taken with a Google Pixel 10
+(public domain, Wikimedia Commons); the AI-generated one is a test file signed by Amazon.*
+
 | shown | verifier's state | meaning |
 |---|---|---|
 | Verified: trusted signer | `Trusted` | intact, and the signer is on the trust list |
@@ -45,7 +59,7 @@ media representation show nothing of this.
 | No Content Credentials | | the file has none, which says nothing about its origin |
 | Could not be checked | | the check failed, with the reason shown |
 
-**Trust.** Files are checked against the C2PA trust lists bundled in [`trust/`](trust/README.md)
+**Trust.** Files are checked against the C2PA trust lists bundled in [`trust/`](https://github.com/provemark/omeka-s-content-credentials/blob/main/trust/README.md)
 (CC BY 4.0, © C2PA), with or without DigiCert timestamps, or against custom trust settings. All of
 this is on the module's configure page, which shows the lists' date and warns when the copy is more
 than six months old. New lists come with a new version of the module. The module does not fetch them.
@@ -99,5 +113,5 @@ and what was decided by the maintainer.
 
 ## Licence
 
-GPL-3.0-or-later, see [`LICENSE`](LICENSE). The bundled verifier is MIT, and the bundled C2PA lists are
-CC BY 4.0: see [`trust/README.md`](trust/README.md).
+GPL-3.0-or-later, see [`LICENSE`](https://github.com/provemark/omeka-s-content-credentials/blob/main/LICENSE). The bundled verifier is MIT, and the bundled C2PA lists are
+CC BY 4.0: see [`trust/README.md`](https://github.com/provemark/omeka-s-content-credentials/blob/main/trust/README.md).

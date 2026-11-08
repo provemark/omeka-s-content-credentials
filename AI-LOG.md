@@ -1139,3 +1139,13 @@ README are where the disclosure lives.
   `notes/step-54-the-label-in-the-column.md`.
 - Then: the integration tests filled the environment the screenshots were taken in; it was reset
   and the four media added again before the screenshots were retaken.
+
+## 2026-11-08: M7.25, the README outside GitHub
+
+- Model: Claude Opus 5.5, Claude Code CLI
+- Asked: as for M7.24.
+- Produced: the reading of omeka.org's registration page, SPEC-008 amendment 6 (approved), the tests
+  for AC18 and AC19, the README's introduction, links and screenshots, the links in `module.ini`,
+  and `notes/step-55-the-readme-outside-github.md`.
+- Then: AC19's first version expected the link as written, not as Omeka escapes it; the test now
+  decodes it. AC18's second test was never red (it tests the test's helper); recorded in the note.

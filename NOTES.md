@@ -205,6 +205,7 @@ Registration on omeka.org is still his go.
 | M7.22 | [`notes/step-52-stalled-downloads.md`](notes/step-52-stalled-downloads.md): `--connect-timeout 30 --speed-limit 1000 --speed-time 60` on the two release downloads; a stalled transfer and an incomplete connection end as error 28, which `--retry` retries; `-m` not chosen |
 | M7.23 | [`notes/step-53-dependabot-for-actions.md`](notes/step-53-dependabot-for-actions.md): `.github/dependabot.yml` for `github-actions` only, monthly; Composer left out (the bundled verifier is a release decision); security alerts are a repository setting, Maurice's |
 | M7.24 | [`notes/step-54-the-label-in-the-column.md`](notes/step-54-the-label-in-the-column.md): Omeka's tablesaw wraps a cell in a flex span, so the label stood beside the verdict; the cell is now one element (SPEC-007 amendment 4) |
+| M7.25 | [`notes/step-55-the-readme-outside-github.md`](notes/step-55-the-readme-outside-github.md): omeka.org publishes the README as the module's page; links made absolute, an introduction for collection managers and two screenshots added; `module_link` and `author_link` shown by Omeka, `support_link` unused by Omeka 4.2.1 |
 
 ## To measure before a spec rests on it
 

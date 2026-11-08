@@ -212,6 +212,21 @@ Criteria on the zip are in `tests/Release`, those on the module's source in `tes
     message and output
   - And on a good tree Strauss's output is not shown, as before
 
+- **AC18 — the README reads the same outside GitHub** *(added by amendment 6; error path)*
+  - Given `README.md`, which omeka.org publishes with each release
+  - When its Markdown links and images are listed
+  - Then each target is an absolute `https://` URL or a link within the page (`#…`), and each
+    image has alt text
+  - Error: a relative link or an image without alt text fails the test, which names it
+
+- **AC19 — Omeka's modules page links to the repository** *(added by amendment 6)*
+  - Given `config/module.ini` with `module_link` (the repository) and `author_link`
+    (`https://github.com/provemark`)
+  - When an administrator opens Omeka's modules page
+  - Then the module's name links to the repository and the author's name to the author link,
+    as Omeka's `admin/module/browse.phtml` writes them
+  - And `support_link` is not added: Omeka S 4.2.1 does not use it
+
 ## References
 
 - Specification: Omeka S 4.2.1 source: `Omeka\Module\Manager::uninstall()`,
@@ -306,6 +321,11 @@ $connection->executeStatement(Schema::drop());
   review (step 35), moved before the release by Maurice. Was: Strauss's output went to /dev/null; a
   run that prefixed nothing failed later with a `find` error.
 
+- **Amendment 6 (2026-11-08, approved by Maurice van Loon):** adds AC18 and AC19, before the
+  registration on omeka.org, which publishes the README as the module's page. Was: three relative
+  links in the README (`trust/README.md` twice, `LICENSE`), and no links in `module.ini`. Record:
+  `notes/step-55-the-readme-outside-github.md`.
+
 ## Open questions
 
 - All six choices above: blockers, for Maurice.
@@ -334,3 +354,5 @@ Filled when status becomes `implemented`.
 | AC15 | tests/Integration/UninstallJobsTest.php :: AC15: the warning / SPEC-008 | config/module.ini :: description |
 | AC16 | tests/Release/ZipInOmekaTest.php :: AC16: it runs on the PHP that was asked for; tests/Release/BuildTest.php :: AC16: CI runs the zip on every PHP the README promises / SPEC-008 | tools/env/release.sh; tools/env/compose.release.yaml; .github/workflows/ci.yml :: release |
 | AC17 | tests/Release/BuildTest.php :: AC17: a Strauss run that prefixes nothing stops the build with its output; AC1 (no Strauss output on a good tree) | tools/build.sh |
+| AC18 | tests/Unit/ReadmeTest.php :: AC18: every link and image in the README holds outside GitHub; AC18: a relative link or an image without alt text is named / SPEC-008 | README.md |
+| AC19 | tests/Integration/ModuleLinksTest.php :: AC19: the modules page links to the repository and the author / SPEC-008 | config/module.ini :: author_link, module_link |
