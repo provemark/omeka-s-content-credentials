@@ -1087,3 +1087,12 @@ README are where the disclosure lives.
 - Asked: "ok, go voor de tag en de release".
 - Done by the assistant with `git` and `gh`, after green CI: the tag, the release and its text, the
   download check, `notes/step-49-release-0-1-0.md`.
+
+## 2026-11-08: M7.20, retrying GitHub's release downloads
+
+- Model: Claude Opus 5.5, Claude Code CLI
+- Asked: "ok, voeg de --retry toe".
+- Produced: the retry on the three downloads, the measurements and
+  `notes/step-50-retrying-downloads.md`. The assistant first reran CI too early, and first
+  measured `--retry` only against a local HTTP/1.1 server, which hid that it does nothing over
+  HTTP/2 here; both recorded in the note.

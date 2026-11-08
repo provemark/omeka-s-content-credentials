@@ -24,7 +24,9 @@ fi
 zip="$out/.tools/omeka-s-$version.zip"
 mkdir -p "$out/.tools"
 if [ ! -f "$zip" ]; then
-    curl -sSfL -o "$zip.part" "https://github.com/omeka/omeka-s/releases/download/v$version/omeka-s-$version.zip"
+    # --retry: a 5xx of GitHub's release downloads is retried for about five minutes; a 404 is not.
+    # --http1.1: over HTTP/2, curl 8.7.1 reported GitHub's 504 as error 56 and did not retry it.
+    curl -sSfL --http1.1 --retry 10 --retry-delay 30 -o "$zip.part" "https://github.com/omeka/omeka-s/releases/download/v$version/omeka-s-$version.zip"
     mv "$zip.part" "$zip"
 fi
 actual=$(php -r 'echo hash_file("sha256", $argv[1]);' "$zip")

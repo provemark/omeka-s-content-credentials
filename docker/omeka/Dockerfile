@@ -20,7 +20,9 @@ RUN apt-get update \
     && docker-php-ext-install pdo_mysql \
     && a2enmod rewrite
 
-RUN curl -sSfL -o /tmp/omeka-s.zip \
+# --retry: a 5xx of GitHub's release downloads is retried for about five minutes; a 404 is not.
+# --http1.1: over HTTP/2, curl 8.7.1 reported GitHub's 504 as error 56 and did not retry it.
+RUN curl -sSfL --http1.1 --retry 10 --retry-delay 30 -o /tmp/omeka-s.zip \
         "https://github.com/omeka/omeka-s/releases/download/v${OMEKA_VERSION}/omeka-s-${OMEKA_VERSION}.zip" \
     && echo "${OMEKA_SHA256}  /tmp/omeka-s.zip" | sha256sum -c - \
     && unzip -q /tmp/omeka-s.zip -d /tmp \

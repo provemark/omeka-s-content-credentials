@@ -296,6 +296,7 @@ Open for Maurice, after measuring:
 | M7.17 | A security policy, `SECURITY.md` | done: [`notes/step-47-security-policy.md`](../notes/step-47-security-policy.md) |
 | M7.18 | Maurice's trial of the zip, before the release | done: [`notes/step-48-the-trial.md`](../notes/step-48-the-trial.md) |
 | M7.19 | Release 0.1.0: tag `v0.1.0` and the GitHub release with the zip | done: [`notes/step-49-release-0-1-0.md`](../notes/step-49-release-0-1-0.md) |
+| M7.20 | Retry GitHub's release downloads, after a 504 outage turned CI red | done: [`notes/step-50-retrying-downloads.md`](../notes/step-50-retrying-downloads.md) |
 
 **M7.5 is done (2026-11-06):** `tools/build.sh` makes the zip, which holds `vendor-prefixed/` and no
 `vendor/` (ADR-0006; M7's row above says "prefixed `vendor/`"), and which is tested in a clean
