@@ -1105,3 +1105,5 @@ README are where the disclosure lives.
   `up.sh` and `release.sh`, the CI cache, the measurements and `notes/step-51-caching-downloads.md`.
 - Then: the assistant's first cache used one key for both files, so only the first job's files were
   kept (no Strauss); split into two caches, recorded in the note.
+- Then: asked "ok, doe punt 1 en 2": the tag run's green fourth attempt recorded in the note, and
+  the trial and test environments taken down.

@@ -70,3 +70,12 @@ on every run. Split into two caches the same day.
   is not covered.
 - At 11:05 UTC GitHub's release downloads still answered 502 and 503, and a request could hang
   without an answer: curl has no time limit here. Not changed in this step.
+
+## The tag run (measured)
+
+The tag run of `v0.1.0` (42464340662) runs the code as tagged, without the retry and without the
+cache, so it could only pass once GitHub's release downloads were steady again. A loop fetched the
+Omeka S zip once a minute (`curl --http1.1 -m 90`) and counted answers of 200 in a row: ten in a row
+at 11:56:20 UTC. Its failed jobs were then rerun (`gh run rerun 42464340662 --failed`), and attempt 4
+was green at 12:07:59 UTC (`gh run view 42464340662 --json attempt,conclusion,updatedAt`). Release
+0.1.0 has a green CI run.
