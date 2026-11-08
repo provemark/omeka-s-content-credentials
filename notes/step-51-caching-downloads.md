@@ -50,7 +50,23 @@ the first job to finish: `gh cache list` showed one `downloads-…` entry of 17,
 10:26:12 by a static-checks job, which has no Strauss. The release jobs would have downloaded Strauss
 on every run. Split into two caches the same day.
 
-## Not yet measured
+## Measured in CI
 
-A CI run that fills the cache and a later run that restores it without downloading. At 10:25 UTC,
-when this was committed, GitHub's release downloads still answered 504.
+- Run 42472189621 (`ef0ebf5`), attempt 1: green at 10:51 UTC, while GitHub's release downloads were
+  still unsteady (the retry of step 50 carried the downloads). It saved `omeka-s-25087d72…`
+  (17,056,753 bytes, from a static-checks job at 10:37:45) and `strauss-66233575…` (1,971,714 bytes,
+  from a release job at 10:46:28) (`gh cache list`).
+- The same run, attempt 2, every job rerun: green. Each of the seven jobs that download logs "Cache
+  restored from key" for `omeka-s-…`, and each of the three release jobs also for `strauss-…`. The
+  log has no `curl:` line and no `releases/download` address. (curl runs silently unless it fails, so
+  the absence of those lines shows no failed download, not that none was attempted; that none was
+  attempted follows from the scripts, which download only a missing file.)
+
+## Limits
+
+- GitHub evicts a cache unused for seven days. On a quiet repository the next run downloads again,
+  with step 50's retry.
+- The images still pull the PHP and MariaDB images from Docker Hub and run `apt-get`; an outage there
+  is not covered.
+- At 11:05 UTC GitHub's release downloads still answered 502 and 503, and a request could hang
+  without an answer: curl has no time limit here. Not changed in this step.
