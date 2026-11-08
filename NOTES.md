@@ -212,6 +212,7 @@ Registration on omeka.org is still his go.
 | M7.29 | [`notes/step-59-evidence-for-omeka-roles.md`](notes/step-59-evidence-for-omeka-roles.md): the evidence controller allowed for Omeka's six roles, not for a role another module adds (measured with an added `guest` role) |
 | M7.30 | [`notes/step-60-dev-tool-advisories.md`](notes/step-60-dev-tool-advisories.md): three Symfony packages of Deptrac to 7.4.23; `composer audit` clean, the zip was never affected |
 | M7.31 | [`notes/step-61-time-memory-and-evidence-size.md`](notes/step-61-time-memory-and-evidence-size.md): 530 MB verified in 2.55 s at 8 MiB peak (streamed); evidence 2–34 KB against a 16 MiB packet limit; no change, both recorded as limits |
+| M7.32 | [`notes/step-62-release-0-1-2.md`](notes/step-62-release-0-1-2.md): tag `v0.1.2` on `88ac321`, zip `662f093f…`; the upgrade from the published 0.1.1 keeps verdicts and evidence byte-identical and denies the added `guest` role |
 
 ## To measure before a spec rests on it
 

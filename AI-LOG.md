@@ -1194,3 +1194,13 @@ README are where the disclosure lives.
 - Then: the first script read the state from a field that does not exist and printed `NULL`;
   corrected. A Pixel photo `Invalid` without trust settings looked wrong and was traced to its
   expired signer before the numbers were used.
+
+## 2026-11-08: M7.32, release 0.1.2
+
+- Model: Claude Opus 5.5, Claude Code CLI
+- Asked: "ok, go voor release 0.1.2".
+- Produced: the version commit, the measurement of the upgrade from 0.1.1, the tag, the release with
+  its text, the download checks and `notes/step-62-release-0-1-2.md`; the environments taken down.
+- Then: `tools/build.sh` is not executable and builds from the commit, so the version was committed
+  before the zip was built; the first after-upgrade hash included the new upload and was redone for
+  the same two rows.
