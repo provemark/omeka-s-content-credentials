@@ -240,7 +240,7 @@ Each with a recommendation; Maurice decides.
    (`msgfmt --statistics`), so a Dutch installation still shows some of Omeka's own text in English;
    AC1 is about the module's text only.
 
-**Amendments to other specs, approved with this spec**
+## Amendments to other specs (approved with this one)
 
 - **SPEC-008 amendment 7:** AC3's top level gains `language/`; AC4 compares `language/` with HEAD's
   byte for byte, like `trust/`, `view/` and `config/`. `tools/build.sh` archives `language` too. Was:

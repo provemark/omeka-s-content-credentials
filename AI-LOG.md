@@ -1222,3 +1222,6 @@ README are where the disclosure lives.
 - Produced: the approval and the answered open questions in SPEC-009; the count of Omeka S 4.2.1's
   own Dutch translation (`msgfmt --statistics`: 1089 translated, 639 untranslated), recorded in the
   spec.
+- Then: the approval commit (`546c3e9`) was made while `bin/spec-check.php` failed on it (the
+  amendment block sat under the open questions without a status line; the exit code was lost in a
+  pipe); the block was moved to its own section, as in SPEC-008, and the check passes.
