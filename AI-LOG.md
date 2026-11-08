@@ -1225,3 +1225,14 @@ README are where the disclosure lives.
 - Then: the approval commit (`546c3e9`) was made while `bin/spec-check.php` failed on it (the
   amendment block sat under the open questions without a status line; the exit code was lost in a
   pipe); the block was moved to its own section, as in SPEC-008, and the check passes.
+
+## 2026-11-08: SPEC-009 amendment 1 proposed
+
+- Model: Claude Opus 5.5, Claude Code CLI
+- Asked: "maar waarom moet ik een nederlandse vertaling toevoegen?", then "ok, werk het amendement
+  uit".
+- Produced: SPEC-009 amendment 1, proposed: the module becomes translatable and ships no language;
+  the tests use a pseudo translation made from the template; AC5 and AC6 move to a later spec of a
+  shipped translation.
+- Then: the earlier recommendation had joined Omeka's requirement (translatable) and a choice
+  (a Dutch translation) into one; the amendment separates them.

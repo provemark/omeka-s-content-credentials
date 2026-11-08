@@ -249,6 +249,48 @@ Each with a recommendation; Maurice decides.
 SPEC-003 keeps its criteria: the strings it names are its English source strings, and its escaping
 is unchanged.
 
+## Amendments
+
+Proposed 2026-11-08, after approval and before any test or code, not yet approved. The criteria
+above keep their original words; this amendment says how they now read.
+
+1. **Translatable, no language shipped.** Maurice asked why the module must ship a Dutch
+   translation. Omeka's documentation asks that a module be translatable (a `translator`
+   configuration, every string marked, a template others can translate from), not that it ship
+   a language (step 57). A shipped language also has a cost: every new or changed string then
+   needs its translation before the tests pass, and a Dutch administrator still sees Omeka's own
+   untranslated third in English. So this spec makes the module translatable; a Dutch
+   translation becomes a later spec of its own, when a user asks for it or Maurice wants it.
+   - **Title:** "Translatable text". Was: "Translation, Dutch first". The file name stays.
+   - **Scope:** `language/nl_NL.po` and `language/nl_NL.mo` leave the scope; `language/` holds
+     `template.pot` only. A `.mo` an administrator puts in `language/` is loaded (step 63). Out of
+     scope gains: any shipped translation, Dutch included, and the check of a `.po` (AC5, AC6).
+   - **The pseudo translation.** The integration tests make, from `template.pot`, a `.mo` in
+     which each msgstr is its msgid between `⟦` and `⟧`, with the placeholders kept, and place
+     it as `language/nl_NL.mo` in the test environment only. The test support writes that `.mo`
+     in plain PHP; nothing is compiled with `msgfmt`, and no `.mo` is committed.
+   - **AC1** now reads: with locale `nl_NL` and the pseudo translation, every string of the module
+     on the pages AC1 names is shown between `⟦` and `⟧`, the values from the file filled in
+     unchanged and escaped once by `escapeHtml`, as before. So every string the module shows goes
+     through `translate()` and is in the template. Was: the Dutch of `nl_NL.po`.
+   - **AC2, AC3, AC4** stay as written. AC3 still holds: no `de_DE.mo` is shipped.
+   - **AC5 and AC6** move to the later spec of a shipped translation. Was: a complete Dutch
+     translation, and the placeholder check of a `.po`. AC4's `#, php-format` marks stay, so a
+     translator's `msgfmt -c` checks the placeholders.
+   - **AC7** stays as written; its `.mo` is a test file the test places, not a shipped one.
+   - **AC8** now reads: with the pseudo translation, each of the four messages is shown between
+     `⟦` and `⟧` as one whole; in the refusal, the module's own reason is translated and a reason
+     from the verifier is filled in as it is. Was: the Dutch translation.
+   - **AC9** stays as written, with the pseudo translation in place of the Dutch.
+   - **AC10** now reads: the zip holds `language/template.pot`, identical to HEAD's, and no `.po`
+     or `.mo`. Was: the Dutch headline in a clean Omeka S.
+   - **SPEC-008 amendment 7** now reads: AC3's top level gains `language/`, which holds only
+     `template.pot`; AC4 compares it with HEAD's byte for byte.
+   - **Open questions 1, 2 and 5** no longer apply: no `.po` or `.mo` is committed, no compiler
+     is used, so no ADR-0007, and the Dutch words wait for the later spec, the table there as a
+     starting point. Question 3 (the template script) and 4 (the fallback) stand as answered.
+     Question 6 now reads: an English user sees no change, so the release is 0.1.3, not 0.2.0.
+
 ## Traceability
 
 Filled when status becomes `implemented`.
