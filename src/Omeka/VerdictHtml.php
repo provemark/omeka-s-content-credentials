@@ -42,9 +42,15 @@ final class VerdictHtml
 
     public static function cell(Presentation $presentation, ViewText $text): string
     {
-        $html = '<span class="content-credentials-headline">'.$text->escape($text->translate($presentation->headline())).'</span>';
+        // One element: Omeka's admin table wraps a cell's content in a flex span
+        // (tablesaw-cell-content), which would set two elements side by side and
+        // ignore the <br> between them (SPEC-007 amendment 4).
+        $html = '<span class="content-credentials-cell"><span class="content-credentials-headline">'.$text->escape($text->translate($presentation->headline())).'</span>';
         $label = $presentation->aiLabel();
+        if ($label !== null) {
+            $html .= '<br><span class="content-credentials-ai">'.$text->escape($text->translate($label)).'</span>';
+        }
 
-        return $label === null ? $html : $html.'<br><span class="content-credentials-ai">'.$text->escape($text->translate($label)).'</span>';
+        return $html.'</span>';
     }
 }

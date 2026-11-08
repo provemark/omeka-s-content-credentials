@@ -415,6 +415,17 @@ Approved by Maurice van Loon on 2026-11-07:
    exact label only. Known limit: tested on constructed reports, as AC2 to AC6 are;
    no real file with such a label was found in 802 files.
 
+Approved by Maurice van Loon on 2026-11-08:
+
+4. **AC9, the label in the column.** Found while taking screenshots for the README
+   (`notes/step-54-the-label-in-the-column.md`). Omeka's admin table wraps each cell's
+   content in `<span class="tablesaw-cell-content">` with `display: flex`, so the
+   headline and the label were two flex items side by side and the `<br>` between
+   them did nothing: in a narrow column "AI-generated (signed)" broke inside the word.
+   AC9 now also reads: in the media browse, the cell holds one element, with the
+   label after a `<br>` inside it, so that the label stands on its own line under the
+   headline. Was: the headline and the label as two elements of the cell.
+
 ## Traceability
 
 Every acceptance criterion maps to at least one test; every source file maps

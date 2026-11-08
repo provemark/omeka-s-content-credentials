@@ -5,8 +5,8 @@ day the work was committed.
 
 ## Unreleased
 
-Nothing in the module changes; these are changes to the build and CI.
-
+- Fixed: in the media browse the AI label stands under the verdict, instead of beside it and broken
+  inside the word (SPEC-007 amendment 4). (2026-11-08)
 - Changed: GitHub's release downloads are retried over HTTP/1.1 (M7.20) and kept in a CI cache, and
   the test image is built from the zip `tools/fetch-omeka.sh` checked (M7.21). (2026-11-08)
 - Changed: a download that stalls, or a connection that does not complete, ends after a minute and

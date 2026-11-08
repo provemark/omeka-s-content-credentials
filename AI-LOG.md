@@ -1127,3 +1127,15 @@ README are where the disclosure lives.
 - Asked: "ok, werk stap 52 uit" (the second half of the proposal, split off as its own step).
 - Produced: `.github/dependabot.yml` (GitHub Actions only, monthly) and
   `notes/step-53-dependabot-for-actions.md`. No repository setting was changed.
+
+## 2026-11-08: M7.24, the AI label in the browse column
+
+- Model: Claude Opus 5.5, Claude Code CLI
+- Asked: "wat adviseer je voor de registratie op omeka.org? Moet er niet ook een uitleg?", then
+  "ok, werk stap 54 uit, met schermafbeeldingen", then "ok, akkoord met beide, author_link naar
+  github.com/provemark".
+- Produced: the screenshots that showed the fault, the measurement of Omeka's flex cell, SPEC-007
+  amendment 4 (approved), the red test, the change in `VerdictHtml::cell()` and
+  `notes/step-54-the-label-in-the-column.md`.
+- Then: the integration tests filled the environment the screenshots were taken in; it was reset
+  and the four media added again before the screenshots were retaken.

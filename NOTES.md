@@ -204,6 +204,7 @@ Registration on omeka.org is still his go.
 | M7.21 | [`notes/step-51-caching-downloads.md`](notes/step-51-caching-downloads.md): `actions/cache` for the Omeka S zip and the Strauss phar; the image copies the zip `tools/fetch-omeka.sh` checked; compose's `additional_contexts` tried and dropped (classic builder) |
 | M7.22 | [`notes/step-52-stalled-downloads.md`](notes/step-52-stalled-downloads.md): `--connect-timeout 30 --speed-limit 1000 --speed-time 60` on the two release downloads; a stalled transfer and an incomplete connection end as error 28, which `--retry` retries; `-m` not chosen |
 | M7.23 | [`notes/step-53-dependabot-for-actions.md`](notes/step-53-dependabot-for-actions.md): `.github/dependabot.yml` for `github-actions` only, monthly; Composer left out (the bundled verifier is a release decision); security alerts are a repository setting, Maurice's |
+| M7.24 | [`notes/step-54-the-label-in-the-column.md`](notes/step-54-the-label-in-the-column.md): Omeka's tablesaw wraps a cell in a flex span, so the label stood beside the verdict; the cell is now one element (SPEC-007 amendment 4) |
 
 ## To measure before a spec rests on it
 

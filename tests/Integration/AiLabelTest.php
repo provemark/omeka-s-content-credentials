@@ -270,9 +270,13 @@ it('AC9: the label follows the state on every page', function (string $state, st
         return;
     }
     $first = '#</h4><div class="value">[^<]+</div><div class="value">'.preg_quote($label, '#').'</div>#';
+    // Amendment 4: one element, so that Omeka's flex cell (tablesaw-cell-content)
+    // keeps the label on its own line under the headline.
+    $one = '#^<span class="content-credentials-cell"><span class="content-credentials-headline">[^<]+</span>'
+        .'<br><span class="content-credentials-ai">'.preg_quote($label, '#').'</span></span>$#';
     expect($block)->toMatch($first)
         ->and($details)->toMatch($first)
-        ->and($cell)->toContain($label);
+        ->and(trim($cell))->toMatch($one);
 })->with([
     ['Trusted', 'generated', SPEC007_GENERATED],
     ['Valid', 'generated', SPEC007_GENERATED],
