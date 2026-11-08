@@ -30,4 +30,14 @@ actions, weekly, `gh api …/contents/.github/dependabot.yml`); `c2pa-verifier` 
 ## Measured
 
 - The file parses as YAML (`ruby -ryaml`), with `version: 2` and one update entry.
-- After the push: see the record below.
+- After the push (`579dcad`), GitHub ran "Dependabot Updates" twice (42482204754 and 42482207423,
+  both green by 12:52:12 UTC; why twice was not looked into). Each log lists the three actions:
+  "No update needed" for `shivammathur/setup-php` 2.40.0, `actions/checkout` 7.0.1 and
+  `actions/cache` 6.1.0, with "Latest version is" the same. No pull request was opened
+  (`gh pr list --state all`).
+- CI on `8458fa0` (step 52, run 42482141824) and on `579dcad` (run 42482199578): green.
+
+## Limits
+
+- That a pull request comes when an action has a new release, and that its CI runs, is not yet
+  seen: every action was current. The first monthly run, or a new release, will show it.
