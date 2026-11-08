@@ -24,7 +24,7 @@ final class EvidenceHtml
             return $html.'<p>'.$text->escape($text->translate('No evidence is kept for this media item.')).'</p>';
         }
         $html .= '<table class="tablesaw content-credentials-evidence"><thead><tr>';
-        foreach (['Checked', 'Verifier', 'Trust', 'File SHA-256', 'Document'] as $heading) {
+        foreach (['Checked', 'Verifier', 'Trust', 'File SHA-256', 'Document'] as $heading) { // @translate
             $html .= '<th>'.$text->escape($text->translate($heading)).'</th>';
         }
         $html .= '</tr></thead><tbody>';

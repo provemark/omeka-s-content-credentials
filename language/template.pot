@@ -1,0 +1,258 @@
+# Content Credentials (C2PA) for Omeka S: the module's translatable strings.
+# Made by bin/i18n-template.php (SPEC-009); not edited by hand.
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+
+msgid "(unknown value)"
+msgstr ""
+
+msgid "A run is already in progress; no new run was started."
+msgstr ""
+
+msgid "A run is in progress. To stop it, use Stop on its job page."
+msgstr ""
+
+msgid "AI-edited (signed)"
+msgstr ""
+
+msgid "AI-generated (signed)"
+msgstr ""
+
+msgid "Accept the time DigiCert's timestamp authorities put on a signature (DigiCert Trusted Root G4). Used with the bundled lists only."
+msgstr ""
+
+msgid "All checks of this media item"
+msgstr ""
+
+msgid "Any"
+msgstr ""
+
+msgid "Back to the media item"
+msgstr ""
+
+#, php-format
+msgid "C2PA trust list of %1$s (commit %2$s), last compared with the published list on %3$s"
+msgstr ""
+
+msgid "Changes apply to new uploads and to runs started below; until such a run, media checked before keep their verdict."
+msgstr ""
+
+msgid "Check all media"
+msgstr ""
+
+msgid "Check existing media"
+msgstr ""
+
+msgid "Check media without a result"
+msgstr ""
+
+msgid "Checked"
+msgstr ""
+
+#, php-format
+msgid "Checked %1$s UTC with c2pa-verifier %2$s"
+msgstr ""
+
+msgid "Checking existing media has started. Its status is on this module's configure page."
+msgstr ""
+
+msgid "Checks media that are already in Omeka S again, in the background, with the saved trust settings. The buttons below start a run; they do not save changes made above."
+msgstr ""
+
+msgid "Codes:"
+msgstr ""
+
+msgid "Completed"
+msgstr ""
+
+msgid "Content Credentials"
+msgstr ""
+
+msgid "Content Credentials: AI statement"
+msgstr ""
+
+msgid "Could not be checked"
+msgstr ""
+
+msgid "Custom trust settings"
+msgstr ""
+
+msgid "DigiCert timestamps"
+msgstr ""
+
+msgid "Document"
+msgstr ""
+
+msgid "Does not verify"
+msgstr ""
+
+msgid "Download"
+msgstr ""
+
+msgid "Evidence"
+msgstr ""
+
+msgid "Evidence document"
+msgstr ""
+
+#, php-format
+msgid "Evidence: %s checks kept"
+msgstr ""
+
+msgid "Evidence: 1 check kept"
+msgstr ""
+
+msgid "Failed"
+msgstr ""
+
+msgid "File SHA-256"
+msgstr ""
+
+msgid "In progress"
+msgstr ""
+
+msgid "Intact: signer not trusted"
+msgstr ""
+
+msgid "Job page"
+msgstr ""
+
+#, php-format
+msgid "Latest run: %1$s, ended %2$s."
+msgstr ""
+
+#, php-format
+msgid "Latest run: %1$s, started %2$s, ended %3$s."
+msgstr ""
+
+#, php-format
+msgid "Latest run: %1$s, started %2$s."
+msgstr ""
+
+#, php-format
+msgid "Latest run: %s."
+msgstr ""
+
+msgid "Mark this run as ended"
+msgstr ""
+
+msgid "No Content Credentials"
+msgstr ""
+
+msgid "No evidence is kept for this media item."
+msgstr ""
+
+msgid "No run was marked as ended."
+msgstr ""
+
+msgid "No run was started: unknown kind of run."
+msgstr ""
+
+msgid "Not checked"
+msgstr ""
+
+#, php-format
+msgid "Reason: %s"
+msgstr ""
+
+msgid "Reason: the check did not finish"
+msgstr ""
+
+msgid "Reason: the file could not be read"
+msgstr ""
+
+msgid "Reason: the verifier failed"
+msgstr ""
+
+msgid "Reason: this server's PHP is older than 8.3"
+msgstr ""
+
+#, php-format
+msgid "Refers to Content Credentials elsewhere (not checked): %s"
+msgstr ""
+
+msgid "Result unreadable"
+msgstr ""
+
+#, php-format
+msgid "Signed at %s"
+msgstr ""
+
+#, php-format
+msgid "Signed by %1$s (%2$s)"
+msgstr ""
+
+#, php-format
+msgid "Signed by %s"
+msgstr ""
+
+msgid "Starting"
+msgstr ""
+
+msgid "Stopped"
+msgstr ""
+
+msgid "Stopping"
+msgstr ""
+
+msgid "The bundled trust lists cannot be used; new uploads and runs are checked without a trust list."
+msgstr ""
+
+#, php-format
+msgid "The bundled trust lists were last compared with the published lists on %s, more than six months ago. A newer release of this module may have newer lists."
+msgstr ""
+
+msgid "The run could not start; see its job page."
+msgstr ""
+
+msgid "The run was marked as ended."
+msgstr ""
+
+msgid "The saved custom trust settings cannot be used; new uploads and runs are checked without a trust list."
+msgstr ""
+
+#, php-format
+msgid "These trust settings were not saved: %s"
+msgstr ""
+
+msgid "This run has not finished. A run that is still working moves on within moments; one that stays like this no longer has a process."
+msgstr ""
+
+msgid "Trust"
+msgstr ""
+
+msgid "Trust settings in the JSON format of c2patool --settings. They replace the bundled lists entirely; leave empty to use the bundled lists."
+msgstr ""
+
+msgid "Trust: custom trust settings"
+msgstr ""
+
+msgid "Trust: none (checked without a trust list)"
+msgstr ""
+
+#, php-format
+msgid "Trust: the C2PA trust list of %s"
+msgstr ""
+
+#, php-format
+msgid "Trust: the C2PA trust list of %s, with DigiCert timestamps"
+msgstr ""
+
+msgid "Unknown"
+msgstr ""
+
+msgid "Verified: trusted signer"
+msgstr ""
+
+msgid "Verifier"
+msgstr ""
+
+msgid "View"
+msgstr ""
+
+msgid "larger than 1 MiB"
+msgstr ""
+
+msgid "the trust settings could not be read"
+msgstr ""

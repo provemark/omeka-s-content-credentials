@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace ContentCredentials;
 
+use ContentCredentials\Display\Format;
 use ContentCredentials\Display\RecheckSection;
 use ContentCredentials\Omeka\AdminDisplay;
 use ContentCredentials\Omeka\AfterFlushListener;
@@ -14,6 +15,7 @@ use Doctrine\DBAL\Connection;
 use Laminas\EventManager\EventInterface;
 use Laminas\EventManager\SharedEventManagerInterface;
 use Laminas\Http\Request;
+use Laminas\I18n\Translator\TranslatorInterface;
 use Laminas\Mvc\Controller\AbstractController;
 use Laminas\Mvc\MvcEvent;
 use Laminas\ServiceManager\ServiceLocatorInterface;
@@ -41,9 +43,11 @@ use Omeka\Settings\Settings;
  * show the verdict (SPEC-003). The configure page holds the trust settings
  * every check uses (SPEC-004); uninstalling removes them. The same page
  * starts a run over existing media and shows the latest (SPEC-005). Every
- * check keeps its evidence; the admin pages that show it are open to every
- * role, and read the media item first, so access follows the media
- * (SPEC-006, ADR-0005).
+ * check keeps its evidence; the admin pages that show it are open to Omeka's
+ * own roles (SPEC-006 amendment 1), and read the media item first, so access follows the media
+ * (SPEC-006, ADR-0005). Its text is translatable: config/module.config.php
+ * loads language/<locale>.mo, and language/template.pot lists every string
+ * (SPEC-009).
  *
  * Keep this file parseable on PHP 8.1: Omeka S 4.2 runs from 8.1 and loads it
  * before the module can say it needs 8.3 (ADR-0001).
@@ -168,8 +172,13 @@ final class Module extends AbstractModule
         $custom = $fields['content_credentials_custom_settings'] ?? '';
         $this->refused = is_string($custom) ? $custom : '';
         $this->refusedDigicert = TrustConfig::submittedDigicert($fields);
+        // One format, so that a translation can order it, filled in here so that
+        // a translation that breaks it gives the English (SPEC-009 AC7, AC8); the
+        // module's own reasons are translated, the verifier's stay as it gave them.
         // Plain text: Omeka's messages() escapes it (step 15).
-        (new Messenger)->addError('These trust settings were not saved: '.$refusal);
+        $translate = $this->translator();
+        $format = 'These trust settings were not saved: %s'; // @translate
+        (new Messenger)->addError(Format::fill($translate($format), $format, [$translate($refusal)]));
 
         return false;
     }
@@ -197,6 +206,18 @@ final class Module extends AbstractModule
         $sharedEventManager->attach($adminMedia, 'view.advanced_search', $display('advancedSearch'));
         $sharedEventManager->attach($adminMedia, 'view.search.filters', $display('searchFilters'));
         $sharedEventManager->attach('Omeka\Api\Adapter\MediaAdapter', 'api.search.query', $display('searchQuery'));
+    }
+
+    /**
+     * Omeka's translator as a function; the source string when there is none.
+     *
+     * @return \Closure(string): string
+     */
+    private function translator(): \Closure
+    {
+        $translator = $this->getServiceLocator()->get('MvcTranslator');
+
+        return static fn (string $source): string => $translator instanceof TranslatorInterface ? $translator->translate($source) : $source;
     }
 
     private static function connection(ServiceLocatorInterface $serviceLocator): Connection

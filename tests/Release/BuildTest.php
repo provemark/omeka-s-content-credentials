@@ -120,7 +120,7 @@ it('AC3: the zip holds what ADR-0006 lists, and nothing else', function (): void
     $prefixed = array_values($prefixed);
     sort($prefixed);
 
-    expect($top)->toBe(['CHANGELOG.md', 'LICENSE', 'Module.php', 'README.md', 'config', 'src', 'trust', 'vendor-prefixed', 'view'])
+    expect($top)->toBe(['CHANGELOG.md', 'LICENSE', 'Module.php', 'README.md', 'config', 'language', 'src', 'trust', 'vendor-prefixed', 'view'])
         ->and($prefixed)->toBe([
             'provemark/',
             'provemark/c2pa-verifier/',
@@ -146,7 +146,7 @@ it('AC4: nothing but the prefix changed', function (): void {
     expect($actual)->toBe($expected)
         ->and(hash_file('sha256', $verifier.'/LICENSE'))->toBe(hash_file('sha256', $original.'/LICENSE'));
 
-    foreach (['trust', 'view', 'config'] as $directory) {
+    foreach (['trust', 'view', 'config', 'language'] as $directory) {
         expect(releaseHashes($module.'/'.$directory))->toBe(releaseHashes($root.'/'.$directory));
     }
     expect(hash_file('sha256', $module.'/Module.php'))->toBe(hash_file('sha256', $root.'/Module.php'));
@@ -158,6 +158,13 @@ it('AC4: nothing but the prefix changed', function (): void {
         }
     }
 })->group('SPEC-008');
+
+it('AC10: the zip carries the template and no translation', function (): void {
+    $language = releaseUnpacked().'/language';
+
+    expect(array_keys(releaseHashes($language)))->toBe(['template.pot'])
+        ->and(hash_file('sha256', $language.'/template.pot'))->toBe(hash_file('sha256', releaseRoot().'/language/template.pot'));
+})->group('SPEC-009');
 
 it('AC16: CI runs the zip on every PHP the README promises', function (): void {
     $workflow = (string) file_get_contents(releaseRoot().'/.github/workflows/ci.yml');

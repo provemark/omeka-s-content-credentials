@@ -25,12 +25,12 @@ final class RecheckSection
 
     /** Omeka's job statuses, in the module's words. */
     public const STATUSES = [
-        'starting' => 'Starting',
-        'in_progress' => 'In progress',
-        'stopping' => 'Stopping',
-        'completed' => 'Completed',
-        'stopped' => 'Stopped',
-        'error' => 'Failed',
+        'starting' => 'Starting', // @translate
+        'in_progress' => 'In progress', // @translate
+        'stopping' => 'Stopping', // @translate
+        'completed' => 'Completed', // @translate
+        'stopped' => 'Stopped', // @translate
+        'error' => 'Failed', // @translate
     ];
 
     public const RUNNING = ['starting', 'in_progress', 'stopping'];
@@ -50,14 +50,15 @@ final class RecheckSection
             .'<p>'.$t('Checks media that are already in Omeka S again, in the background, with the saved trust settings. The buttons below start a run; they do not save changes made above.').'</p>';
         $running = $latest !== null && in_array($latest['status'], self::RUNNING, true);
         if ($latest !== null) {
-            $html .= '<p>'.$t('Latest run:').' '.$t(self::STATUSES[$latest['status']] ?? 'Unknown');
-            if ($latest['started'] !== null) {
-                $html .= ', '.$escape(sprintf($translate('started %s'), $latest['started']));
-            }
-            if ($latest['ended'] !== null) {
-                $html .= ', '.$escape(sprintf($translate('ended %s'), $latest['ended']));
-            }
-            $html .= '.';
+            // One sentence per case, so that a translation can order it (SPEC-009).
+            $status = $translate(self::STATUSES[$latest['status']] ?? 'Unknown'); // @translate
+            [$format, $values] = match (true) {
+                $latest['started'] !== null && $latest['ended'] !== null => ['Latest run: %1$s, started %2$s, ended %3$s.', [$status, $latest['started'], $latest['ended']]], // @translate
+                $latest['started'] !== null => ['Latest run: %1$s, started %2$s.', [$status, $latest['started']]], // @translate
+                $latest['ended'] !== null => ['Latest run: %1$s, ended %2$s.', [$status, $latest['ended']]], // @translate
+                default => ['Latest run: %s.', [$status]], // @translate
+            };
+            $html .= '<p>'.$escape(Format::fill($translate($format), $format, $values));
             if ($jobUrl !== null) {
                 $html .= ' <a href="'.$escape($jobUrl).'">'.$t('Job page').'</a>';
             }

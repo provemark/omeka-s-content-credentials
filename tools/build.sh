@@ -43,7 +43,7 @@ if [ "$actual" != "$strauss_sha256" ]; then
     exit 1
 fi
 
-git -C "$root" archive "$ref" Module.php LICENSE README.md CHANGELOG.md composer.json composer.lock config src trust view | tar -x -C "$dir"
+git -C "$root" archive "$ref" Module.php LICENSE README.md CHANGELOG.md composer.json composer.lock config language src trust view | tar -x -C "$dir"
 version=$(php -r '$i = parse_ini_file($argv[1], true); echo $i["info"]["version"];' "$dir/config/module.ini")
 
 composer install --working-dir="$dir" --no-dev --optimize-autoloader --no-interaction --no-progress --quiet --no-scripts

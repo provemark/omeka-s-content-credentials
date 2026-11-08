@@ -335,5 +335,5 @@ found internationalization the one documented Omeka requirement the module does 
 |---|---|---|
 | M8.1 | Measure how Omeka S 4.2.1 loads a module's translation, which locale wins, and what a bad translation does | done: [`notes/step-63-how-omeka-translates.md`](../notes/step-63-how-omeka-translates.md) |
 | M8.2 | The M8 spec (`draft`), with the open choices and recommendations, and SPEC-008 amendment 7 | done: [`specs/SPEC-009-translation.md`](../specs/SPEC-009-translation.md), approved 2026-11-08 with all recommendations |
-| M8.3 | SPEC-009 amendment 1: translatable, no language shipped; a Dutch translation becomes a later spec | proposed 2026-11-08 |
-| M8.4 | After approval of amendment 1: the tests red, then the implementation | open |
+| M8.3 | SPEC-009 amendment 1: translatable, no language shipped; a Dutch translation becomes a later spec | done: approved 2026-11-08 |
+| M8.4 | The tests red, then the implementation of SPEC-009 with amendment 1 | done: [`notes/step-64-translatable-text.md`](../notes/step-64-translatable-text.md) |

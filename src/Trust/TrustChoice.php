@@ -80,7 +80,7 @@ final class TrustChoice
     public static function refusal(string $custom): ?string
     {
         if (strlen($custom) > self::MAX_CUSTOM_BYTES) {
-            return 'larger than 1 MiB';
+            return 'larger than 1 MiB'; // @translate
         }
         if (trim($custom) === '') {
             return null;
@@ -92,7 +92,7 @@ final class TrustChoice
         } catch (TrustException $e) {
             return $e->getMessage();
         } catch (Throwable) {
-            return 'the trust settings could not be read';
+            return 'the trust settings could not be read'; // @translate
         }
     }
 }

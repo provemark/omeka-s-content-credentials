@@ -1236,3 +1236,16 @@ README are where the disclosure lives.
   shipped translation.
 - Then: the earlier recommendation had joined Omeka's requirement (translatable) and a choice
   (a Dutch translation) into one; the amendment separates them.
+
+## 2026-11-08: M8.4, translatable text
+
+- Model: Claude Opus 5.5, Claude Code CLI
+- Asked: "ok, akkoord met het amendement, begin met M8.4".
+- Produced: the tests of SPEC-009 (unit, integration, release), seen red; `bin/i18n-template.php`,
+  `language/template.pot`, `src/Display/Format.php`, the `translator` key, the `// @translate`
+  marks and the sentences made whole; SPEC-008 amendment 7 recorded; the tmpfs in `compose.yaml`;
+  `notes/step-64-translatable-text.md`.
+- Then: AC7's first expectation named the wrong headline for its fixture; the template script first
+  took the word `error` from a comparison on a marked line, so the message moved to a line of its
+  own; the test's `.mo` written on the host reached the container stale and gave a 500, so it is now
+  written in the container.

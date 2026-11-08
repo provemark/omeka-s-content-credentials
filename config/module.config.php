@@ -7,6 +7,19 @@ use ContentCredentials\Omeka\StateColumnFactory;
 use Laminas\Router\Http\Segment;
 
 return [
+    // SPEC-009: the module's strings are translated from language/<locale>.mo,
+    // a file this module does not ship (amendment 1); language/template.pot
+    // lists them. Omeka S merges this with its own translator (step 63).
+    'translator' => [
+        'translation_file_patterns' => [
+            [
+                'type' => 'gettext',
+                'base_dir' => dirname(__DIR__).'/language',
+                'pattern' => '%s.mo',
+                'text_domain' => null,
+            ],
+        ],
+    ],
     // SPEC-002 / ADR-0003: the verdict table as a Doctrine entity, mapped as
     // the Mapping module maps its own; no proxy_paths (step 10).
     'entity_manager' => [

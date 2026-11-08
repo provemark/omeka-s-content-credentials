@@ -2,7 +2,7 @@
 
 | Field      | Value                                             |
 |------------|---------------------------------------------------|
-| Status     | approved                                          |
+| Status     | implemented                                       |
 | Author     | Maurice van Loon                                  |
 | Approved   | Maurice van Loon, 2026-11-08                      |
 | Supersedes | —                                                 |
@@ -251,8 +251,8 @@ is unchanged.
 
 ## Amendments
 
-Proposed 2026-11-08, after approval and before any test or code, not yet approved. The criteria
-above keep their original words; this amendment says how they now read.
+Approved by Maurice van Loon on 2026-11-08, after the spec and before any test or code. The
+criteria above keep their original words; this amendment says how they now read.
 
 1. **Translatable, no language shipped.** Maurice asked why the module must ship a Dutch
    translation. Omeka's documentation asks that a module be translatable (a `translator`
@@ -297,13 +297,13 @@ Filled when status becomes `implemented`.
 
 | Acceptance criterion | Test (file :: name / group) | Source (file/symbol) |
 |----------------------|-----------------------------|----------------------|
-| AC1                  | —                           | —                    |
-| AC2                  | —                           | —                    |
-| AC3                  | —                           | —                    |
-| AC4                  | —                           | —                    |
-| AC5                  | —                           | —                    |
-| AC6                  | —                           | —                    |
-| AC7                  | —                           | —                    |
-| AC8                  | —                           | —                    |
-| AC9                  | —                           | —                    |
-| AC10                 | —                           | —                    |
+| AC1 | `tests/Integration/TranslationTest.php` :: AC1: with a translation, every string of the module on every page is translated | `config/module.config.php` (`translator`); the `// @translate` marks in `src/`; `RecheckSection::html()` (one format per case) |
+| AC2 | `tests/Integration/TranslationTest.php` :: AC2: a user whose own locale is English sees English; every earlier integration test, unchanged | (Omeka S's locale) |
+| AC3 | `tests/Integration/TranslationTest.php` :: AC3: a locale the module has no translation for shows the module in English, and every page answers | (no `.mo` shipped) |
+| AC4 | `tests/Unit/TranslationTest.php` :: AC4: the committed template is what the script writes; the template holds the strings the module passes on; a format is marked php-format, nothing else is, and no msgid is only a placeholder; the script takes literal calls and marked lines, and leaves keys and unmarked strings | `bin/i18n-template.php`, `language/template.pot` |
+| AC5 | moved to a later spec of a shipped translation by amendment 1 | — |
+| AC6 | moved to a later spec of a shipped translation by amendment 1 | — |
+| AC7 | `tests/Unit/TranslationTest.php` :: AC7 (three tests); `tests/Integration/TranslationTest.php` :: AC7: a translation that breaks a format does not take a page down | `src/Display/Format.php`; `ViewText::line()`; `SettingsPage::html()`; `RecheckSection::html()`; `Module::handleConfigForm()` |
+| AC8 | `tests/Integration/TranslationTest.php` :: AC8: the messages of the configure page are translated whole | `Module::handleConfigForm()`, `Module::translator()`; the marks in `RecheckRuns` and `TrustChoice::refusal()` |
+| AC9 | `tests/Integration/TranslationTest.php` :: AC9: what is not translated stays as it was | (unchanged: `EvidenceController`, `Presentation::of()`'s codes) |
+| AC10 | `tests/Release/BuildTest.php` :: AC10: the zip carries the template and no translation; SPEC-008 AC3 and AC4 (amendment 7) | `tools/build.sh` |

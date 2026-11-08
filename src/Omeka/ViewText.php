@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace ContentCredentials\Omeka;
 
+use ContentCredentials\Display\Format;
 use Laminas\View\Renderer\PhpRenderer;
 
 /**
@@ -33,12 +34,13 @@ final class ViewText
 
     /**
      * A line of a Presentation: its format translated, its values filled
-     * in, the whole escaped once.
+     * in, the whole escaped once. A translation the values do not fit gives
+     * the English line (SPEC-009 AC7).
      *
      * @param  array{string, list<string>}  $line
      */
     public function line(array $line): string
     {
-        return $this->escape(vsprintf($this->translate($line[0]), $line[1]));
+        return $this->escape(Format::fill($this->translate($line[0]), $line[0], $line[1]));
     }
 }

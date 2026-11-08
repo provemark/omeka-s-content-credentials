@@ -29,28 +29,28 @@ final class Presentation
     public const STATES = [self::TRUSTED, self::VALID, self::INVALID, Verdict::NONE, Verdict::ERROR];
 
     public const HEADLINES = [
-        self::TRUSTED => 'Verified: trusted signer',
-        self::VALID => 'Intact: signer not trusted',
-        self::INVALID => 'Does not verify',
-        Verdict::NONE => 'No Content Credentials',
-        Verdict::ERROR => 'Could not be checked',
+        self::TRUSTED => 'Verified: trusted signer', // @translate
+        self::VALID => 'Intact: signer not trusted', // @translate
+        self::INVALID => 'Does not verify', // @translate
+        Verdict::NONE => 'No Content Credentials', // @translate
+        Verdict::ERROR => 'Could not be checked', // @translate
     ];
 
     /** The labels of SPEC-007: English source strings, for `translate`. */
     public const AI_LABELS = [
-        AiStatement::GENERATED => 'AI-generated (signed)',
-        AiStatement::EDITED => 'AI-edited (signed)',
+        AiStatement::GENERATED => 'AI-generated (signed)', // @translate
+        AiStatement::EDITED => 'AI-edited (signed)', // @translate
     ];
 
-    public const NOT_CHECKED = 'Not checked';
+    public const NOT_CHECKED = 'Not checked'; // @translate
 
-    public const UNREADABLE = 'Result unreadable';
+    public const UNREADABLE = 'Result unreadable'; // @translate
 
     private const REASONS = [
-        Verdict::INTERRUPTED => 'Reason: the check did not finish',
-        Verdict::UNREADABLE => 'Reason: the file could not be read',
-        Verdict::EXCEPTION => 'Reason: the verifier failed',
-        Verdict::REQUIREMENTS => "Reason: this server's PHP is older than 8.3",
+        Verdict::INTERRUPTED => 'Reason: the check did not finish', // @translate
+        Verdict::UNREADABLE => 'Reason: the file could not be read', // @translate
+        Verdict::EXCEPTION => 'Reason: the verifier failed', // @translate
+        Verdict::REQUIREMENTS => "Reason: this server's PHP is older than 8.3", // @translate
     ];
 
     /**
@@ -87,33 +87,33 @@ final class Presentation
             $lines[] = [self::REASONS[$reason], []];
         }
         if ($state === self::INVALID) {
-            $lines[] = ['Codes:', []];
+            $lines[] = ['Codes:', []]; // @translate
             foreach ($codes as $code) {
                 $lines[] = ['%s', [Text::visible($code)]];
             }
         }
         $url = self::text($row, 'remote_manifest_url');
         if ($state === Verdict::NONE && $url !== null) {
-            $lines[] = ['Refers to Content Credentials elsewhere (not checked): %s', [$url]];
+            $lines[] = ['Refers to Content Credentials elsewhere (not checked): %s', [$url]]; // @translate
         }
         if (in_array($state, [self::TRUSTED, self::VALID, self::INVALID], true)) {
             // SPEC-003 amendment 5: name what is present, never an empty place.
             $name = self::present($row, 'signer_common_name');
             $issuer = self::present($row, 'signer_issuer');
             if ($name !== null && $issuer !== null) {
-                $lines[] = ['Signed by %1$s (%2$s)', [$name, $issuer]];
+                $lines[] = ['Signed by %1$s (%2$s)', [$name, $issuer]]; // @translate
             } elseif ($name !== null || $issuer !== null) {
-                $lines[] = ['Signed by %s', [$name ?? $issuer]];
+                $lines[] = ['Signed by %s', [$name ?? $issuer]]; // @translate
             }
             $signedAt = self::text($row, 'signed_at');
             if ($signedAt !== null) {
-                $lines[] = ['Signed at %s', [$signedAt]];
+                $lines[] = ['Signed at %s', [$signedAt]]; // @translate
             }
         }
         $checkedAt = self::text($row, 'checked_at');
         $verifier = self::text($row, 'verifier');
         if ($checkedAt !== null && $verifier !== null) {
-            $lines[] = ['Checked %1$s UTC with c2pa-verifier %2$s', [$checkedAt, $verifier]];
+            $lines[] = ['Checked %1$s UTC with c2pa-verifier %2$s', [$checkedAt, $verifier]]; // @translate
         }
         if ($trust !== null) {
             $lines[] = $trust;
@@ -142,13 +142,13 @@ final class Presentation
         }
         if (preg_match('/^c2pa-(\d{4}-\d{2}-\d{2})(\+digicert)?$/', $trust, $m) === 1) {
             return isset($m[2])
-                ? ['Trust: the C2PA trust list of %s, with DigiCert timestamps', [$m[1]]]
-                : ['Trust: the C2PA trust list of %s', [$m[1]]];
+                ? ['Trust: the C2PA trust list of %s, with DigiCert timestamps', [$m[1]]] // @translate
+                : ['Trust: the C2PA trust list of %s', [$m[1]]]; // @translate
         }
 
         return match ($trust) {
-            'custom' => ['Trust: custom trust settings', []],
-            'none' => ['Trust: none (checked without a trust list)', []],
+            'custom' => ['Trust: custom trust settings', []], // @translate
+            'none' => ['Trust: none (checked without a trust list)', []], // @translate
             default => false,
         };
     }

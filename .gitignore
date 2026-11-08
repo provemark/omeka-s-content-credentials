@@ -31,3 +31,5 @@ CLAUDE.md
 
 # Files the tests make at run time
 /tests/tmp/
+# SPEC-009: the integration tests' pseudo translation; the module ships no .po or .mo
+/language/*.mo

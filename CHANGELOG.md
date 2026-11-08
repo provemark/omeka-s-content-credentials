@@ -3,6 +3,13 @@
 This project follows the milestones in `docs/milestones.md`. Dates are the
 day the work was committed.
 
+## Unreleased
+
+- Added: the module's text is translatable. `language/template.pot` lists every string, and a
+  `language/<locale>.mo` an administrator adds is used for that locale; the module ships no
+  translation itself. A translation that does not fit a sentence's values shows that sentence in
+  English instead of breaking the page (SPEC-009). (2026-11-08)
+
 ## 0.1.2 (2026-11-08)
 
 The evidence pages are open to Omeka's own roles only. The stored verdicts and evidence are

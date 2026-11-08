@@ -30,23 +30,17 @@ final class SettingsPage
     {
         $t = static fn (string $source): string => $escape($translate($source));
         $html = '<div class="content-credentials-settings">';
-        $html .= '<p>'.$escape(sprintf(
-            $translate('C2PA trust list of %1$s (commit %2$s), last compared with the published list on %3$s'),
-            BundledLists::LIST_DATE,
-            BundledLists::COMMIT,
-            BundledLists::COMPARED,
-        )).'</p>';
+        $list = 'C2PA trust list of %1$s (commit %2$s), last compared with the published list on %3$s'; // @translate
+        $html .= '<p>'.$escape(Format::fill($translate($list), $list, [BundledLists::LIST_DATE, BundledLists::COMMIT, BundledLists::COMPARED])).'</p>';
         if ($stale) {
-            $html .= '<p class="content-credentials-warning">'.$escape(sprintf(
-                $translate('The bundled trust lists were last compared with the published lists on %s, more than six months ago. A newer release of this module may have newer lists.'),
-                BundledLists::COMPARED,
-            )).'</p>';
+            $warning = 'The bundled trust lists were last compared with the published lists on %s, more than six months ago. A newer release of this module may have newer lists.'; // @translate
+            $html .= '<p class="content-credentials-warning">'.$escape(Format::fill($translate($warning), $warning, [BundledLists::COMPARED])).'</p>';
         }
         if ($problem !== null) {
             $html .= '<p class="content-credentials-warning">'.($customSaved
                 ? $t('The saved custom trust settings cannot be used; new uploads and runs are checked without a trust list.')
                 : $t('The bundled trust lists cannot be used; new uploads and runs are checked without a trust list.'))
-                .' '.$t('Reason:').' '.$escape($problem).'</p>';
+                .' '.$escape(Format::fill($translate('Reason: %s'), 'Reason: %s', [$problem])).'</p>';
         }
         $html .= '<div class="field"><div class="field-meta"><label for="content-credentials-digicert">'.$t('DigiCert timestamps').'</label></div>'
             .'<div class="inputs"><input type="hidden" name="'.self::DIGICERT.'" value="0">'

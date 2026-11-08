@@ -57,16 +57,18 @@ final class RecheckRuns
     public function start(string $media): ?string
     {
         if (! in_array($media, [RecheckSection::ALL, RecheckSection::WITHOUT_RESULT], true)) {
-            return 'No run was started: unknown kind of run.';
+            return 'No run was started: unknown kind of run.'; // @translate
         }
         $latest = $this->latest();
         if ($latest !== null && in_array($latest['status'], RecheckSection::RUNNING, true)) {
-            return 'A run is already in progress; no new run was started.';
+            return 'A run is already in progress; no new run was started.'; // @translate
         }
         $job = $this->dispatcher->dispatch(RecheckJob::class, ['media' => $media]);
 
         // Omeka's dispatch() may return null; no job is no run (fail closed).
-        return $job === null || $job->getStatus() === 'error' ? 'The run could not start; see its job page.' : null;
+        $failed = 'The run could not start; see its job page.'; // @translate
+
+        return $job === null || $job->getStatus() === 'error' ? $failed : null;
     }
 
     /**
@@ -75,7 +77,7 @@ final class RecheckRuns
      */
     public function end(mixed $id): ?string
     {
-        $refused = 'No run was marked as ended.';
+        $refused = 'No run was marked as ended.'; // @translate
         if (! is_string($id) || ! ctype_digit($id) || (int) $id < 1) {
             return $refused;
         }

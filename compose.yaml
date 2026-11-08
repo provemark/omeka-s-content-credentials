@@ -50,6 +50,11 @@ services:
     volumes:
       - files:/var/www/html/files
       - ./:/var/www/html/modules/ContentCredentials:ro
+    # SPEC-009: the integration tests write their translation into language/,
+    # inside the container. A file written on the host and replaced reached the
+    # container with its old size and could not be opened (step 64).
+    tmpfs:
+      - /var/www/html/modules/ContentCredentials/language
 
   db-php82:
     <<: *db

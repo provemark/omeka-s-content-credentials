@@ -326,6 +326,12 @@ $connection->executeStatement(Schema::drop());
   links in the README (`trust/README.md` twice, `LICENSE`), and no links in `module.ini`. Record:
   `notes/step-55-the-readme-outside-github.md`.
 
+- **Amendment 7 (2026-11-08, approved by Maurice van Loon with SPEC-009 and its amendment 1):**
+  SPEC-009 makes the module translatable and ships `language/template.pot`. AC3's top level gains
+  `language/`, which holds only `template.pot`; AC4 compares `language/` with HEAD's byte for byte,
+  like `trust/`, `view/` and `config/`. `tools/build.sh` archives `language` too. Was: no
+  `language/`.
+
 ## Open questions
 
 - All six choices above: blockers, for Maurice.

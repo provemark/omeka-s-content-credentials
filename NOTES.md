@@ -215,6 +215,7 @@ Registration on omeka.org is still his go.
 | M7.32 | [`notes/step-62-release-0-1-2.md`](notes/step-62-release-0-1-2.md): tag `v0.1.2` on `88ac321`, zip `662f093f…`; the upgrade from the published 0.1.1 keeps verdicts and evidence byte-identical and denies the added `guest` role |
 | M8.1 | [`notes/step-63-how-omeka-translates.md`](notes/step-63-how-omeka-translates.md): a module's `translator` key and `language/nl_NL.mo` are enough for Dutch; a user's locale wins; one translation with a wrong placeholder takes the media page down (500), and `msgfmt -c` sees it only with `php-format` |
 | M8.2 | [`specs/SPEC-009-translation.md`](specs/SPEC-009-translation.md), approved 2026-11-08 with all recommendations: Dutch first, with SPEC-008 amendment 7 proposed in it |
+| M8.4 | [`notes/step-64-translatable-text.md`](notes/step-64-translatable-text.md): SPEC-009 implemented with amendment 1; `language/template.pot` (79 strings), a fallback to English for a broken format, and a tmpfs for the tests' `.mo`, because a file replaced on the host reached the container stale |
 
 ## To measure before a spec rests on it
 

@@ -14,7 +14,7 @@ use ContentCredentials\Display\Presentation;
  */
 final class VerdictHtml
 {
-    public const HEADING = 'Content Credentials';
+    public const HEADING = 'Content Credentials'; // @translate
 
     /**
      * @param  string|null  $evidenceUrl  where the media item's evidence is, when it has any (SPEC-006 AC6)
@@ -33,7 +33,7 @@ final class VerdictHtml
         }
 
         if ($evidenceCount > 0 && $evidenceUrl !== null) {
-            $line = $evidenceCount === 1 ? ['Evidence: 1 check kept', []] : ['Evidence: %s checks kept', [(string) $evidenceCount]];
+            $line = $evidenceCount === 1 ? ['Evidence: 1 check kept', []] : ['Evidence: %s checks kept', [(string) $evidenceCount]]; // @translate
             $html .= '<div class="value"><a href="'.$text->escape($evidenceUrl).'">'.$text->line($line).'</a></div>';
         }
 
