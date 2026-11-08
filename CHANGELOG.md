@@ -3,7 +3,11 @@
 This project follows the milestones in `docs/milestones.md`. Dates are the
 day the work was committed.
 
-## Unreleased
+## 0.1.1 (2026-11-08)
+
+The AI label stands under the verdict in the media browse, and the README is ready for omeka.org.
+The stored verdicts and evidence are unchanged; an installation of 0.1.0 is upgraded on Omeka's
+modules page.
 
 - Added: an introduction for collection managers and two screenshots in the README; every link in it
   works outside GitHub, and Omeka's modules page links to the repository and the author
