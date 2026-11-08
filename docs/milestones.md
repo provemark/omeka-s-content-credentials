@@ -338,3 +338,4 @@ found internationalization the one documented Omeka requirement the module does 
 | M8.3 | SPEC-009 amendment 1: translatable, no language shipped; a Dutch translation becomes a later spec | done: approved 2026-11-08 |
 | M8.4 | The tests red, then the implementation of SPEC-009 with amendment 1 | done: [`notes/step-64-translatable-text.md`](../notes/step-64-translatable-text.md) |
 | M8.5 | A README section for translators | done: README "Translating" (no note: a text change, measured by SPEC-008 AC18's test) |
+| M8.6 | Release 0.1.3, with the upgrade from 0.1.2 measured | done: [`notes/step-65-release-0-1-3.md`](../notes/step-65-release-0-1-3.md) |

@@ -1255,3 +1255,14 @@ README are where the disclosure lives.
 - Model: Claude Opus 5.5, Claude Code CLI
 - Asked: "ok, doe de README-alinea en daarna release 0.1.3".
 - Produced: the section "Translating" in `README.md`, and its CHANGELOG line.
+
+## 2026-11-08: M8.6, release 0.1.3
+
+- Model: Claude Opus 5.5, Claude Code CLI
+- Asked: "ok, doe de README-alinea en daarna release 0.1.3".
+- Produced: the version commit, the measurement of the upgrade from 0.1.2 (rows, English pages, a
+  `.mo` on the released layout), the tag, the release with its text, the download checks and
+  `notes/step-65-release-0-1-3.md`; the environments taken down.
+- Then: the first `composer check` failed because the test database still held 0.1.2; and the
+  version commit was pushed by the same command before the check was read. The environment was
+  reset, the check run again green, and the tag waited for it and for CI.
