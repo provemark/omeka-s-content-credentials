@@ -9,6 +9,7 @@ day the work was committed.
   `language/<locale>.mo` an administrator adds is used for that locale; the module ships no
   translation itself. A translation that does not fit a sentence's values shows that sentence in
   English instead of breaking the page (SPEC-009). (2026-11-08)
+- Added: a README section on translating the module. (2026-11-08)
 
 ## 0.1.2 (2026-11-08)
 

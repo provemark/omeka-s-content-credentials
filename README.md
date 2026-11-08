@@ -95,6 +95,23 @@ Uninstalling deletes every verdict and evidence document the module has stored, 
 rows of its jobs in Omeka's job list, and ends a run that is going on. Back up the database first if
 you want to keep them.
 
+## Translating
+
+The module's text follows the language Omeka S is set to, for the user or for the installation. The
+module itself is in English only. Every string it shows is listed in
+[`language/template.pot`](https://github.com/provemark/omeka-s-content-credentials/blob/main/language/template.pot).
+
+To add a language:
+
+1. Translate that file with a gettext editor such as Poedit.
+2. Save it under the locale code Omeka uses, for example `nl_NL.po`.
+3. Compile it to `nl_NL.mo`.
+4. Put the `.mo` in the module's `language/` folder.
+
+A translated sentence that does not fit its values (a `%s` too many or too few) is shown in English
+instead. An upgrade replaces the module's folder, so keep a copy of your `.mo` and put it back
+afterwards.
+
 ## Building the zip
 
 `tools/build.sh`, in a checkout of the repository, makes `build/ContentCredentials-<version>.zip` from

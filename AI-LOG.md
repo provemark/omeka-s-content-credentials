@@ -1249,3 +1249,9 @@ README are where the disclosure lives.
   took the word `error` from a comparison on a marked line, so the message moved to a line of its
   own; the test's `.mo` written on the host reached the container stale and gave a 500, so it is now
   written in the container.
+
+## 2026-11-08: M8.5, the README section on translating
+
+- Model: Claude Opus 5.5, Claude Code CLI
+- Asked: "ok, doe de README-alinea en daarna release 0.1.3".
+- Produced: the section "Translating" in `README.md`, and its CHANGELOG line.
