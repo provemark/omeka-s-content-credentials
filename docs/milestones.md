@@ -334,5 +334,5 @@ found internationalization the one documented Omeka requirement the module does 
 | Step | What | Status |
 |---|---|---|
 | M8.1 | Measure how Omeka S 4.2.1 loads a module's translation, which locale wins, and what a bad translation does | done: [`notes/step-63-how-omeka-translates.md`](../notes/step-63-how-omeka-translates.md) |
-| M8.2 | The M8 spec (`draft`), with the open choices and recommendations, and SPEC-008 amendment 7 | done: [`specs/SPEC-009-translation.md`](../specs/SPEC-009-translation.md) `draft` |
+| M8.2 | The M8 spec (`draft`), with the open choices and recommendations, and SPEC-008 amendment 7 | done: [`specs/SPEC-009-translation.md`](../specs/SPEC-009-translation.md), approved 2026-11-08 with all recommendations |
 | M8.3 | After approval: ADR-0007 for the compiler (if chosen), then the tests red, then the implementation; Maurice reads `nl_NL.po` before it is committed | open |

@@ -214,7 +214,7 @@ Registration on omeka.org is still his go.
 | M7.31 | [`notes/step-61-time-memory-and-evidence-size.md`](notes/step-61-time-memory-and-evidence-size.md): 530 MB verified in 2.55 s at 8 MiB peak (streamed); evidence 2–34 KB against a 16 MiB packet limit; no change, both recorded as limits |
 | M7.32 | [`notes/step-62-release-0-1-2.md`](notes/step-62-release-0-1-2.md): tag `v0.1.2` on `88ac321`, zip `662f093f…`; the upgrade from the published 0.1.1 keeps verdicts and evidence byte-identical and denies the added `guest` role |
 | M8.1 | [`notes/step-63-how-omeka-translates.md`](notes/step-63-how-omeka-translates.md): a module's `translator` key and `language/nl_NL.mo` are enough for Dutch; a user's locale wins; one translation with a wrong placeholder takes the media page down (500), and `msgfmt -c` sees it only with `php-format` |
-| M8.2 | [`specs/SPEC-009-translation.md`](specs/SPEC-009-translation.md) `draft`: Dutch first, with SPEC-008 amendment 7 proposed in it |
+| M8.2 | [`specs/SPEC-009-translation.md`](specs/SPEC-009-translation.md), approved 2026-11-08 with all recommendations: Dutch first, with SPEC-008 amendment 7 proposed in it |
 
 ## To measure before a spec rests on it
 

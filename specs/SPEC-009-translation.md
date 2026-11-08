@@ -2,9 +2,9 @@
 
 | Field      | Value                                             |
 |------------|---------------------------------------------------|
-| Status     | draft                                             |
+| Status     | approved                                          |
 | Author     | Maurice van Loon                                  |
-| Approved   | —                                                 |
+| Approved   | Maurice van Loon, 2026-11-08                      |
 | Supersedes | —                                                 |
 
 > Lifecycle: `draft` → maintainer approves → `approved` → tests-first →
@@ -198,18 +198,22 @@ Each with a recommendation; Maurice decides.
    the `.po` committed, the `.mo` made by `tools/build.sh`. *Recommendation: (a)*; the unit test of
    AC5 reads the committed `.mo` in plain PHP and compares it with the `.po`, so a stale `.mo` cannot
    slip through.
+   *Status 2026-11-08:* answered, (a).
 2. **The compiler.** (a) GNU gettext's `msgfmt -c`, a development tool outside Composer, recorded in
    an ADR-0007 with the version used; CI does not need it, since the test checks the committed `.mo`;
    (b) a small compiler of our own in `tools/`. *Recommendation: (a)*, with the ADR written before the
    first `.mo`.
+   *Status 2026-11-08:* answered, (a).
 3. **The template.** (a) a script of our own, `bin/i18n-template.php`, that collects literal
    `translate('…')` arguments and `// @translate` strings, with AC4's test that it is current;
    (b) Omeka's gulp task from the Omeka S repository (Node and a checkout of Omeka S needed).
    *Recommendation: (a)*: no new dependency, and the test sees a forgotten string.
+   *Status 2026-11-08:* answered, (a).
 4. **The fallback of AC7.** (a) in the code at every format site, as in the API sketch, plus the
    check of AC6; (b) only the check of AC6. *Recommendation: (a)*: step 63 measured that one bad
    string takes the whole media page down, and a later `.po` from someone else should not be able
    to do that.
+   *Status 2026-11-08:* answered, (a).
 5. **The Dutch words.** Omeka's own `nl_NL.po` is followed where the module uses a word Omeka has
    ("Bekijk" for View, "Taken" for Jobs). "Content Credentials" stays as it is, a name. Proposed for
    the main strings, for Maurice to correct:
@@ -228,8 +232,13 @@ Each with a recommendation; Maurice decides.
    | Trust settings | Vertrouwensinstellingen |
 
    *Recommendation:* Maurice reads the whole `nl_NL.po` before the step that adds it is committed.
+   *Status 2026-11-08:* answered, as recommended; the table is the starting point.
 6. **A release.** The translation changes no table and no stored row. *Recommendation:* 0.2.0
    after this spec, since it is a new feature, upgraded like 0.1.2.
+   *Status 2026-11-08:* answered, as recommended; the release itself still needs Maurice's go.
+   Read at approval: Omeka S 4.2.1's own `nl_NL.po` has 1089 of its 1728 strings translated
+   (`msgfmt --statistics`), so a Dutch installation still shows some of Omeka's own text in English;
+   AC1 is about the module's text only.
 
 **Amendments to other specs, approved with this spec**
 

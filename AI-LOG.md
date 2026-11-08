@@ -1214,3 +1214,11 @@ README are where the disclosure lives.
   questions and SPEC-008 amendment 7; the M8 rows in `docs/milestones.md`. No code changed.
 - Then: the first test translation had a wrong placeholder by design; it took the media page down
   (500), which became AC7.
+
+## 2026-11-08: SPEC-009 approved
+
+- Model: Claude Opus 5.5, Claude Code CLI
+- Asked: "ok, akkoord met alle aanbevelingen. Maar is omeka nederlands?"
+- Produced: the approval and the answered open questions in SPEC-009; the count of Omeka S 4.2.1's
+  own Dutch translation (`msgfmt --statistics`: 1089 translated, 639 untranslated), recorded in the
+  spec.
