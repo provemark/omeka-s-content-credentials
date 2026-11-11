@@ -3,7 +3,10 @@
 This project follows the milestones in `docs/milestones.md`. Dates are the
 day the work was committed.
 
-## Unreleased
+## 0.1.4 (2026-11-11)
+
+The bundled verifier is 0.10.1. Entries checked before keep their verdict and evidence; an
+installation of 0.1.3 is upgraded on Omeka's modules page.
 
 - Changed: bundles c2pa-verifier 0.10.1. An icon in a manifest that is not a hashed URI is now
   reported as `hashedURI.missing` and the media is not valid, as C2PA 2.4 (section 10.2.3.2)
