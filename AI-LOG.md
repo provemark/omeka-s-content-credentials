@@ -1294,3 +1294,16 @@ README are where the disclosure lives.
   deptrac, unit 357, integration 152, release 24); `grep` finds no `StatusCode` in `src/`.
 - Reasoned: no module code changes; stored entries keep their verdicts and evidence.
 - Decided by Maurice: the update. A 0.1.4 release is his decision.
+
+## 2026-11-11: M8.10, release 0.1.4
+
+- Model: Claude Opus 5.5, Claude Code CLI
+- Asked: "bereid release 0.1.4 voor"; "push maar"; "tag en release v0.1.4 maar".
+- Produced: `74dc364` (version and CHANGELOG); the upgrade measurement from the published 0.1.3 zip in
+  a clean Omeka S; the tag `v0.1.4`, the GitHub release with the zip; `notes/step-68-release-0-1-4.md`;
+  M8.10 in `docs/milestones.md`.
+- Measured: after the upgrade the verdict and evidence tables byte-identical and the pages unchanged;
+  a new upload of `agents-icon.png` `Invalid` with `hashedURI.missing`; `composer check` exit 0 (357,
+  152, 24); CI 9 of 9; the tag's build unpacked identical to the measured one; the download with
+  `gh` and anonymously equal to the release text's SHA-256.
+- Decided by Maurice: the release, the push, the tag.
