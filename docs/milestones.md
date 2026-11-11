@@ -341,3 +341,4 @@ found internationalization the one documented Omeka requirement the module does 
 | M8.6 | Release 0.1.3, with the upgrade from 0.1.2 measured | done: [`notes/step-65-release-0-1-3.md`](../notes/step-65-release-0-1-3.md) |
 | M8.7 | The maintenance rhythm: trust lists, verifier, Omeka S, PHP, actions, releases | done: [`docs/maintenance.md`](maintenance.md) |
 | M8.8 | Registration on omeka.org, at Maurice's decision; the release checked against omeka.org's requirements first | submitted 2026-11-11: [`notes/step-66-omeka-org-registration.md`](../notes/step-66-omeka-org-registration.md); the listing not yet measured |
+| M8.9 | c2pa-verifier 0.10.1 (an icon that is not a hashed URI is `hashedURI.missing`), no module code changes | done: [`notes/step-67-verifier-0-10-1.md`](../notes/step-67-verifier-0-10-1.md); a 0.1.4 release is Maurice's decision |

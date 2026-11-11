@@ -3,6 +3,12 @@
 This project follows the milestones in `docs/milestones.md`. Dates are the
 day the work was committed.
 
+## Unreleased
+
+- Changed: bundles c2pa-verifier 0.10.1. An icon in a manifest that is not a hashed URI is now
+  reported as `hashedURI.missing` and the media is not valid, as C2PA 2.4 (section 10.2.3.2)
+  requires. Entries checked before keep the verdict they were checked with. (2026-11-11)
+
 ## 0.1.3 (2026-11-08)
 
 The module's text is translatable; it ships in English only. An English user sees no change, and the

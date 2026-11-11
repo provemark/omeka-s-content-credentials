@@ -1283,3 +1283,14 @@ README are where the disclosure lives.
   omeka.org and its registration form; the check of release 0.1.3 against them;
   `notes/step-66-omeka-org-registration.md`.
 - Decided by Maurice: to register; he filled in and submitted the form himself.
+
+## 2026-11-11: M8.9, c2pa-verifier 0.10.1
+
+- Model: Claude Opus 5.5, Claude Code CLI
+- Asked: "werk de verifier in omeka bij naar 0.10.1".
+- Produced: `composer.lock` (v0.10.0 → v0.10.1); a CHANGELOG entry under Unreleased;
+  `notes/step-67-verifier-0-10-1.md`; M8.9 in `docs/milestones.md`.
+- Measured: `tools/env/reset.sh` and `composer check`, exit 0 (spec-check 10 specs, phpstan,
+  deptrac, unit 357, integration 152, release 24); `grep` finds no `StatusCode` in `src/`.
+- Reasoned: no module code changes; stored entries keep their verdicts and evidence.
+- Decided by Maurice: the update. A 0.1.4 release is his decision.
