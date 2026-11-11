@@ -217,6 +217,7 @@ Registration on omeka.org is still his go.
 | M8.2 | [`specs/SPEC-009-translation.md`](specs/SPEC-009-translation.md), approved 2026-11-08 with all recommendations: Dutch first, with SPEC-008 amendment 7 proposed in it |
 | M8.4 | [`notes/step-64-translatable-text.md`](notes/step-64-translatable-text.md): SPEC-009 implemented with amendment 1; `language/template.pot` (79 strings), a fallback to English for a broken format, and a tmpfs for the tests' `.mo`, because a file replaced on the host reached the container stale |
 | M8.6 | [`notes/step-65-release-0-1-3.md`](notes/step-65-release-0-1-3.md): tag `v0.1.3` on `2bcb83b`, zip `e7743e85…`; the upgrade from the published 0.1.2 keeps the rows and the English pages byte-identical; a test database kept at an older version makes every integration test fail |
+| M8.8 | [`notes/step-66-omeka-org-registration.md`](notes/step-66-omeka-org-registration.md): release 0.1.3 meets every automated check of omeka.org; Maurice submitted the registration on 2026-11-11; from now on every release that is not a draft is published there |
 
 ## To measure before a spec rests on it
 

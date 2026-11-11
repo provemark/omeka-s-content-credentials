@@ -1274,3 +1274,12 @@ README are where the disclosure lives.
 - Produced: `docs/maintenance.md`: a monthly and a quarterly rhythm, the quarterly check (trust lists,
   verifier, Omeka S, development tools, PHP), security reports, and the release routine with the
   lesson of step 65.
+
+## 2026-11-11: M8.8, registration on omeka.org
+
+- Model: Claude Opus 5.5, Claude Code CLI
+- Asked: "wat adviseer je nu echt?", then "ja" to collecting omeka.org's requirements.
+- Produced: the advice to register without waiting for a pilot; the requirements, read from
+  omeka.org and its registration form; the check of release 0.1.3 against them;
+  `notes/step-66-omeka-org-registration.md`.
+- Decided by Maurice: to register; he filled in and submitted the form himself.

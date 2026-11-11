@@ -67,5 +67,5 @@ Each release so far follows the same routine (steps 49, 56, 62 and 65):
    it with its SHA-256 in the release text.
 6. Download it with `gh` and anonymously, compare the hash, and write the step note.
 
-After the module is registered on omeka.org, every release that is not a draft is published there
-automatically.
+The module was registered on omeka.org on 2026-11-11 (step 66): every release that is not a draft
+is published there automatically. Setting a release to draft or pre-release takes it off again.
