@@ -343,4 +343,5 @@ found internationalization the one documented Omeka requirement the module does 
 | M8.8 | Registration on omeka.org, at Maurice's decision; the release checked against omeka.org's requirements first | submitted 2026-11-11: [`notes/step-66-omeka-org-registration.md`](../notes/step-66-omeka-org-registration.md); the listing not yet measured |
 | M8.9 | c2pa-verifier 0.10.1 (an icon that is not a hashed URI is `hashedURI.missing`), no module code changes | done: [`notes/step-67-verifier-0-10-1.md`](../notes/step-67-verifier-0-10-1.md); released in 0.1.4 (M8.10) |
 | M8.10 | Release 0.1.4, with the upgrade from 0.1.3 measured | done: [`notes/step-68-release-0-1-4.md`](../notes/step-68-release-0-1-4.md) |
-| M8.11 | c2pa-verifier 0.11.0 (the general box hash in a JPEG), measured before the minor; no module code changes | done: [`notes/step-69-verifier-0-11-0.md`](../notes/step-69-verifier-0-11-0.md); a release is Maurice's decision |
+| M8.11 | c2pa-verifier 0.11.0 (the general box hash in a JPEG), measured before the minor; no module code changes | done: [`notes/step-69-verifier-0-11-0.md`](../notes/step-69-verifier-0-11-0.md); released in 0.1.5 (M8.12) |
+| M8.12 | Release 0.1.5, with the upgrade from 0.1.4 measured | done: [`notes/step-70-release-0-1-5.md`](../notes/step-70-release-0-1-5.md) |

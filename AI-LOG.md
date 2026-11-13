@@ -1331,3 +1331,23 @@ README are where the disclosure lives.
 - Reasoned: no module code changes; stored entries keep their verdicts and
   evidence.
 - Decided by Maurice: the update. A release is his decision.
+
+## 2026-11-13: M8.12, release 0.1.5
+
+- Model: Claude Opus 5.5, Claude Code CLI
+- Asked: "bereid omeka 0.1.5 voor"; "push"; "tag en release v0.1.5 maar".
+- Produced:
+  - `ba50b06` "Version 0.1.5" (local), with `config/module.ini` 0.1.5 and the CHANGELOG section
+    dated;
+  - the zip built from it;
+  - `notes/step-70-release-0-1-5.md` and M8.12 in `docs/milestones.md` (uncommitted).
+- Measured:
+  - The upgrade from the published 0.1.4 zip in a clean Omeka S 4.2.1 on PHP 8.3:
+    - the verdict and evidence tables are byte-identical after the upgrade;
+    - the box-hash JPEG stored under 0.10.1 stays `Invalid`;
+    - a new upload of it is `Valid` with verifier 0.11.0.
+  - `tools/env/reset.sh` and `composer check`, exit 0 (unit 357, integration 152, release 24).
+- Published: the push of `ba50b06` (CI run 43411631346, 9 of 9); the annotated tag `v0.1.5`; the
+  zip rebuilt from the tag (unpacked identical to the measured one) and the GitHub release with it
+  (`5d0b8151…`, the same after `gh` and anonymous download).
+- Decided by Maurice: the release, the push, the tag and the GitHub release.
