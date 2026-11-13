@@ -1307,3 +1307,27 @@ README are where the disclosure lives.
   152, 24); CI 9 of 9; the tag's build unpacked identical to the measured one; the download with
   `gh` and anonymously equal to the release text's SHA-256.
 - Decided by Maurice: the release, the push, the tag.
+
+## 2026-11-13: M8.11, c2pa-verifier 0.11.0
+
+- Model: Claude Opus 5.5, Claude Code CLI
+- Asked: "werk Omeka bij naar verifier 0.11.0".
+- Produced:
+  - `composer.json` (`^0.10` → `^0.11`) and `composer.lock` (v0.10.1 → v0.11.0);
+  - ADR-0002 dated, `docs/maintenance.md`, a CHANGELOG entry under
+    Unreleased;
+  - `notes/step-69-verifier-0-11-0.md`; M8.11 in `docs/milestones.md`.
+- Measured:
+  - The evidence format is unchanged between v0.10.1 and v0.11.0.
+  - Under the module's bundled trust settings, DigiCert off and on: 1,468
+    runs per version, 0 exceptions.
+    - The module's own fixtures: no verdict, report or evidence changes.
+    - The verifier's five new probes go `Invalid` → `Valid`.
+    - The Bing file goes `Invalid` → `Valid` with DigiCert on only (its
+      time-stamp validates).
+    - `Trusted` stays 6.
+  - `tools/env/reset.sh` and `composer check`, exit 0 (unit 357,
+    integration 152, release 24).
+- Reasoned: no module code changes; stored entries keep their verdicts and
+  evidence.
+- Decided by Maurice: the update. A release is his decision.

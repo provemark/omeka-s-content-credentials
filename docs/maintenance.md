@@ -27,9 +27,9 @@ fall before that date, so a release with a new comparison date can always come b
    `src/Trust/BundledLists.php`; the unit tests check that the two agree with the files. Either way
    it needs a release, since the date ships in the zip.
 2. **The verifier.** Look for a new release of `provemark/c2pa-verifier`
-   (`gh release list -R provemark/c2pa-verifier`). The module requires `^0.10`. A new 0.10.x
+   (`gh release list -R provemark/c2pa-verifier`). The module requires `^0.11`. A new 0.11.x
    is a patch release of the module if `composer check` is green after `composer update
-   provemark/c2pa-verifier`. A 0.11 or later is its own step: read its changelog for changes to
+   provemark/c2pa-verifier`. A 0.12 or later is its own step: read its changelog for changes to
    verdicts, status codes and the evidence format (SPEC-006 stores `evidenceToJson()` byte for
    byte), and measure before deciding. Dependabot leaves Composer alone on purpose
    ([`.github/dependabot.yml`](../.github/dependabot.yml)).

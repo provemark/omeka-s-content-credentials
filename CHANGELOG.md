@@ -3,6 +3,14 @@
 This project follows the milestones in `docs/milestones.md`. Dates are the
 day the work was committed.
 
+## Unreleased
+
+- Changed: bundles c2pa-verifier 0.11.0. A JPEG whose credentials bind the image with a box hash,
+  as Microsoft Bing Image Creator writes every file, is now verified instead of reported as not
+  valid whatever it holds. With the DigiCert time-stamp root on, such a file whose signing
+  certificate has since expired can be judged at its time-stamp. Entries checked before keep the
+  verdict they were checked with. (2026-11-13)
+
 ## 0.1.4 (2026-11-11)
 
 The bundled verifier is 0.10.1. Entries checked before keep their verdict and evidence; an

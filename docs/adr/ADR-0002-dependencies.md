@@ -36,6 +36,8 @@ find.
 - `provemark/c2pa-verifier` `^0.10`: the verification itself. Same
   maintainer; pure PHP, no network, no `exec`. Updated deliberately, one
   minor release at a time (in 0.x a minor release may break).
+  *2026-11-13 (step 69):* `^0.11`, verifier 0.11.0 (the general box hash
+  in a JPEG); measured first, no module code changed.
 
 **Development (`require-dev`):** the tools of `composer check`, the same
 as in the sister projects:
