@@ -3,7 +3,10 @@
 This project follows the milestones in `docs/milestones.md`. Dates are the
 day the work was committed.
 
-## Unreleased
+## 0.1.5 (2026-11-13)
+
+The bundled verifier is 0.11.0. Entries checked before keep their verdict and evidence; an
+installation of 0.1.4 is upgraded on Omeka's modules page.
 
 - Changed: bundles c2pa-verifier 0.11.0. A JPEG whose credentials bind the image with a box hash,
   as Microsoft Bing Image Creator writes every file, is now verified instead of reported as not
